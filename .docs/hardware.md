@@ -22,10 +22,12 @@
   and over sub-GHz CC1101 (lower idle current in theory, but needs its own
   antenna design and a second discrete radio chip — not worth it once
   duty-cycle math showed BLE was already more than adequate).
-- **Power**: 2S-3S LiPo (~6-12.6V) off the vehicle's own power bus. Regulator: TI TPS6290x
-  family (3-17V in, ~4µA IQ) — single stage is sufficient; a pack this size
-  (1500-2500mAh) gives decades of idle life even at a few µA, so don't
-  over-engineer the regulator stage further.
+- **Power**: 2S-3S LiPo (~6-12.6V) off the vehicle's own power bus. Regulator:
+  **TI TPS62901** (verified against the actual datasheet — 3-17V in, ~4µA
+  IQ, 1A max output; the smallest of the TPS6290x family, plenty for this
+  load) — single stage is sufficient; a pack this size (1500-2500mAh) gives
+  decades of idle life even at a few µA, so don't over-engineer the
+  regulator stage further. Full reference-design BOM below.
 - **Switching element**: NOT a bare 10A relay (too bulky) and NOT a
   solid-state CMOS latch (volatile — loses state on power interruption,
   which matters here because of vibration/connector risk in an RC vehicle). Settled
@@ -85,6 +87,43 @@ Notes:
   bring-up, rather than hand-wiring each time.
 - 4 spare GPIOs remain (2, 6, 7, 8) if anything else comes up.
 
+## Buck regulator (TPS62901) reference design
+
+Output target is 3.0V or 3.3V (not yet finalized — see Open Items), both
+well within the BT832's 1.7-3.6V VDD range. Values below are computed
+directly from the TPS62901 datasheet's own equations, not read off a
+scanned table, so treat them as trustworthy starting points rather than
+final tuned values.
+
+**Output filter** (Table 7-3, standard combo for the part's default
+2.5MHz switching frequency):
+- L1 = 1µH — TI's own reference inductors (e.g. Coilcraft XGL4020-102ME)
+  are rated for several amps, far beyond this design's actual draw, so a
+  small/cheap 1µH part is fine
+- C_out = 10-22µF ceramic, X7R/X5R, low ESR
+- C_in = 10µF ceramic, X7R/X5R, voltage-rated well above the 12.6V max
+  (use a 25V-rated part to avoid DC-bias capacitance derating)
+
+**Feedback divider** (classic external-divider mode; Equation 10:
+R1 = R2 × (VOUT/0.6V − 1), VFB = 0.6V):
+
+| Target VOUT | R1 | R2 | Actual VOUT |
+|---|---|---|---|
+| 3.0V | 402k | 100k | 3.01V |
+| 3.3V | 453k | 100k | 3.32V |
+
+**Not yet resolved**:
+- The TPS62901's MODE/S-CONF pin selects between this classic
+  external-divider mode and an alternate mode where a single resistor to
+  GND picks one of 16 preset output+PFM/PWM combinations. The exact
+  MODE pin strap value for classic mode wasn't cleanly extracted from the
+  datasheet OCR — confirm directly against datasheet §6.3.2 before
+  finalizing the schematic.
+- Soft-start: TI recommends against the default ~150µs ramp (inrush
+  current) and suggests ≥1ms via a cap on SS/TR, but sizing that cap needs
+  the ISS current constant from the datasheet's electrical characteristics
+  table, which wasn't pulled yet.
+
 ## Open items
 
 - Real hardware not yet built — wake interval, scan window length, and BLE
@@ -92,3 +131,7 @@ Notes:
   estimates, not measured.
 - Exact latching relay part number (small pilot relay) and MOSFET part
   number not yet chosen.
+- Regulator output voltage: 3.0V vs 3.3V not yet finalized (see Buck
+  regulator section above).
+- TPS62901 MODE/S-CONF pin strap and soft-start capacitor value need
+  confirming directly against the datasheet before schematic finalization.
