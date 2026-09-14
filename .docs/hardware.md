@@ -1,8 +1,22 @@
 # Hardware
 
 - **MCU**: nRF52 — nRF52-DK or Adafruit Feather nRF52 Bluefruit for dev;
-  production target is the ISP1507 module (8×8×1mm, integrated antenna, no
-  custom RF layout needed).
+  production target is the **Fanstel BT832** module (nRF52832, 14×16×1.9mm,
+  integrated PCB trace antenna, no custom RF layout needed). Chosen over the
+  smaller Insight SiP ISP1507 (8×8×1mm) specifically for assembly: the
+  ISP1507 is a 62-pad bottom-only LGA with no side access, which needs
+  stencil+paste reflow — not viable for hand rework. The BT832 instead
+  breaks out 16 pins as **castellated edges** (side-accessible, and per
+  Fanstel's own datasheet, "SMT equipment is not required for soldering
+  castellated pins"), backed by 24 further LGA-only pins for full 32-GPIO
+  access if ever needed. Every signal this design needs — VDD, GND,
+  SWDCLK/SWDIO/RESET for programming, plus 2 analog-capable GPIOs
+  (P0.02/AIN0, P0.03/AIN1) and enough spare digital GPIOs for relay
+  SET/RESET drive, ADC feedback, the button interrupt, and the status LED —
+  lands on those 16 castellated pins, so the LGA-only pads never need to be
+  used. A same-footprint BT832F variant (15×20.8×1.9mm, ~760m vs ~110m
+  range) exists if longer BLE range is ever needed; not required for this
+  short vehicle-to-module link, so BT832 is the default unless that changes.
 - **Radio**: BLE. Chosen over ESP-NOW/WiFi-class radios (too power-hungry to
   listen continuously, ~mA-range RX current with no good sleep/wake story)
   and over sub-GHz CC1101 (lower idle current in theory, but needs its own
