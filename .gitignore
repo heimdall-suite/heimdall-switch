@@ -1,0 +1,8 @@
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Firmware toolchain build output will be added here once the
+# nRF52 toolchain (nRF5 SDK / nRF Connect SDK / Zephyr) is chosen.
