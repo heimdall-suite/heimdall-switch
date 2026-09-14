@@ -23,15 +23,17 @@
   antenna design and a second discrete radio chip — not worth it once
   duty-cycle math showed BLE was already more than adequate).
 - **Power**: 2S-3S LiPo (~6-12.6V) off the vehicle's own power bus. Regulator:
-  **TI TPS62901** (verified against the actual datasheet — 3-17V in, ~4µA
-  IQ, 1A max output; the smallest of the TPS6290x family, plenty for this
-  load) — single stage is sufficient; a pack this size (1500-2500mAh) gives
-  decades of idle life even at a few µA, so don't over-engineer the
-  regulator stage further. Full reference-design BOM below. Only offered
-  in a 9-pin VQFN-HR, 1.5×2.0mm, 0.5mm pitch (no alternate package exists
-  for this part) — accepted as a hot-air/reflow assembly, unlike the
-  BT832's hand-solderable castellated edge; a conscious trade-off, not an
-  oversight.
+  **TI TPS629206** (verified against the actual datasheet — 3-17V in, 4µA
+  typical IQ, 0.6A max output — same TPS6292xx low-IQ family as the
+  originally-considered TPS62901, ~30x this design's actual peak draw) —
+  single stage is sufficient; a pack this size (1500-2500mAh) gives years
+  of idle life even at a few µA, so don't over-engineer the regulator stage
+  further. Chosen over the TPS62901 specifically for assembly: TPS62901 is
+  only offered in a 9-pin VQFN-HR (0.5mm pitch, no-lead, recessed pins —
+  reflow/hot-air-only with no visible solder joint), while the TPS629206 is
+  in an **8-pin SOT-5X3 (1.6×2.1mm) with genuine gull-wing leads** (confirmed
+  from the package outline's lead foot-angle dimensions) — same 4µA
+  efficiency, no assembly trade-off. Full reference-design BOM below.
 - **Switching element**: NOT a bare 10A relay (too bulky) and NOT a
   solid-state CMOS latch (volatile — loses state on power interruption,
   which matters here because of vibration/connector risk in an RC vehicle). Settled
@@ -91,42 +93,40 @@ Notes:
   bring-up, rather than hand-wiring each time.
 - 4 spare GPIOs remain (2, 6, 7, 8) if anything else comes up.
 
-## Buck regulator (TPS62901) reference design
+## Buck regulator (TPS629206) reference design
 
-Output target is 3.0V or 3.3V (not yet finalized — see Open Items), both
-well within the BT832's 1.7-3.6V VDD range. Values below are computed
-directly from the TPS62901 datasheet's own equations, not read off a
-scanned table, so treat them as trustworthy starting points rather than
-final tuned values.
+Output is **3.3V**, chosen over 3.0V specifically because it's directly
+available as an internal VSET preset with zero feedback components (see
+below) — 3.0V isn't a VSET option at all (the preset table jumps 2.5V →
+3.8V), so it would force the classic 2-resistor external-divider mode
+instead. 3.3V is comfortably within the BT832's 1.7-3.6V VDD range.
 
-**Output filter** (Table 7-3, standard combo for the part's default
-2.5MHz switching frequency):
-- L1 = 1µH — TI's own reference inductors (e.g. Coilcraft XGL4020-102ME)
-  are rated for several amps, far beyond this design's actual draw, so a
-  small/cheap 1µH part is fine
-- C_out = 10-22µF ceramic, X7R/X5R, low ESR
-- C_in = 10µF ceramic, X7R/X5R, voltage-rated well above the 12.6V max
+**Output voltage configuration** (confirmed against the actual datasheet
+tables, Table 8-1 and Table 8-2 — cross-checked against a user-provided
+screenshot of Table 8-1 after an initial OCR pass mismapped which resistor
+values select which mode):
+- **MODE/S-CONF pin**: 27.40kΩ to GND — selects VSET (internal divider)
+  mode, "up to 2.5MHz" switching (auto-adjusted for actual VIN/VOUT),
+  output discharge enabled, Auto PFM/PWM with AEE (best light-load
+  efficiency, which matters here since the system is asleep almost all the
+  time)
+- **FB/VSET pin**: left open (no component) — Table 8-2 row 18 shows
+  "249kΩ or larger, or open" both select the top VSET preset, 3.3V
+- No R1/R2 feedback divider needed at all — simpler and cheaper than the
+  classic external-divider mode this part also supports
+
+**Output filter** (Table 9-3 / component selection sections):
+- L1 = 2.2µH nominal
+- C_out = 22µF ceramic, X7R/X5R, low ESR
+- C_in = 4.7µF ceramic, X7R/X5R, voltage-rated well above the 12.6V max
   (use a 25V-rated part to avoid DC-bias capacitance derating)
 
-**Feedback divider** (classic external-divider mode; Equation 10:
-R1 = R2 × (VOUT/0.6V − 1), VFB = 0.6V):
-
-| Target VOUT | R1 | R2 | Actual VOUT |
-|---|---|---|---|
-| 3.0V | 402k | 100k | 3.01V |
-| 3.3V | 453k | 100k | 3.32V |
-
-**Not yet resolved**:
-- The TPS62901's MODE/S-CONF pin selects between this classic
-  external-divider mode and an alternate mode where a single resistor to
-  GND picks one of 16 preset output+PFM/PWM combinations. The exact
-  MODE pin strap value for classic mode wasn't cleanly extracted from the
-  datasheet OCR — confirm directly against datasheet §6.3.2 before
-  finalizing the schematic.
-- Soft-start: TI recommends against the default ~150µs ramp (inrush
-  current) and suggests ≥1ms via a cap on SS/TR, but sizing that cap needs
-  the ISS current constant from the datasheet's electrical characteristics
-  table, which wasn't pulled yet.
+**Superseded**: an earlier pass at this section spec'd the TPS62901 (same
+family, VQFN-HR package) with a classic-mode R1/R2 divider (402k/100k for
+3.0V, 453k/100k for 3.3V) computed from that part's equation. Kept here
+for reference only in case the VSET-preset approach above doesn't pan out
+during bring-up and a fallback to classic external-divider mode is needed
+— the same R1/R2 math applies to the TPS629206 too (also VFB = 0.6V).
 
 ## Open items
 
@@ -135,7 +135,6 @@ R1 = R2 × (VOUT/0.6V − 1), VFB = 0.6V):
   estimates, not measured.
 - Exact latching relay part number (small pilot relay) and MOSFET part
   number not yet chosen.
-- Regulator output voltage: 3.0V vs 3.3V not yet finalized (see Buck
-  regulator section above).
-- TPS62901 MODE/S-CONF pin strap and soft-start capacitor value need
-  confirming directly against the datasheet before schematic finalization.
+- TPS629206 soft-start behavior/capacitor (if any is needed) not yet
+  checked against the datasheet — carried over from the TPS62901
+  investigation, never resolved for either part.
