@@ -42,6 +42,49 @@
   <15s → toggle power state locally. Held ≥15s → enter pairing mode.
 - **Status LED**: 1 GPIO, visual state indicator.
 
+## Pin assignment (BT832 castellated edge)
+
+All 16 castellated pins are used or reserved; the 24 LGA-only pads are
+untouched. Programming pins (VDD/GND/RESET/SWDCLK/SWDIO) are covered in
+[protocol.md](protocol.md)'s scope — this table is the full picture:
+
+| Pin | Net | Function |
+|---|---|---|
+| 1 | P0.26 | Status LED |
+| 2 | P0.27 | Spare GPIO |
+| 3 | P0.00/XL1 | 32.768kHz crystal (LFCLK) |
+| 4 | P0.01/XL2 | 32.768kHz crystal (LFCLK) |
+| 5 | P0.02/AIN0 | ADC feedback (load-side sense divider) |
+| 6 | P0.03/AIN1 | Spare GPIO (analog-capable) |
+| 7 | P0.09 | Spare GPIO (NFC pin — needs `NFCPINS` UICR cleared to use as GPIO) |
+| 8 | P0.10 | Spare GPIO (NFC pin — needs `NFCPINS` UICR cleared to use as GPIO) |
+| 9 | VDD | Power |
+| 10 | GND | Ground |
+| 11 | P0.13 | Relay coil drive — SET |
+| 12 | P0.18 | Relay coil drive — RESET |
+| 13 | P0.20 | Button input (GPIOTE, must wake from System OFF) |
+| 14 | P0.21/RESET | SWD reset |
+| 15 | SWDCLK | SWD clock |
+| 16 | SWDIO | SWD data |
+
+Notes:
+- **LFCLK**: the module's mandatory 32MHz radio crystal is already onboard
+  the BT832 (not exposed on any pin). Pins 3/4 are for the *optional*
+  32.768kHz LFCLK crystal, populated here rather than using the internal RC
+  oscillator — accuracy matters for the tightly-timed wake/scan cycle (see
+  protocol.md), and the internal RC would otherwise need periodic
+  HFCLK-powered recalibration, working against the power budget. Costs 2
+  GPIOs + a crystal and 2 load caps on the BOM; reversible pin-for-pin if
+  that trade turns out not to be worth it once real numbers are measured.
+- **P0.09/P0.10** default to NFC antenna function at reset; firmware must
+  clear the `NFCPINS` UICR register once to use them as plain GPIOs. No
+  hardware-side implication, just a firmware bring-up step to remember.
+- Programming header: pins 9/10/14/15/16 (VDD/GND/RESET/SWDCLK/SWDIO) are
+  grouped on the same edge of the module — worth breaking out to a small
+  pogo-pin test-jig footprint or header for repeated flashing during
+  bring-up, rather than hand-wiring each time.
+- 4 spare GPIOs remain (2, 6, 7, 8) if anything else comes up.
+
 ## Open items
 
 - Real hardware not yet built — wake interval, scan window length, and BLE
