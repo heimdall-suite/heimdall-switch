@@ -20,7 +20,7 @@ flowchart LR
     SW["heimdall-switch<br/>nRF52 node"]
     LOAD["Switched load"]
 
-    TX -- "S.Port / EX Bus" --> MOD
+    TX -- "S.Port" --> MOD
     MOD -- "BLE command (absolute ON/OFF)" --> SW
     SW -- "relay + MOSFET" --> LOAD
     SW -- "BLE ack burst" --> MOD
