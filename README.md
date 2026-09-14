@@ -43,9 +43,12 @@ for manual toggling and pairing, independent of that whole chain.
   cycle, command/ack frame layouts, the transmitter-side Lua widget
 - [.agents/AGENTS.md](.agents/AGENTS.md) / [CLAUDE.md](CLAUDE.md) —
   instructions for AI coding agents working in this repo
+- [hardware/kicad/](hardware/kicad/) — first-draft KiCad schematic (see
+  `.docs/hardware.md`'s Schematic section for what's in it and what's
+  still a placeholder)
 
 ## Status
 
 No firmware yet. nRF52 toolchain (nRF5 SDK vs. nRF Connect SDK/Zephyr vs.
 upstream Zephyr) is not yet decided. `src/` is a placeholder until that's
-settled.
+settled. A first-pass schematic exists under `hardware/kicad/`.

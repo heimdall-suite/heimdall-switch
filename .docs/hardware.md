@@ -93,6 +93,38 @@ Notes:
   bring-up, rather than hand-wiring each time.
 - 4 spare GPIOs remain (2, 6, 7, 8) if anything else comes up.
 
+## Schematic
+
+A first-draft KiCad schematic implementing everything on this page lives in
+[hardware/kicad/](../hardware/kicad/) (`heimdall-switch.kicad_pro` +
+`.kicad_sch`), with a rendered [heimdall-switch.svg](../hardware/kicad/heimdall-switch.svg)
+for quick viewing without opening KiCad. Custom symbols for the BT832 and
+TPS629206 (neither has an official KiCad library part) live in
+`heimdall-switch.kicad_sym`; opening the project should resolve them
+automatically via the project-local `sym-lib-table`.
+
+Verified with `kicad-cli sch export svg` and `kicad-cli sch erc` (both
+tools already installed on this machine, just not on PATH — full path is
+`AppData/Local/Programs/KiCad/10.0/bin/`). ERC comes back clean except for
+expected items: the intentionally-open VSET/PG/spare-GPIO pins, and
+"power pin not driven" on VDD/GND/VIN — the last one is a modeling
+artifact of using plain net labels (`GND`, `+3V3`, `VBAT`) instead of
+dedicated KiCad power-flag symbols, done to keep the generation simpler;
+electrically correct either way, but swap in real power symbols later if
+you want ERC fully silent.
+
+Known simplifications in this draft, worth revisiting before layout:
+- No footprints assigned yet (schematic-only pass).
+- The relay driver stage (Q1/Q2 pilot transistors, D1/D2 flyback diodes,
+  K1 latching relay, Q3 P-channel high-side load switch) uses generic
+  Device-library parts as placeholders — exact relay/MOSFET part numbers
+  are still an open item (see below), so values/footprints aren't final.
+- ADC divider (R_FB_TOP=100k, R_FB_BOT=33k) assumes sensing a ~12.6V max
+  load rail scaled to a safe ADC input; revisit once the actual load
+  voltage range is known.
+- Component placement is a plain generated grid (correctness-first, not
+  routed/tidied) — expect to rearrange freely in the KiCad GUI.
+
 ## Buck regulator (TPS629206) reference design
 
 Output is **3.3V**, chosen over 3.0V specifically because it's directly

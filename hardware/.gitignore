@@ -1,0 +1,6 @@
+# KiCad local/cache files, not meant to be version-controlled
+*.kicad_prl
+*-erc.rpt
+*-drc.rpt
+fp-info-cache
+_autosave-*

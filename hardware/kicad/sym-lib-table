@@ -1,0 +1,4 @@
+(sym_lib_table
+	(version 7)
+	(lib (name "heimdall-switch") (type "KiCad") (uri "${KIPRJMOD}/heimdall-switch.kicad_sym") (options "") (descr "Custom symbols for heimdall-switch (BT832, TPS629206)"))
+)
