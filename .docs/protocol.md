@@ -14,7 +14,7 @@ not yet validated on real hardware):
 1. Wake → open short RX scan window (~5-10ms assumed, needs validation
    against chosen advertising interval)
 2. If no valid command heard → sleep
-3. If valid command (matches paired address + key + boat ID + counter >
+3. If valid command (matches paired address + key + unit ID + counter >
    last accepted, for replay protection) → drive relay coil (SET or RESET
    per commanded absolute state — never toggle logic, always an absolute
    state command)
@@ -25,7 +25,7 @@ not yet validated on real hardware):
 
 | Bits | Field |
 |---|---|
-| 31:24 | Boat ID |
+| 31:24 | Unit ID |
 | 23:16 | Rolling counter (replay protection) |
 | 15:8 | Key check byte |
 | 1 | State (1=ON, 0=OFF) |
@@ -36,13 +36,13 @@ widget):
 
 | Bits | Field |
 |---|---|
-| 31:24 | Boat ID (echo) |
+| 31:24 | Unit ID (echo) |
 | 23:16 | Counter (echo) |
 | 8 | Valid flag (command checked out AND output-sense ADC confirms power state) |
 | 0 | New state |
 
-Multi-boat safety: each boat's nRF52 only reacts to its own paired address +
-boat ID, so overlapping BLE range between multiple boats/units is a
+Multi-unit safety: each node only reacts to its own paired address + unit
+ID, so overlapping BLE range between multiple vehicles/units is a
 non-issue by design.
 
 ## Transmitter-side Lua widget

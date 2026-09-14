@@ -21,11 +21,13 @@ in this repo). Read that before assuming intent not captured here.
 
 ## What this node does
 
-`heimdall-switch` is an nRF52-based boat-side wireless power switch,
-replacing a Jeti SPS-20 magnetic switch. It is controlled by
-`heimdall-module` (an ESP32-C3 on the transmitter side) over BLE,
-deliberately independent of the boat's normal RadioLink CRSF control link
-so switching keeps working regardless of that link's state.
+`heimdall-switch` is an nRF52-based wireless power switch node for RC
+vehicles (boats, planes, cars) — it originated as a replacement for a
+boat's Jeti SPS-20 magnetic switch but is not boat-specific. It is
+controlled by `heimdall-module` (an ESP32-C3 external RF module on the
+transmitter side) over BLE, deliberately independent of the vehicle's
+normal RC control link (e.g. CRSF) so switching keeps working regardless
+of that link's state.
 
 Key architectural properties to preserve in any implementation:
 
@@ -44,9 +46,9 @@ Key architectural properties to preserve in any implementation:
 - **Feedback is closed-loop**: the ack frame's valid bit must reflect both
   "command checked out" and "load-side ADC confirms the commanded power
   state" — not just that a drive pulse was sent.
-- **Multi-boat isolation is per-node, not link-level**: a node only reacts
-  to its own paired address + boat ID, so overlapping BLE range between
-  boats/units is a non-issue by design — don't add extra multi-boat
+- **Multi-unit isolation is per-node, not link-level**: a node only reacts
+  to its own paired address + unit ID, so overlapping BLE range between
+  vehicles/units is a non-issue by design — don't add extra multi-unit
   arbitration logic.
 
 Full details: [hardware.md](../.docs/hardware.md) (MCU, power, switching,
