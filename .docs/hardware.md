@@ -27,7 +27,11 @@
   IQ, 1A max output; the smallest of the TPS6290x family, plenty for this
   load) — single stage is sufficient; a pack this size (1500-2500mAh) gives
   decades of idle life even at a few µA, so don't over-engineer the
-  regulator stage further. Full reference-design BOM below.
+  regulator stage further. Full reference-design BOM below. Only offered
+  in a 9-pin VQFN-HR, 1.5×2.0mm, 0.5mm pitch (no alternate package exists
+  for this part) — accepted as a hot-air/reflow assembly, unlike the
+  BT832's hand-solderable castellated edge; a conscious trade-off, not an
+  oversight.
 - **Switching element**: NOT a bare 10A relay (too bulky) and NOT a
   solid-state CMOS latch (volatile — loses state on power interruption,
   which matters here because of vibration/connector risk in an RC vehicle). Settled
