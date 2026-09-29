@@ -140,12 +140,18 @@ pull-down) can drop the output; MOSFETs typically fail short (ON), which is
 the benign direction.
 
 **Circuit**:
-- **Q3 — load switch**: P-FET, source to VBAT, drain to LOAD_OUT. SO-8
-  (leaded, hand-solderable), −30V V_DS, R_DS(on) ≤ 20mΩ specified at
-  V_GS = −4.5V (so a sagging 2S pack still drives it fully on). At 3A /
-  15mΩ that's ~135mW; peaks ~1W for ms — fine in SO-8 with a copper pad.
-  SOT-23 parts (typically 40-60mΩ) run too hot at 3A continuous. AO4407A is
-  a starting candidate, not yet verified against its datasheet.
+- **Q3 — load switch**: P-FET, source to VBAT, drain to LOAD_OUT.
+  **Selected: AOS AO4407A** (SO-8, LCSC C16072) — −30V V_DS, ±25V V_GS,
+  R_DS(on) ≤ 13mΩ at V_GS = −10V, ≤ 17mΩ at −6V (12.7mΩ typ), V_GS(th)
+  −1.7 to −3.0V. It is *not* specified at −4.5V, and doesn't need to be:
+  the gate is pulled all the way to GND, so |V_GS| = pack voltage, never
+  below ~5V on 2S (≈14mΩ typ there per datasheet Fig. 5). Worst case at
+  3A ≈ 0.15W; peaks ~1W for ms — fine in SO-8 with a copper pad. Chosen
+  over the DFN 3×3 AONR21357 (C431196, ≤12.3mΩ at −4.5V) for easier hand
+  assembly/inspection on pre-production boards — AONR21357 is the drop-in
+  electrical upgrade if the board is shrunk later. AO4409 (SO-8, −4.5V
+  spec) rejected: obsolete. SOT-23 parts (typically 40-60mΩ) run too hot
+  at 3A continuous.
 - **Gate default ON**: Q3 gate pulled to GND by R_PD1 ‖ R_PD2 (2×2.2MΩ =
   1.1MΩ), split so a single open resistor can't leave the gate floating.
 - **Slow turn-on**: C_SS = 220nF gate-source with the 1.1MΩ pull-down →
@@ -157,18 +163,36 @@ the benign direction.
   Fully enhanced (V_GS = −4.5V) after ~110ms at 12.6V / ~280ms at 6.6V.
   The same RC soft-starts the inrush into the downstream
   BEC/receiver/servo capacitance.
-- **Active OFF**: Q2 (BSS84-class small P-FET) clamps Q3's gate to VBAT
-  when on. Q2's gate is pulled up to VBAT by R_CLAMP_PU (1MΩ) and pulled
-  low by Q1 (2N7002-class N-FET), driven from P0.13 via R_G1 (100Ω), with
-  R_OFF_PD (1MΩ) holding Q1 off whenever the GPIO floats (reset, unpowered
-  MCU). GPIO high → Q1 on → Q2 on → output OFF. Turn-off is fast (hard
-  clamp, also discharges C_SS); only turn-on is slowed.
-- **Leakage matters for fail-on**: with the MCU dead, Q1's off-state
-  leakage through R_CLAMP_PU must not pull Q2's gate low enough to turn it
-  on, and Q2's leakage through R_PD must not lift Q3's gate enough to turn
-  it off. At 1MΩ-class values that means low-nA leakage at operating
-  temperature — choose Q1/Q2 with specified low I_DSS, and don't raise
-  these resistors further to save current without re-checking this.
+- **Active OFF**: Q2 (P-FET) clamps Q3's gate to VBAT through R_LIM when
+  on. Q2's gate is pulled up to VBAT by R_CLAMP_PU (1MΩ) and pulled low by
+  Q1 (N-FET), driven from P0.13 via R_G1 (100Ω), with R_OFF_PD (1MΩ)
+  holding Q1 off whenever the GPIO floats (reset, unpowered MCU). GPIO
+  high → Q1 on → Q2 on → output OFF. Turn-off is fast (~20µs); only
+  turn-on is slowed.
+  - **Q1: AOS AO3400A** (SOT-23, LCSC C20917, JLCPCB basic part) —
+    logic-level (V_GS(th) 0.65-1.45V), fully on from a 3.3V GPIO. The CJ
+    2N7002 (C8545, V_GS(th) up to 2.5V) was the placeholder: works, but
+    thin margin at 3.3V drive.
+  - **Q2: Nexperia BSS84** (SOT-23, LCSC C493579) — V_GS(th) −0.8 to
+    −2.0V, I_DSS ≤ 100nA at −40V/25°C. A *high* threshold is deliberate:
+    the more gate voltage Q2 needs, the more Q1 leakage it takes to turn it
+    on by accident (so low-threshold parts like AO3401A are unsuitable
+    here).
+  - **R_LIM (100Ω, Q2 drain → Q3 gate)**: when Q2 switches on it shorts
+    C_SS (charged to VBAT); without R_LIM the discharge spike is ~1A+ for
+    ~µs, above BSS84's ~0.5A pulse rating (tiny energy, ~17µJ — a spec
+    violation rather than a likely failure). R_LIM caps it at ~0.1A;
+    turn-off goes from ~2µs to ~20µs, irrelevant for this load.
+- **Leakage margin for fail-on**: with the MCU dead, a chain of leakages
+  would have to (1) pull Q2's gate ~0.8-1V below VBAT — ≈1µA of Q1
+  leakage through R_CLAMP_PU — and then (2) push ≈3-9µA through Q2 into
+  Q3's gate against R_PD (1.1MΩ) to lift it within ~3V of VBAT. Small
+  SOT-23 FETs typically leak tens of nA at 7-13V and warm temperatures:
+  10-100× margin. Datasheet worst cases (often "1µA max" at full rated
+  V_DS) are looser, so **verify on the first boards**: MCU unpowered,
+  output ON — Q3 gate should read within a few mV of GND and Q2 gate
+  within a few mV of VBAT. Don't raise R_CLAMP_PU / R_PD further to save
+  current without re-checking this.
 - **Gate protection**: D_Z, 15V zener gate-source on Q3 (cathode to VBAT).
   At 12.6V max a ±20V-rated gate is within spec without it; it's cheap
   insurance against transients.
@@ -181,8 +205,7 @@ the battery input:
 - **Q4**: P-FET "ideal diode" in the positive line between J3 and the VBAT
   rail — drain to the battery (+) pin of J3, source to VBAT, gate to GND
   via R_REV (100kΩ), plus a 15V gate-source zener (D_Z2, cathode to
-  source) like Q3's. Same part class as Q3 (SO-8, −30V, ≤20mΩ at
-  V_GS = −4.5V; AO4407A candidate).
+  source) like Q3's. **Same part as Q3: AO4407A** (SO-8, LCSC C16072).
 - Correct polarity: Q4's body diode conducts first, lifting its source to
   ~VBAT, which pulls V_GS to −VBAT and turns it fully on. Reversed: the
   body diode is reverse-biased and V_GS ≈ 0, so Q4 stays off and nothing
@@ -321,9 +344,9 @@ Known simplifications in this draft, worth revisiting before layout:
   for whether onboard decoupling is sufficient.
 - The switching stage implements the fail-on design in
   [Switching stage](#switching-stage) (Q1 driver, Q2 gate clamp, Q3 load
-  switch, R_PD1/R_PD2, C_SS, D_Z). Q1/Q2/Q3 values (2N7002 / BSS84 /
-  AO4407A) are candidate part names on generic FET symbols — not yet
-  verified against datasheets (especially leakage for Q1/Q2).
+  switch, R_LIM, R_PD1/R_PD2, C_SS, D_Z). All four FETs are selected
+  (Q1 AO3400A, Q2 BSS84, Q3/Q4 AO4407A) on generic FET symbols —
+  footprints not yet assigned.
 - **The KiCad file is now the source of truth.** `gen_body.sh` /
   `build_sch.sh` generated the first wired draft, but the schematic has
   since been rearranged in the GUI and patched (J1 layout, reverse
@@ -373,6 +396,18 @@ for reference only in case the VSET-preset approach above doesn't pan out
 during bring-up and a fallback to classic external-divider mode is needed
 — the same R1/R2 math applies to the TPS629206 too (also VFB = 0.6V).
 
+## Assembly
+
+- **PCBs**: bare boards from JLCPCB, surface finish **HASL with lead**
+  (pre-tinned with leaded solder, matches the hand-assembly solder).
+- **Parts**: from LCSC (ships with the JLCPCB order), preferring JLCPCB
+  "basic" parts where that doesn't compromise the design — keeps JLCPCB
+  assembly possible for a later batch.
+- **Hand assembly**: hot-air station + Sn63/Pb37 leaded paste for SMD,
+  soldering iron (60/40) for the BT832's castellated edges and connectors.
+  **No 0402** — passives 0603, 0805 where voltage/capacitance needs it.
+  No-lead packages (DFN, SOT-5X3) are fine with hot air.
+
 ## Open items
 
 - Real hardware not yet built — wake interval, scan window length, and BLE
@@ -380,10 +415,9 @@ during bring-up and a fallback to classic external-divider mode is needed
   estimates, not measured.
 - **Component selection** (next step) — values are fixed, part numbers
   and footprints are not:
-  - Q3, Q4: SO-8 P-FET, −30V, R_DS(on) ≤ 20mΩ at V_GS = −4.5V (AO4407A
-    candidate, unverified)
-  - Q1, Q2: 2N7002 / BSS84 placeholders — pick for low specified I_DSS
-    (fail-on depends on it, see the leakage note under Switching stage)
+  - ~~Q3, Q4~~: **done — AO4407A** (LCSC C16072), see Switching stage
+  - ~~Q1, Q2~~: **done — AO3400A** (C20917) / **Nexperia BSS84**
+    (C493579), plus R_LIM 100Ω added; see Switching stage
   - L1: 2.2µH shielded, I_sat ≈ 1A or more
   - J2, J3: must carry 6-8A peaks (JST-XH at 3A is too small; XT30 or
     soldered leads)

@@ -3478,6 +3478,16 @@
 	)
 	(wire
 		(pts
+			(xy 81.28 154.94) (xy 82.55 154.94)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "03c9890f-916d-4b91-9fda-75980e250c88")
+	)
+	(wire
+		(pts
 			(xy 45.72 48.26) (xy 71.12 48.26)
 		)
 		(stroke
@@ -3505,16 +3515,6 @@
 			(type default)
 		)
 		(uuid "08ab7e5b-54b0-42f7-a1eb-30bc110c2a09")
-	)
-	(wire
-		(pts
-			(xy 81.28 154.94) (xy 91.44 154.94)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "0c30535d-66b3-41b2-95f3-b3830f378c83")
 	)
 	(wire
 		(pts
@@ -3605,6 +3605,16 @@
 			(type default)
 		)
 		(uuid "2d634b8a-9fff-4b28-8813-9e31c8fef459")
+	)
+	(wire
+		(pts
+			(xy 90.17 154.94) (xy 91.44 154.94)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3715e005-2700-4617-ab11-7f9cd34b69b2")
 	)
 	(wire
 		(pts
@@ -4216,16 +4226,6 @@
 		)
 		(uuid "f4ce07de-f84c-415b-9a4b-e62845742d69")
 	)
-	(label "Q3_GATE"
-		(at 83.82 154.94 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "1ba4377e-0c26-4100-83ab-5d6a6e4e9e6e")
-	)
 	(label "LOAD_OUT"
 		(at 152.4 167.64 0)
 		(effects
@@ -4285,6 +4285,16 @@
 			(justify right bottom)
 		)
 		(uuid "b3a7bd6c-330b-42c9-90a5-c60e25665083")
+	)
+	(label "Q3_GATE"
+		(at 93.98 154.94 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "c608c154-1b33-4ef3-a8ae-9b204e934480")
 	)
 	(symbol
 		(lib_id "Device:D_Zener")
@@ -5996,6 +6006,86 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:C")
+		(at 106.68 151.13 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "422ad13e-813b-4a89-b252-b0cc95ab71ff")
+		(property "Reference" "C_SS"
+			(at 104.14 148.59 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "220nF"
+			(at 104.14 151.13 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" ""
+			(at 106.68 151.13 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 106.68 151.13 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 106.68 151.13 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "262acf07-fa45-433c-97f0-1a4a9662238c")
+		)
+		(pin "2"
+			(uuid "e1bd870f-b775-429f-bf25-6dbd137a0eb8")
+		)
+		(instances
+			(project "heimdall-switch"
+				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
+					(reference "C_SS")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Transistor_FET:Q_PMOS_GSD")
 		(at 127 154.94 0)
 		(mirror x)
@@ -7013,86 +7103,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:C")
-		(at 106.68 151.13 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "9a7ab325-2392-43a4-b3fc-95801e9ac7ec")
-		(property "Reference" "C_SS"
-			(at 104.14 149.86 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "220nF"
-			(at 104.14 152.4 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" ""
-			(at 106.68 151.13 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 106.68 151.13 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 106.68 151.13 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "e713c8d2-9c32-41cc-9292-15e7e48b2869")
-		)
-		(pin "2"
-			(uuid "a3070c0c-fe2c-457a-bfe4-53f0802ee6d8")
-		)
-		(instances
-			(project "heimdall-switch"
-				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
-					(reference "C_SS")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Device:R")
 		(at 236.22 105.41 180)
 		(unit 1)
@@ -7705,6 +7715,89 @@
 			(project "heimdall-switch"
 				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
 					(reference "#PWR21")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Transistor_FET:Q_NMOS_GSD")
+		(at 63.5 154.94 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "a9b9c025-7263-418a-b416-2757cfff4add")
+		(property "Reference" "Q1"
+			(at 68.58 153.67 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "AO3400A"
+			(at 68.58 156.21 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 63.5 154.94 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 63.5 154.94 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 63.5 154.94 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "07bf5636-6d01-47d3-b8a5-68ebafb4bc74")
+		)
+		(pin "2"
+			(uuid "9358ceb0-185b-4ab2-8d82-c42aabd496b6")
+		)
+		(pin "3"
+			(uuid "80763fc6-bac6-4839-a918-cb33b2f6f525")
+		)
+		(instances
+			(project "heimdall-switch"
+				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
+					(reference "Q1")
 					(unit 1)
 				)
 			)
@@ -8647,6 +8740,84 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:R")
+		(at 86.36 154.94 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "df0f5ce2-eb91-405c-a604-29ce28dfda0e")
+		(property "Reference" "R_LIM"
+			(at 86.36 149.86 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "100R"
+			(at 86.36 152.4 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 86.36 154.94 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 86.36 154.94 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 86.36 154.94 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "72ac0328-a346-4667-bc76-e9c7cd526eb9")
+		)
+		(pin "2"
+			(uuid "b8dc2254-5b8a-4822-8507-8e974a361ae9")
+		)
+		(instances
+			(project "heimdall-switch"
+				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
+					(reference "R_LIM")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:GND")
 		(at 66.04 71.12 0)
 		(unit 1)
@@ -8947,89 +9118,6 @@
 			(project "heimdall-switch"
 				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
 					(reference "#PWR50")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Transistor_FET:Q_NMOS_GSD")
-		(at 63.5 154.94 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "fe1b0ba4-50a0-40bf-8a41-c6129d5f70d1")
-		(property "Reference" "Q1"
-			(at 68.58 153.67 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "2N7002"
-			(at 68.58 156.21 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" ""
-			(at 63.5 154.94 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 63.5 154.94 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 63.5 154.94 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "26d92a64-6c65-4393-8d08-f119ce5f580b")
-		)
-		(pin "2"
-			(uuid "2efecc2b-e95e-4255-82dc-3a6a5cf0c79b")
-		)
-		(pin "3"
-			(uuid "201d275c-74cf-4783-a332-b93a7207dd6e")
-		)
-		(instances
-			(project "heimdall-switch"
-				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
-					(reference "Q1")
 					(unit 1)
 				)
 			)
