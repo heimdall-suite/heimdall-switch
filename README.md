@@ -22,7 +22,7 @@ flowchart LR
 
     TX -- "S.Port" --> MOD
     MOD -- "BLE command (absolute ON/OFF)" --> SW
-    SW -- "relay + MOSFET" --> LOAD
+    SW -- "MOSFET (fail-on)" --> LOAD
     SW -- "BLE ack burst" --> MOD
     MOD -- "S.Port telemetry (ack)" --> TX
     BTN -. "5-15s: toggle, 15s+: pair" .-> SW
@@ -31,7 +31,7 @@ flowchart LR
 The transmitter side (Lua widget or a OneClick action) sends the command
 through `heimdall-module`, the external RF module in the transmitter's
 module bay; `heimdall-module` relays it over BLE to `heimdall-switch`,
-which drives the relay/MOSFET and acks back the same path so the widget can
+which drives the MOSFET and acks back the same path so the widget can
 show "Hello" / "Goodbye" / "No response". The node also has a local button
 for manual toggling and pairing, independent of that whole chain.
 
@@ -41,6 +41,8 @@ for manual toggling and pairing, independent of that whole chain.
   feedback, button/LED, open hardware items
 - [.docs/protocol.md](.docs/protocol.md) — BLE roles, pairing, runtime
   cycle, command/ack frame layouts, the transmitter-side Lua widget
+- [.docs/persistence.md](.docs/persistence.md) — what's kept in flash
+  across power loss (state + replay counter) and the wear-levelling scheme
 - [.agents/AGENTS.md](.agents/AGENTS.md) / [CLAUDE.md](CLAUDE.md) —
   instructions for AI coding agents working in this repo
 - [hardware/kicad/](hardware/kicad/) — first-draft KiCad schematic (see
