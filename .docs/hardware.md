@@ -103,7 +103,7 @@ untouched. Programming pins (VDD/GND/RESET/SWDCLK/SWDIO) are covered in
 | 9 | VDD | Power |
 | 10 | GND | Ground |
 | 11 | P0.13 | Output OFF-hold (high = output OFF, released = ON) |
-| 12 | P0.18 | Spare GPIO |
+| 12 | P0.18 | SWO (trace output to J1 pin 6) |
 | 13 | P0.20 | Button input (GPIOTE, must wake from System OFF) |
 | 14 | P0.21/RESET | SWD reset |
 | 15 | SWDCLK | SWD clock |
@@ -138,23 +138,35 @@ Notes:
   grouped on the same edge of the module — worth breaking out to a small
   pogo-pin test-jig footprint or header for repeated flashing during
   bring-up, rather than hand-wiring each time.
-- **SWD header J1** (5-pin, no universal standard for this count — order
-  chosen to follow the BT832's pin order so the signals route without
-  crossings):
+- **SWD header J1**: the standard **ARM Cortex Debug 10-pin** connector
+  (2×5, 1.27mm pitch), male pins on the board, the probe's ribbon cable
+  brings the female socket. J-Link, ST-Link, the Raspberry Pi Debug
+  Probe, CMSIS-DAP probes and Nordic DKs' debug-out all plug straight in.
+  **Samtec FTSH-105-01-L-DV-K** (SMD, ~6.4×3.4mm, LCSC C5155080), the
+  header ARM's spec references. It's unshrouded, so mark pin 1 clearly on
+  the silkscreen; the shrouded, keyed Samtec SHF-105-01-L-D-SM-K
+  (C5143029) is the alternative if board space allows (≈2× the area).
 
   | J1 pin | Signal | BT832 pin |
   |---|---|---|
-  | 1 | +3V3 (VTref) | 9 (VDD) |
-  | 2 | GND | 10 |
-  | 3 | nRESET (10k pull-up R_RST to +3V3) | 14 (P0.21/RESET) |
-  | 4 | SWDCLK | 15 |
-  | 5 | SWDIO | 16 |
+  | 1 | VTref (+3V3) | 9 (VDD) |
+  | 2 | SWDIO | 16 |
+  | 3, 5, 9 | GND (9 = GNDDetect) | 10 |
+  | 4 | SWCLK | 15 |
+  | 6 | SWO | 12 (P0.18) |
+  | 7 | KEY (no pin function) | — |
+  | 8 | NC/TDI (not connected) | — |
+  | 10 | nRESET (10k pull-up R_RST to +3V3) | 14 (P0.21/RESET) |
+
+  SWO is the nRF52832's trace output, fixed to P0.18 in silicon: wiring
+  it gives printf-style logging over the debug probe (e.g. SEGGER SWO
+  viewer) without a UART. P0.18 was spare, so it costs nothing.
 
   Pin 1 is a **voltage reference for the probe, not a power input** — power
   the board from its battery while flashing. A probe set to *supply*
   3.3V with no battery connected back-feeds through the buck onto VBAT,
   and with fail-on Q3 then puts ~3V on the load output.
-- 5 spare GPIOs remain (2, 6, 7, 8, 12) if anything else comes up.
+- 4 spare GPIOs remain (2, 6, 7, 8) if anything else comes up.
 - P0.13 must be driven to its saved state as early as possible in boot —
   see [Switching stage](#switching-stage).
 
@@ -360,9 +372,10 @@ Drawn with real wires within each block (regulator, MCU + crystal/SWD,
 status LED + button + J4 breakout, switching stage + load output), KiCad power symbols (`GND`,
 `+3V3`, `VBAT` — the latter is the stock `+BATT` symbol renamed) with
 PWR_FLAGs, and no-connect markers on the intentionally-open pins
-(VSET/PG, spare GPIOs). Only four signals cross between blocks as net
-labels: `OUT_OFF` (P0.13 → switching stage), `ADC_FB` (divider →
-P0.02), `LED_DRV` (P0.26 → Q5 gate) and `BTN` (P0.20 → R_BTN/SW1/J4).
+(VSET/PG, spare GPIOs). Signals cross between blocks as net labels:
+`OUT_OFF` (P0.13 → switching stage), `ADC_FB` (divider → P0.02),
+`LED_DRV` (P0.26 → Q5 gate), `BTN` (P0.20 → R_BTN/SW1/J4), and the debug
+signals `nRESET`, `SWDCLK`, `SWDIO`, `SWO` (U1 → J1).
 Within the LED/button block, the `LED_A` label carries the LED anode to
 J4.
 J3 is the battery input connector.
@@ -377,8 +390,9 @@ connect (this happened once, to SWDCLK/SWDIO).
 
 Sheet layout: the reverse polarity block (J3 → Q4 → VBAT, with D_Z2 and
 R_REV) sits on its own below the regulator and connects to it through the
-`VBAT` power symbol; J3's pin 1 net is labelled `BATT+`. SWDCLK/SWDIO are
-routed nested below the nRESET path so no wires cross.
+`VBAT` power symbol; J3's pin 1 net is labelled `BATT+`. The debug
+header J1 (with R_RST) sits in its own block right of the crystal,
+linked to U1 by labels, so no wires cross.
 
 Reading the schematic:
 - **Power symbols** (`VBAT` arrow, `+3V3` arrow, `GND`) connect by name
@@ -552,7 +566,7 @@ batch is JLCPCB-assembled). Resistors are UNI-ROYAL 0603WAF thick film,
 | R_FB_TOP, R_REV | 100kΩ | 0603WAF1003T5E | 0603 | C25803 | ✓ |
 | R_CLAMP_PU, R_OFF_PD, R_LED_PD, R_Q6_PU | 1MΩ | 0603WAF1004T5E | 0603 | C22935 | ✓ |
 | R_PD1, R_PD2 | 2.2MΩ | 0603WAF2204T5E | 0603 | C22938 | |
-| J1 | SWD | 5 test pads / 1.27mm header | — | — | |
+| J1 | ARM 10-pin debug | Samtec FTSH-105-01-L-DV-K | 2×5 1.27mm SMD | C5155080 | |
 | J2, J3 | wire pads | see Assembly | — | — | |
 
 Notes:
@@ -575,8 +589,6 @@ Notes:
   estimates, not measured.
 - **Component selection: done** (see [BOM](#bom)). Footprint assignment
   is next, then annotation and layout.
-- **J1 footprint**: bare test pads for a pogo jig, or a 1.27mm header.
-  Undecided.
 - **Y1/C1/C2**: keep, leave unfitted, or remove (see LFCLK note above).
   The BOM assumes fitted.
 - Power budget is estimated, not measured.
