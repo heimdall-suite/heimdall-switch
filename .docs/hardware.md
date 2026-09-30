@@ -45,18 +45,35 @@
 - **Local button**: debounced, GPIOTE interrupt-wake (must wake the nRF52
   from deep sleep independent of the normal BLE scan cycle). Held ≥5s but
   <15s → toggle power state locally. Held ≥15s → enter pairing mode.
-- **Status LED**: 1 GPIO, visual state indicator. 5mm through-hole,
-  high-intensity red (see [BOM](#bom)), so it's readable outdoors / through
-  a hole in the fuselage or hull. Driven GPIO → R_LED (330Ω) → LED → GND:
-  ~4mA, so firmware must set P0.26 to **high drive** (`S0H1`). Standard
-  drive only sources ~2mA at that voltage drop, which still works, just
-  dimmer.
+- **Status LED**: 1 GPIO, visual state indicator. Must be clearly visible
+  **outdoors in sunlight**, typically through a 3mm hole drilled in the
+  hull/fuselage (as with the Jeti SPS-20's daughter-board LED). So: 3mm
+  through-hole, water-clear lens, narrow beam, high intensity — **Everlight
+  204-10SUGC/S400-A4**, emerald green 525nm, 3.2cd at 20mA, 20° (see
+  [BOM](#bom)).
+  - **Driven from VBAT, not 3.3V**: high-intensity green/blue/white LEDs
+    (InGaN) need ~3.0-3.4V forward, which leaves nothing across a
+    resistor on the 3.3V rail. Circuit: VBAT → R_LED (680Ω 1206) → LED →
+    Q5 (AO3400A, low-side) → GND, Q5's gate on P0.26 (`LED_DRV`) with
+    R_LED_PD (1MΩ) holding it off while the MCU is in reset or dead.
+    Plain GPIO drive; no high-drive mode needed.
+  - **Current follows pack voltage** (V_F ≈ 3.1V at these currents):
+    ~4.3mA at 6.0V (2S LiFePO4 near empty), ~5.1mA at 6.6V (2S LiFePO4
+    nominal), ~7.8mA at 8.4V (2S LiPo full), ~14mA at 12.6V (3S full) —
+    roughly 0.7-2.2cd, still far above a normal indicator. R_LED
+    dissipates ≤0.13W. If an even brightness matters, firmware can PWM
+    the LED against the pack voltage it reads through ADC_FB while the
+    output is ON.
+  - **Short protection**: R_LED sits on the main board ahead of J4, so a
+    daughter-board wire shorted to GND draws at most 12.6V / 680Ω =
+    18.5mA (0.23W, within the 1206's 0.25W).
 - **Breakout for a daughter board (J4)**: LED and button can sit on the
   main board (LED1/SW1 fitted) or on a small daughter board, positioned
-  wherever the vehicle needs them. J4 is three pads (1 LED_A, 2 BTN,
-  3 GND) wired in parallel with LED1/SW1; for off-board use leave LED1/SW1
-  unfitted and run three wires from J4. R_LED stays on the main board, so
-  the daughter board only needs the LED and the switch. **R_BTN (1kΩ)** in
+  wherever the vehicle needs them. J4 is four pads (1 LED_A, 2 LED_K,
+  3 BTN, 4 GND) wired in parallel with LED1/SW1; for off-board use leave
+  LED1/SW1 unfitted and run four wires from J4. R_LED and Q5 stay on the
+  main board, so the daughter board only needs the LED and the switch.
+  **R_BTN (1kΩ)** in
   series with P0.20 protects the pin from ESD on the off-board wire (the
   button is the part people touch); with the internal pull-up (~13kΩ) the
   pressed level is ~0.23V, a clean logic low.
@@ -69,7 +86,7 @@ untouched. Programming pins (VDD/GND/RESET/SWDCLK/SWDIO) are covered in
 
 | Pin | Net | Function |
 |---|---|---|
-| 1 | P0.26 | Status LED |
+| 1 | P0.26 | Status LED drive (`LED_DRV`, Q5 gate; high = LED on) |
 | 2 | P0.27 | Spare GPIO |
 | 3 | P0.00/XL1 | 32.768kHz crystal (LFCLK) |
 | 4 | P0.01/XL2 | 32.768kHz crystal (LFCLK) |
@@ -339,7 +356,9 @@ status LED + button + J4 breakout, switching stage + load output), KiCad power s
 PWR_FLAGs, and no-connect markers on the intentionally-open pins
 (VSET/PG, spare GPIOs). Only four signals cross between blocks as net
 labels: `OUT_OFF` (P0.13 → switching stage), `ADC_FB` (divider →
-P0.02), `LED_A` (R_LED → LED1/J4) and `BTN` (P0.20 → R_BTN/SW1/J4).
+P0.02), `LED_DRV` (P0.26 → Q5 gate) and `BTN` (P0.20 → R_BTN/SW1/J4).
+Within the LED/button block, `LED_A`/`LED_K` labels carry the LED's two
+legs to J4.
 J3 is the battery input connector.
 
 Verified with `kicad-cli sch erc`, netlist export (every pin checked
@@ -478,15 +497,15 @@ batch is JLCPCB-assembled). Resistors are UNI-ROYAL 0603WAF thick film,
 | U1 | BT832 | Fanstel BT832 (nRF52832) | module | — (Fanstel/distributors) | |
 | U2 | 3.3V buck | TI TPS629206DRLR | SOT-583 | C5219292 | |
 | L1 | 2.2µH | Murata DFE252012PD-2R2M=P2 | 1008 | C237482 | |
-| Q1 | N-FET | AOS AO3400A | SOT-23 | C20917 | ✓ |
+| Q1, Q5 | N-FET | AOS AO3400A | SOT-23 | C20917 | ✓ |
 | Q2 | P-FET | Nexperia BSS84 | SOT-23 | C493579 | |
 | Q3, Q4 | P-FET | AOS AO4407A | SO-8 | C16072 | |
 | D_Z, D_Z2 | 18V zener | onsemi MMSZ5248B | SOD-123 | C2127 | |
 | Y1 | 32.768kHz | Epson FC-135, CL 12.5pF | 3215 | C32346 | ✓ |
 | SW1 | tactile | C&K KSC221J LFS, IP67 | 6.2×6.2 SMD | C221726 | |
-| LED1 | red, 7.8cd, 35° | TONYU DY-324SVRC-H23-P-A4(FH) | 5mm THT, water clear | C7470729 | |
+| LED1 | green 525nm, 3.2cd, 20° | Everlight 204-10SUGC/S400-A4 | 3mm THT, water clear | C414645 | |
 | R_BTN | 1kΩ | 0603WAF1001T5E | 0603 | C21190 | ✓ |
-| J4 | UI breakout | 3 pads, 2.54mm pitch | — | — | |
+| J4 | UI breakout | 4 pads, 2.54mm pitch | — | — | |
 | C_IN | 10µF 50V X5R | Samsung CL31A106KBHNNNE | 1206 | C13585 | ✓ |
 | C_OUT | 22µF 25V X5R | Samsung CL21A226MAQNNNE | 0805 | C45783 | ✓ |
 | C_SS | 220nF 50V X7R | Samsung CL21B224KBFNNNE | 0805 | C5378 | ✓ |
@@ -494,12 +513,12 @@ batch is JLCPCB-assembled). Resistors are UNI-ROYAL 0603WAF thick film,
 | C_VDD2, C_FB | 100nF 50V X7R | Yageo CC0603KRX7R9BB104 | 0603 | C14663 | ✓ |
 | C1, C2 | 18pF 50V C0G | Samsung CL10C180JB8NNNC | 0603 | C1647 | ✓ |
 | R_G1, R_LIM | 100Ω | 0603WAF1000T5E | 0603 | C22775 | ✓ |
-| R_LED | 330Ω | 0603WAF3300T5E | 0603 | C23138 | ✓ |
+| R_LED | 680Ω 1/4W | 1206W4F6800T5E | 1206 | C17975 | |
 | R_RST | 10kΩ | 0603WAF1002T5E | 0603 | C25804 | ✓ |
 | R_MODE | 27.4kΩ | 0603WAF2742T5E | 0603 | C22964 | |
 | R_FB_BOT | 33kΩ | 0603WAF3302T5E | 0603 | C4216 | ✓ |
 | R_FB_TOP, R_REV | 100kΩ | 0603WAF1003T5E | 0603 | C25803 | ✓ |
-| R_CLAMP_PU, R_OFF_PD | 1MΩ | 0603WAF1004T5E | 0603 | C22935 | ✓ |
+| R_CLAMP_PU, R_OFF_PD, R_LED_PD | 1MΩ | 0603WAF1004T5E | 0603 | C22935 | ✓ |
 | R_PD1, R_PD2 | 2.2MΩ | 0603WAF2204T5E | 0603 | C22938 | |
 | J1 | SWD | 5 test pads / 1.27mm header | — | — | |
 | J2, J3 | wire pads | see Assembly | — | — | |
@@ -507,14 +526,13 @@ batch is JLCPCB-assembled). Resistors are UNI-ROYAL 0603WAF thick film,
 Notes:
 - **R_MODE must be exactly 27.4kΩ (E96)**: it selects the TPS629206's
   mode by resistor window, so a 27kΩ E24 substitute is not safe.
-- **LED1 red, 5mm high-intensity**: 7.8cd at 20mA, ~1.5cd at the ~4mA it
-  gets here, versus ~60mcd for a typical 0603 SMD LED. 35° beam: narrow
-  enough to be bright, wide enough to see off-axis (10° parts were
-  rejected for that reason). Red because its ~2V forward voltage leaves a
-  usable 1.3V across R_LED from 3.3V; green/blue (~3V) would be dim and
-  vary part to part. Cree C503B and Kingbright WP7113 equivalents were out
-  of stock at LCSC. It only blinks on events, so the current doesn't show
-  in the power budget.
+- **LED1: 3mm green, high intensity, narrow beam** for sunlight
+  visibility through a 3mm hole in the hull (see Status LED above for the
+  VBAT drive and currents). Chosen over Hubei KENTO 3AG2HD (C2843819,
+  2-3cd, 23°) for the higher intensity and Everlight datasheet quality;
+  the -A5 variant (C2927624) is the same die with a 30° beam if 20° turns
+  out too narrow to see off-axis. It only blinks on events, so its current
+  doesn't show in the power budget.
 - **SW1**: IP67 sealed tactile switch (gull-wing J-lead, easy to solder by
   hand). The plain KSC221J (C19458559) is the same switch but out of stock.
 

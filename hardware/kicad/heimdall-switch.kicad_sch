@@ -163,7 +163,7 @@
 			)
 			(embedded_fonts no)
 		)
-		(symbol "Connector_Generic:Conn_01x03"
+		(symbol "Connector_Generic:Conn_01x04"
 			(pin_names
 				(offset 1.016)
 				(hide yes)
@@ -183,8 +183,8 @@
 					)
 				)
 			)
-			(property "Value" "Conn_01x03"
-				(at 0 -5.08 0)
+			(property "Value" "Conn_01x04"
+				(at 0 -7.62 0)
 				(show_name no)
 				(do_not_autoplace no)
 				(effects
@@ -215,7 +215,7 @@
 					)
 				)
 			)
-			(property "Description" "Generic connector, single row, 01x03, script generated (kicad-library-utils/schlib/autogen/connector/)"
+			(property "Description" "Generic connector, single row, 01x04, script generated (kicad-library-utils/schlib/autogen/connector/)"
 				(at 0 0 0)
 				(show_name no)
 				(do_not_autoplace no)
@@ -248,10 +248,10 @@
 					)
 				)
 			)
-			(symbol "Conn_01x03_1_1"
+			(symbol "Conn_01x04_1_1"
 				(rectangle
 					(start -1.27 3.81)
-					(end 1.27 -3.81)
+					(end 1.27 -6.35)
 					(stroke
 						(width 0.254)
 						(type default)
@@ -285,6 +285,17 @@
 				(rectangle
 					(start -1.27 -2.413)
 					(end 0 -2.667)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(rectangle
+					(start -1.27 -4.953)
+					(end 0 -5.207)
 					(stroke
 						(width 0.1524)
 						(type default)
@@ -340,6 +351,24 @@
 						)
 					)
 					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at -5.08 -5.08 0)
+					(length 3.81)
+					(name "Pin_4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -3485,14 +3514,14 @@
 	)
 	(text "Status LED + button: fit LED1/SW1 here, or leave them\nunfitted and wire J4 to a daughter board"
 		(exclude_from_sim no)
-		(at 200.66 132.08 0)
+		(at 226.06 132.08 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "bd754f50-52e5-4a55-8a9d-e123bededa19")
+		(uuid "f6e53f5b-1f44-493d-b1ec-799413528ad4")
 	)
 	(junction
 		(at 114.3 154.94)
@@ -3525,6 +3554,12 @@
 		(uuid "44da4081-76a4-492c-97be-a63e904b35c3")
 	)
 	(junction
+		(at 200.66 154.94)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "4694fed4-0560-4924-90d8-1d51f1688242")
+	)
+	(junction
 		(at 142.24 167.64)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -3541,12 +3576,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "4a433f88-f129-4c9c-b55a-60dfbe71370c")
-	)
-	(junction
-		(at 213.36 157.48)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "7b506f2d-3e23-4079-b8d3-f1786debac44")
 	)
 	(junction
 		(at 142.24 175.26)
@@ -3585,10 +3614,22 @@
 		(uuid "96cfbae1-6437-4557-9e8d-b7a7fa59fff6")
 	)
 	(junction
+		(at 210.82 142.24)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "97ceaa13-b849-48d8-9cc7-76c696c8ce79")
+	)
+	(junction
 		(at 81.28 127)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "97d83408-b507-46b5-b7f5-7d007d80d0aa")
+	)
+	(junction
+		(at 213.36 172.72)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "acb72765-447d-4fce-8601-7891f5603c79")
 	)
 	(junction
 		(at 106.68 154.94)
@@ -3601,6 +3642,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "b63743a5-9572-4389-a20c-e57a52ef6af7")
+	)
+	(junction
+		(at 210.82 149.86)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "b7410c68-94bc-42f8-af6e-711ca40a44b2")
 	)
 	(junction
 		(at 106.68 127)
@@ -3668,16 +3715,6 @@
 	)
 	(wire
 		(pts
-			(xy 207.01 71.12) (xy 210.82 71.12)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "01b13b35-a66d-4a4d-a2a4-763ffd5d9ea1")
-	)
-	(wire
-		(pts
 			(xy 195.58 91.44) (xy 200.66 91.44)
 		)
 		(stroke
@@ -3685,6 +3722,16 @@
 			(type default)
 		)
 		(uuid "034fc9a8-13b9-4034-a5a3-4c710308c2ad")
+	)
+	(wire
+		(pts
+			(xy 210.82 142.24) (xy 218.44 142.24)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0363dbda-c1bd-4871-a599-3ab4df05645e")
 	)
 	(wire
 		(pts
@@ -3768,16 +3815,6 @@
 	)
 	(wire
 		(pts
-			(xy 195.58 157.48) (xy 203.2 157.48)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "20662638-82f4-4392-b6b3-762e10e44192")
-	)
-	(wire
-		(pts
 			(xy 45.72 88.9) (xy 53.34 88.9)
 		)
 		(stroke
@@ -3795,6 +3832,16 @@
 			(type default)
 		)
 		(uuid "2511e825-423f-48e5-a06a-75ddb3b96bf1")
+	)
+	(wire
+		(pts
+			(xy 213.36 180.34) (xy 241.3 180.34)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "257a4fd9-e0e6-4638-b6da-fb45012b33c6")
 	)
 	(wire
 		(pts
@@ -3835,6 +3882,16 @@
 			(type default)
 		)
 		(uuid "3715e005-2700-4617-ab11-7f9cd34b69b2")
+	)
+	(wire
+		(pts
+			(xy 233.68 175.26) (xy 241.3 175.26)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "37edb2e5-02f3-441b-9ee9-fda3bbdf5dfb")
 	)
 	(wire
 		(pts
@@ -3888,6 +3945,16 @@
 	)
 	(wire
 		(pts
+			(xy 233.68 177.8) (xy 241.3 177.8)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "41795b23-988c-44ec-ba27-d830ca8b8b5b")
+	)
+	(wire
+		(pts
 			(xy 54.61 154.94) (xy 58.42 154.94)
 		)
 		(stroke
@@ -3925,16 +3992,6 @@
 			(type default)
 		)
 		(uuid "520c240e-6abe-48ad-88e9-ee3970aa96b3")
-	)
-	(wire
-		(pts
-			(xy 236.22 167.64) (xy 233.68 167.64)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "5441ba9e-7227-4005-970b-87f571cda838")
 	)
 	(wire
 		(pts
@@ -3985,16 +4042,6 @@
 			(type default)
 		)
 		(uuid "651611de-1652-4b7d-93c6-d3c60d9c3328")
-	)
-	(wire
-		(pts
-			(xy 233.68 167.64) (xy 233.68 170.18)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "65ad90dd-4ec1-4d42-ac1d-71eeb61eb564")
 	)
 	(wire
 		(pts
@@ -4078,6 +4125,26 @@
 	)
 	(wire
 		(pts
+			(xy 210.82 149.86) (xy 218.44 149.86)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7195185c-747d-427a-820a-6e1593229856")
+	)
+	(wire
+		(pts
+			(xy 241.3 182.88) (xy 238.76 182.88)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "727e1066-f1bf-4740-acd6-718097ecc9cc")
+	)
+	(wire
+		(pts
 			(xy 25.4 88.9) (xy 35.56 88.9)
 		)
 		(stroke
@@ -4108,23 +4175,13 @@
 	)
 	(wire
 		(pts
-			(xy 195.58 144.78) (xy 210.82 144.78)
+			(xy 190.5 154.94) (xy 200.66 154.94)
 		)
 		(stroke
 			(width 0)
 			(type default)
 		)
-		(uuid "7a82786f-610c-42ea-a573-74674c18811e")
-	)
-	(wire
-		(pts
-			(xy 213.36 165.1) (xy 236.22 165.1)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "7c237ac2-65e6-4c80-8684-93a38a795c88")
+		(uuid "7af446d0-dcec-49a3-84b2-a50a2faa2263")
 	)
 	(wire
 		(pts
@@ -4178,6 +4235,16 @@
 	)
 	(wire
 		(pts
+			(xy 210.82 172.72) (xy 213.36 172.72)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "87fb9d12-d6bd-4d5f-b7cb-ba2e3f3fa3fd")
+	)
+	(wire
+		(pts
 			(xy 71.12 53.34) (xy 76.2 53.34)
 		)
 		(stroke
@@ -4218,6 +4285,16 @@
 	)
 	(wire
 		(pts
+			(xy 195.58 172.72) (xy 203.2 172.72)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9d8b9c24-cc6e-4bb9-ac21-6be7a471fffe")
+	)
+	(wire
+		(pts
 			(xy 246.38 116.84) (xy 266.7 116.84)
 		)
 		(stroke
@@ -4248,16 +4325,6 @@
 	)
 	(wire
 		(pts
-			(xy 210.82 157.48) (xy 213.36 157.48)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a223fbae-5d03-47c0-b226-d204af7ed29d")
-	)
-	(wire
-		(pts
 			(xy 129.54 167.64) (xy 142.24 167.64)
 		)
 		(stroke
@@ -4275,16 +4342,6 @@
 			(type default)
 		)
 		(uuid "a43ba3e7-4e12-40ad-94dd-9c5e603122e4")
-	)
-	(wire
-		(pts
-			(xy 213.36 157.48) (xy 213.36 165.1)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a6d8a326-f857-46ab-aae8-1f89f541926f")
 	)
 	(wire
 		(pts
@@ -4318,6 +4375,16 @@
 	)
 	(wire
 		(pts
+			(xy 200.66 154.94) (xy 203.2 154.94)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b4759b13-1bf0-49c7-9e2a-ae79e6d561fd")
+	)
+	(wire
+		(pts
 			(xy 99.06 154.94) (xy 106.68 154.94)
 		)
 		(stroke
@@ -4335,6 +4402,16 @@
 			(type default)
 		)
 		(uuid "ba0a3a90-9ac8-42fa-994d-1bb43506e145")
+	)
+	(wire
+		(pts
+			(xy 213.36 172.72) (xy 213.36 180.34)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ba5bb2ce-54a3-4c08-99b1-3c2408045827")
 	)
 	(wire
 		(pts
@@ -4398,16 +4475,6 @@
 	)
 	(wire
 		(pts
-			(xy 228.6 162.56) (xy 236.22 162.56)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "cfa3d6e5-9ae6-46ab-878a-acd2aea856b9")
-	)
-	(wire
-		(pts
 			(xy 124.46 55.88) (xy 132.08 55.88)
 		)
 		(stroke
@@ -4445,16 +4512,6 @@
 			(type default)
 		)
 		(uuid "d2c63993-e3a2-4b58-9f60-2ed7cf7476cb")
-	)
-	(wire
-		(pts
-			(xy 218.44 144.78) (xy 223.52 144.78)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "d5839198-8dc8-4a7c-ba12-3da15d243bc9")
 	)
 	(wire
 		(pts
@@ -4498,6 +4555,16 @@
 	)
 	(wire
 		(pts
+			(xy 238.76 182.88) (xy 238.76 185.42)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ee70c588-713c-4558-9a00-878e997b2813")
+	)
+	(wire
+		(pts
 			(xy 114.3 55.88) (xy 124.46 55.88)
 		)
 		(stroke
@@ -4536,6 +4603,16 @@
 		)
 		(uuid "f4ce07de-f84c-415b-9a4b-e62845742d69")
 	)
+	(label "LED_K"
+		(at 233.68 177.8 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "1c154a44-3935-49ec-8cdd-c791bcc571f1")
+	)
 	(label "LOAD_OUT"
 		(at 152.4 167.64 0)
 		(effects
@@ -4545,26 +4622,6 @@
 			(justify left bottom)
 		)
 		(uuid "27ead3dd-de75-4b68-abff-ee4ca837f380")
-	)
-	(label "LED_A"
-		(at 228.6 162.56 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "2fbd31ef-6788-4691-8816-da52693ceaea")
-	)
-	(label "LED_A"
-		(at 210.82 71.12 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "3b63c0bc-4bf9-45f6-a976-0d838ffd402f")
 	)
 	(label "ADC_FB"
 		(at 154.94 175.26 0)
@@ -4596,6 +4653,16 @@
 		)
 		(uuid "83dfa68c-5c64-472a-af37-63f7ac485a6f")
 	)
+	(label "LED_A"
+		(at 233.68 175.26 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "8af61d72-1559-42ab-b872-c4035ce0e500")
+	)
 	(label "ADC_FB"
 		(at 200.66 81.28 0)
 		(effects
@@ -4606,15 +4673,25 @@
 		)
 		(uuid "8e0d43dd-c254-474f-ae20-6831dc8929d8")
 	)
-	(label "BTN"
-		(at 195.58 157.48 0)
+	(label "LED_K"
+		(at 218.44 149.86 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "a011b817-ff11-4149-be3d-4e85892e88d4")
+		(uuid "9a23b02e-120c-41cc-8a3b-8d8d4472aea1")
+	)
+	(label "LED_DRV"
+		(at 190.5 154.94 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "a44f8cdc-946b-453d-8d5d-c8b513da9ff7")
 	)
 	(label "OUT_OFF"
 		(at 38.1 154.94 180)
@@ -4646,15 +4723,35 @@
 		)
 		(uuid "d59be9a6-3e6a-4d96-8f56-db771d221e56")
 	)
-	(label "LED_A"
-		(at 195.58 144.78 0)
+	(label "BTN"
+		(at 195.58 172.72 0)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
 			(justify left bottom)
 		)
-		(uuid "e59228d0-a779-4c44-95bd-19e713d8e545")
+		(uuid "d9ca6bb1-8537-43a7-8b38-2dbe508c56da")
+	)
+	(label "LED_A"
+		(at 218.44 142.24 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "e3619e52-d9cd-4581-8ad4-44dc235f4426")
+	)
+	(label "LED_DRV"
+		(at 199.39 71.12 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "fca291d9-3542-42c4-9e6e-6e18476e526c")
 	)
 	(symbol
 		(lib_id "Device:D_Zener")
@@ -5157,6 +5254,173 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:R")
+		(at 200.66 158.75 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "0b1dc408-f288-41a7-a763-74316686692b")
+		(property "Reference" "R_LED_PD"
+			(at 198.12 157.48 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "1M"
+			(at 198.12 160.02 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" ""
+			(at 200.66 158.75 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 200.66 158.75 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 200.66 158.75 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C22935"
+			(at 200.66 158.75 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "4dd91af2-3f6a-4f62-8c3c-12ae3f8f6664")
+		)
+		(pin "2"
+			(uuid "a0495d2c-964f-48ef-af57-8da912e49beb")
+		)
+		(instances
+			(project "heimdall-switch"
+				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
+					(reference "R_LED_PD")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 238.76 185.42 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "0b904821-0069-4adc-bd1f-52209788493f")
+		(property "Reference" "#PWR95"
+			(at 238.76 185.42 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 238.76 189.92 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 238.76 185.42 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 238.76 185.42 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 238.76 185.42 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "a741cfe0-0132-4b4c-959b-f6c93568fedf")
+		)
+		(instances
+			(project "heimdall-switch"
+				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
+					(reference "#PWR95")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:GND")
 		(at 73.66 58.42 0)
 		(unit 1)
@@ -5228,95 +5492,6 @@
 			(project "heimdall-switch"
 				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
 					(reference "#PWR49")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R")
-		(at 203.2 71.12 90)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "13984693-e01d-4594-9b47-a87a9bce54ea")
-		(property "Reference" "R_LED"
-			(at 203.2 66.04 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "330R"
-			(at 203.2 68.58 90)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 203.2 71.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 203.2 71.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 203.2 71.12 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC" "C23138"
-			(at 203.2 71.12 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "3ed91523-9d2f-4caa-a9b8-43d835975f46")
-		)
-		(pin "2"
-			(uuid "b63a9a21-39ac-4f89-af0d-fefa119cdd5f")
-		)
-		(instances
-			(project "heimdall-switch"
-				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
-					(reference "R_LED")
 					(unit 1)
 				)
 			)
@@ -5730,6 +5905,97 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:LED")
+		(at 210.82 146.05 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "279a1c8c-9e21-4ecd-8c6b-908585976280")
+		(property "Reference" "LED1"
+			(at 207.01 144.78 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "Green 3mm"
+			(at 207.01 147.32 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 210.82 146.05 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 210.82 146.05 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 210.82 146.05 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C414645"
+			(at 210.82 146.05 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "33b8593f-9a8e-42de-aaa2-3b0ba9441fc4")
+		)
+		(pin "2"
+			(uuid "e9739161-9246-4d2c-98c3-553f63d295e8")
+		)
+		(instances
+			(project "heimdall-switch"
+				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
+					(reference "LED1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:D_Zener")
 		(at 114.3 151.13 270)
 		(unit 1)
@@ -5983,6 +6249,82 @@
 			(project "heimdall-switch"
 				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
 					(reference "R_G1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
+		(at 210.82 160.02 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "316d5154-93fa-4e33-9d04-7fb3168934b4")
+		(property "Reference" "#PWR92"
+			(at 210.82 160.02 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 210.82 164.52 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 210.82 160.02 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 210.82 160.02 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 210.82 160.02 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "1f8b1a55-6d8f-45b3-9896-b0b6fc9a79cf")
+		)
+		(instances
+			(project "heimdall-switch"
+				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
+					(reference "#PWR92")
 					(unit 1)
 				)
 			)
@@ -7310,6 +7652,95 @@
 		)
 	)
 	(symbol
+		(lib_id "Device:R")
+		(at 207.01 172.72 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "6ae2a512-3afd-4107-94df-85346d892653")
+		(property "Reference" "R_BTN"
+			(at 207.01 170.18 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "1k"
+			(at 207.01 175.26 90)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 207.01 172.72 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 207.01 172.72 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 207.01 172.72 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C21190"
+			(at 207.01 172.72 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "363728a5-f5da-4dcc-b5ab-b0d6c8209d22")
+		)
+		(pin "2"
+			(uuid "6ed66e1d-9bb8-47a0-8fcd-afa4adf8fdd0")
+		)
+		(instances
+			(project "heimdall-switch"
+				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
+					(reference "R_BTN")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Transistor_FET:Q_PMOS_GSD")
 		(at 78.74 144.78 0)
 		(mirror x)
@@ -7405,8 +7836,8 @@
 		)
 	)
 	(symbol
-		(lib_id "Switch:SW_Push")
-		(at 218.44 157.48 0)
+		(lib_id "power:GND")
+		(at 200.66 162.56 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -7414,9 +7845,10 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
-		(uuid "764417ac-a807-4de9-957d-2ffe98234e7a")
-		(property "Reference" "SW1"
-			(at 218.44 160.02 0)
+		(uuid "74fdea00-a014-441e-b57a-7400abdc5288")
+		(property "Reference" "#PWR93"
+			(at 200.66 162.56 0)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -7425,8 +7857,8 @@
 				)
 			)
 		)
-		(property "Value" "KSC221J"
-			(at 218.44 162.56 0)
+		(property "Value" "GND"
+			(at 200.66 167.06 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -7436,7 +7868,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 218.44 157.48 0)
+			(at 200.66 162.56 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7447,7 +7879,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 218.44 157.48 0)
+			(at 200.66 162.56 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7458,18 +7890,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 218.44 157.48 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC" "C221726"
-			(at 218.44 157.48 0)
-			(hide yes)
+			(at 200.66 162.56 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -7479,98 +7900,12 @@
 			)
 		)
 		(pin "1"
-			(uuid "7088f6d3-f237-485c-84e3-248c62b3e975")
-		)
-		(pin "2"
-			(uuid "79739bb2-6b96-4eaf-aa5b-a8db73ed316c")
+			(uuid "2f497efb-0ee1-4729-a365-9662f3578c36")
 		)
 		(instances
 			(project "heimdall-switch"
 				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
-					(reference "SW1")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector_Generic:Conn_01x03")
-		(at 241.3 165.1 0)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "7a8145de-af00-45cd-b455-f4c6899eff83")
-		(property "Reference" "J4"
-			(at 243.84 163.83 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "UI_BREAKOUT"
-			(at 243.84 166.37 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" ""
-			(at 241.3 165.1 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 241.3 165.1 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 241.3 165.1 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "2aaf9c19-a19e-4e4f-b784-6e3a5fa27b61")
-		)
-		(pin "2"
-			(uuid "58d5e33b-3549-4b36-89cf-5a1fa2dab10d")
-		)
-		(pin "3"
-			(uuid "8cdb49da-a1ab-4425-aea7-17ebf690b9a1")
-		)
-		(instances
-			(project "heimdall-switch"
-				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
-					(reference "J4")
+					(reference "#PWR93")
 					(unit 1)
 				)
 			)
@@ -8152,6 +8487,92 @@
 		)
 	)
 	(symbol
+		(lib_id "Connector_Generic:Conn_01x04")
+		(at 246.38 177.8 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "9eba2cff-e60a-4b67-9e0c-ec3f369d73b0")
+		(property "Reference" "J4"
+			(at 248.92 176.53 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Value" "UI_BREAKOUT"
+			(at 248.92 179.07 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 246.38 177.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 246.38 177.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 246.38 177.8 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "8b168d6c-a4a6-45d3-b447-518dbd3de40c")
+		)
+		(pin "2"
+			(uuid "848b5f18-4f1f-4961-8564-1554ffe8d5aa")
+		)
+		(pin "3"
+			(uuid "04daa648-c202-4ddc-9fa7-46a5aab3f1d4")
+		)
+		(pin "4"
+			(uuid "af033512-fc86-42b8-a195-c43544dbb967")
+		)
+		(instances
+			(project "heimdall-switch"
+				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
+					(reference "J4")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "power:+BATT")
 		(at 60.96 127 0)
 		(unit 1)
@@ -8222,95 +8643,6 @@
 			(project "heimdall-switch"
 				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
 					(reference "#PWR16")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:LED")
-		(at 214.63 144.78 180)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "a2d4fc54-d3da-4862-8a2d-b2e678b82815")
-		(property "Reference" "LED1"
-			(at 214.63 137.16 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "Red 5mm"
-			(at 214.63 139.7 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 214.63 144.78 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 214.63 144.78 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 214.63 144.78 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "LCSC" "C7470729"
-			(at 214.63 144.78 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "29147cd2-2c59-4873-9789-0dcec1c56885")
-		)
-		(pin "2"
-			(uuid "6f641c7a-91c0-4a31-ad9b-7923e5e664ab")
-		)
-		(instances
-			(project "heimdall-switch"
-				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
-					(reference "LED1")
 					(unit 1)
 				)
 			)
@@ -8898,6 +9230,82 @@
 	)
 	(symbol
 		(lib_id "power:GND")
+		(at 223.52 172.72 90)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "b44815dd-f142-4e38-b009-1de9d2ae63bb")
+		(property "Reference" "#PWR94"
+			(at 223.52 172.72 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "GND"
+			(at 228.02 172.72 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 223.52 172.72 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 223.52 172.72 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 223.52 172.72 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "54075722-ed57-4a4f-b89c-5e865e46d320")
+		)
+		(instances
+			(project "heimdall-switch"
+				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
+					(reference "#PWR94")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:GND")
 		(at 99.06 162.56 0)
 		(unit 1)
 		(body_style 1)
@@ -9401,8 +9809,8 @@
 		)
 	)
 	(symbol
-		(lib_id "power:GND")
-		(at 223.52 144.78 0)
+		(lib_id "Device:R")
+		(at 210.82 138.43 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -9410,30 +9818,31 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
-		(uuid "c7ef2245-32f5-460d-ad9b-cf6fb553b8e5")
-		(property "Reference" "#PWR81"
-			(at 223.52 144.78 0)
-			(hide yes)
+		(uuid "c975172c-04b7-4e6e-b365-0549d11550d9")
+		(property "Reference" "R_LED"
+			(at 213.36 137.16 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
-		(property "Value" "GND"
-			(at 223.52 149.28 0)
+		(property "Value" "680R 1206"
+			(at 213.36 139.7 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" ""
-			(at 223.52 144.78 0)
+			(at 210.82 138.43 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9444,7 +9853,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 223.52 144.78 0)
+			(at 210.82 138.43 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9455,7 +9864,18 @@
 			)
 		)
 		(property "Description" ""
-			(at 223.52 144.78 0)
+			(at 210.82 138.43 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C17975"
+			(at 210.82 138.43 0)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -9465,88 +9885,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "bceb9ed0-bb61-4980-a9ad-facb05eb688e")
+			(uuid "d7176f3c-cc02-40e0-b689-b9423f02e658")
+		)
+		(pin "2"
+			(uuid "0105f75d-25ec-479f-8dcc-3dae12a39a37")
 		)
 		(instances
 			(project "heimdall-switch"
 				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
-					(reference "#PWR81")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:GND")
-		(at 223.52 157.48 90)
-		(unit 1)
-		(body_style 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(in_pos_files yes)
-		(dnp no)
-		(uuid "cf56bc8c-a337-4558-9fbc-813d91bd0df9")
-		(property "Reference" "#PWR82"
-			(at 223.52 157.48 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "GND"
-			(at 228.02 157.48 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 223.52 157.48 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Datasheet" ""
-			(at 223.52 157.48 0)
-			(hide yes)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Description" ""
-			(at 223.52 157.48 0)
-			(show_name no)
-			(do_not_autoplace no)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(pin "1"
-			(uuid "75dd80d4-280a-4db4-88e3-9c5b114b635c")
-		)
-		(instances
-			(project "heimdall-switch"
-				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
-					(reference "#PWR82")
+					(reference "R_LED")
 					(unit 1)
 				)
 			)
@@ -10052,8 +10399,8 @@
 		)
 	)
 	(symbol
-		(lib_id "power:GND")
-		(at 233.68 170.18 0)
+		(lib_id "Transistor_FET:Q_NMOS_GSD")
+		(at 208.28 154.94 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -10061,30 +10408,31 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
-		(uuid "e1b67152-1cf3-4b03-bf21-10619c264fbf")
-		(property "Reference" "#PWR83"
-			(at 233.68 170.18 0)
-			(hide yes)
+		(uuid "e39d8340-42c0-4d15-9a19-ea32d920d38e")
+		(property "Reference" "Q5"
+			(at 213.36 153.67 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
-		(property "Value" "GND"
-			(at 233.68 174.68 0)
+		(property "Value" "AO3400A"
+			(at 213.36 156.21 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(justify left)
 			)
 		)
 		(property "Footprint" ""
-			(at 233.68 170.18 0)
+			(at 208.28 154.94 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10095,7 +10443,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 233.68 170.18 0)
+			(at 208.28 154.94 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10106,7 +10454,18 @@
 			)
 		)
 		(property "Description" ""
-			(at 233.68 170.18 0)
+			(at 208.28 154.94 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "LCSC" "C20917"
+			(at 208.28 154.94 0)
+			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -10116,12 +10475,94 @@
 			)
 		)
 		(pin "1"
-			(uuid "54679f1e-4a0e-4f5a-a0b3-ee995d2f2c4d")
+			(uuid "c54b07ed-2b6f-4a46-a169-61fd44eee751")
+		)
+		(pin "2"
+			(uuid "87a7d54e-1349-4c16-a1eb-625beb65f2a5")
+		)
+		(pin "3"
+			(uuid "7ef912ec-338e-4cde-8d4c-0d97e43e9f7e")
 		)
 		(instances
 			(project "heimdall-switch"
 				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
-					(reference "#PWR83")
+					(reference "Q5")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+BATT")
+		(at 210.82 134.62 0)
+		(unit 1)
+		(body_style 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(in_pos_files yes)
+		(dnp no)
+		(uuid "e7cade3f-60f0-4073-962b-653a7df39ef7")
+		(property "Reference" "#PWR91"
+			(at 210.82 134.62 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "VBAT"
+			(at 210.82 130.12 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 210.82 134.62 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Datasheet" ""
+			(at 210.82 134.62 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Description" ""
+			(at 210.82 134.62 0)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "b14b06a7-ad89-4fe7-a759-c955b3f5ab37")
+		)
+		(instances
+			(project "heimdall-switch"
+				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
+					(reference "#PWR91")
 					(unit 1)
 				)
 			)
@@ -10281,8 +10722,8 @@
 		)
 	)
 	(symbol
-		(lib_id "Device:R")
-		(at 207.01 157.48 90)
+		(lib_id "Switch:SW_Push")
+		(at 218.44 172.72 0)
 		(unit 1)
 		(body_style 1)
 		(exclude_from_sim no)
@@ -10290,9 +10731,9 @@
 		(on_board yes)
 		(in_pos_files yes)
 		(dnp no)
-		(uuid "fae43482-1e4e-4c43-8a63-5d17f576ce48")
-		(property "Reference" "R_BTN"
-			(at 207.01 154.94 90)
+		(uuid "fc927b1f-c1c4-4d1f-a5ff-6ecfae3068d1")
+		(property "Reference" "SW1"
+			(at 218.44 175.26 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -10301,8 +10742,8 @@
 				)
 			)
 		)
-		(property "Value" "1k"
-			(at 207.01 160.02 90)
+		(property "Value" "KSC221J"
+			(at 218.44 177.8 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -10312,7 +10753,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 207.01 157.48 0)
+			(at 218.44 172.72 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10323,7 +10764,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 207.01 157.48 0)
+			(at 218.44 172.72 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10334,7 +10775,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 207.01 157.48 0)
+			(at 218.44 172.72 0)
 			(show_name no)
 			(do_not_autoplace no)
 			(effects
@@ -10343,8 +10784,8 @@
 				)
 			)
 		)
-		(property "LCSC" "C21190"
-			(at 207.01 157.48 0)
+		(property "LCSC" "C221726"
+			(at 218.44 172.72 0)
 			(hide yes)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10355,15 +10796,15 @@
 			)
 		)
 		(pin "1"
-			(uuid "54ec2ad6-7bf1-4e30-88bb-5f57056edff8")
+			(uuid "bcc83904-057d-478e-87fe-5326a6b65f43")
 		)
 		(pin "2"
-			(uuid "eaee81a1-2545-4be8-a2f3-f94395b8dddf")
+			(uuid "c1a7e11c-90ee-466a-8689-54d9a7849bd7")
 		)
 		(instances
 			(project "heimdall-switch"
 				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
-					(reference "R_BTN")
+					(reference "SW1")
 					(unit 1)
 				)
 			)
