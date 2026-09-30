@@ -387,7 +387,8 @@ Reading the schematic:
 - **PWR_FLAG** (small diamond, text hidden) is not a component and not in
   the BOM. It tells ERC "this net is powered from outside" — needed where
   power arrives through pins KiCad sees as passive (battery connector, Q4,
-  L1). One each on VBAT (at Q4), GND (at J3) and +3V3 (at C_OUT).
+  L1, R_IN). One each on VBAT (at Q4), GND (at J3), +3V3 (at C_OUT) and
+  the regulator input node after R_IN.
 - One GND symbol has its "GND" text hidden where it collided with
   wires (U2 pin 5) — an ordinary GND connection.
 
@@ -456,7 +457,31 @@ values select which mode):
   CL31A106KBHNNNE, 10µF 50V X5R 1206** (LCSC C13585, JLCPCB basic): same
   footprint, and at 12.6V it keeps roughly 5-6µF effective, where a
   4.7µF 25V part drops to ~2µF. The 50V rating also gives headroom for
-  hot-plug ringing (see Open items).
+  hot-plug ringing (below).
+
+**Hot-plug damping (R_IN, 22Ω 0603, LCSC C23345)**: plugging a pack into a
+board whose input is only ceramic capacitance rings. The battery leads'
+inductance and the near-zero-ESR ceramic form an undamped LC circuit, and
+the first peak approaches **2× the pack voltage** (~25V on 3S; connector
+bounce can repeat it). The TPS629206 is rated for 17V in. The usual fix, a
+bulk electrolytic (≈47µF 25V) whose ESR damps the ring, is bigger than
+this board, so instead R_IN sits between VBAT and the regulator's input
+node (C_IN + VIN/EN):
+- Critical damping for this LC is ~0.4Ω; 22Ω is far past it, so C_IN
+  charges with no overshoot, and plug-in inrush into C_IN is capped at
+  ~0.6A. Ringing on VBAT itself (now only small capacitance) is filtered
+  by R_IN·C_IN (τ ≈ 110µs) before it reaches the regulator.
+- The regulator's own draw is tiny (µA asleep, a few mA peak during radio
+  bursts at pack voltage), so R_IN drops ≤0.1V. Its switching pulses come
+  from C_IN, downstream of R_IN.
+- Converter input-filter stability: |Z_in| of the buck at these loads is
+  ≥1kΩ (V_IN² / P_IN), orders of magnitude above R_IN.
+- The rest of VBAT tolerates the ring: Q3/Q4 (AO4407A) and Q1/Q5
+  (AO3400A, via 1MΩ) are 30V parts, Q2/Q6 (BSS84) 50V, Q3/Q4 gates are
+  zener-clamped, and Q6's gate sits at V_GS ≈ 0 at plug-in (LED off).
+  The load path through Q3 doesn't go through R_IN.
+- **Verify on the first boards**: scope VBAT and U2 VIN while plugging in
+  a full 3S pack a few times.
 
 **Superseded**: an earlier pass at this section spec'd the TPS62901 (same
 family, VQFN-HR package) with a classic-mode R1/R2 divider (402k/100k for
@@ -518,6 +543,7 @@ batch is JLCPCB-assembled). Resistors are UNI-ROYAL 0603WAF thick film,
 | C_VDD1 | 4.7µF 16V X5R | Samsung CL10A475KO8NNNC | 0603 | C19666 | ✓ |
 | C_VDD2, C_FB | 100nF 50V X7R | Yageo CC0603KRX7R9BB104 | 0603 | C14663 | ✓ |
 | C1, C2 | 18pF 50V C0G | Samsung CL10C180JB8NNNC | 0603 | C1647 | ✓ |
+| R_IN | 22Ω | 0603WAF220JT5E | 0603 | C23345 | ✓ |
 | R_G1, R_LIM | 100Ω | 0603WAF1000T5E | 0603 | C22775 | ✓ |
 | R_LED | 680Ω 1/4W | 1206W4F6800T5E | 1206 | C17975 | |
 | R_RST | 10kΩ | 0603WAF1002T5E | 0603 | C25804 | ✓ |
@@ -551,12 +577,6 @@ Notes:
   is next, then annotation and layout.
 - **J1 footprint**: bare test pads for a pogo jig, or a 1.27mm header.
   Undecided.
-- **Hot-plug ringing on 3S**: plugging a pack into a board with only
-  ceramic input capacitance can ring up to ~2× the pack voltage (~25V on
-  3S), above the TPS629206's 17V input maximum. Candidate fixes: a bulk
-  electrolytic or polymer cap (≈47µF 25V, its ESR damps the ringing) on
-  VBAT near J3, or a TVS. To decide before layout; 2S (≤7.3V) has ample
-  margin either way.
 - **Y1/C1/C2**: keep, leave unfitted, or remove (see LFCLK note above).
   The BOM assumes fitted.
 - Power budget is estimated, not measured.
