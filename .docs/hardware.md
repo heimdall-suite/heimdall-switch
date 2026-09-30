@@ -45,7 +45,21 @@
 - **Local button**: debounced, GPIOTE interrupt-wake (must wake the nRF52
   from deep sleep independent of the normal BLE scan cycle). Held ≥5s but
   <15s → toggle power state locally. Held ≥15s → enter pairing mode.
-- **Status LED**: 1 GPIO, visual state indicator.
+- **Status LED**: 1 GPIO, visual state indicator. 5mm through-hole,
+  high-intensity red (see [BOM](#bom)), so it's readable outdoors / through
+  a hole in the fuselage or hull. Driven GPIO → R_LED (330Ω) → LED → GND:
+  ~4mA, so firmware must set P0.26 to **high drive** (`S0H1`). Standard
+  drive only sources ~2mA at that voltage drop, which still works, just
+  dimmer.
+- **Breakout for a daughter board (J4)**: LED and button can sit on the
+  main board (LED1/SW1 fitted) or on a small daughter board, positioned
+  wherever the vehicle needs them. J4 is three pads (1 LED_A, 2 BTN,
+  3 GND) wired in parallel with LED1/SW1; for off-board use leave LED1/SW1
+  unfitted and run three wires from J4. R_LED stays on the main board, so
+  the daughter board only needs the LED and the switch. **R_BTN (1kΩ)** in
+  series with P0.20 protects the pin from ESD on the off-board wire (the
+  button is the part people touch); with the internal pull-up (~13kΩ) the
+  pressed level is ~0.23V, a clean logic low.
 
 ## Pin assignment (BT832 castellated edge)
 
@@ -87,7 +101,10 @@ Notes:
   justify on power alone. Currently in the schematic (Y1/C1/C2); the
   keep / leave unfitted (DNP) / remove decision is open. Leaving it
   unfitted needs no hardware change, only the firmware's clock-source
-  config.
+  config. Part if fitted: **Epson FC-135** 32.768kHz, CL 12.5pF, ±20ppm
+  (3.2×1.5mm, LCSC C32346, JLCPCB basic; the 9pF variant isn't stocked),
+  with C1 = C2 = **18pF C0G**: nRF52 formula C = 2·CL − C_pin (4pF) −
+  C_pcb (~1-2pF) ≈ 19-20pF → nearest E12 below.
 - **DC/DC**: the two inductors for the nRF52832's internal DC/DC regulator
   are inside the BT832 module (per Fanstel's datasheet), so firmware can
   enable DC/DC mode — the lower-current figures in the power budget apply.
@@ -163,6 +180,10 @@ the benign direction.
   Fully enhanced (V_GS = −4.5V) after ~110ms at 12.6V / ~280ms at 6.6V.
   The same RC soft-starts the inrush into the downstream
   BEC/receiver/servo capacitance.
+  C_SS is a **50V X7R 0805** (Samsung CL21B224KBFNNNE, LCSC C5378), not a
+  25V 0603: it sits at up to 12.6V, and a 25V 0603 X7R loses ~30% of its
+  capacitance there, which would cut the ~30ms turn-on delay at 12.6V to
+  ~20ms — the whole firmware margin. The 50V 0805 part loses ~10%.
 - **Active OFF**: Q2 (P-FET) clamps Q3's gate to VBAT through R_LIM when
   on. Q2's gate is pulled up to VBAT by R_CLAMP_PU (1MΩ) and pulled low by
   Q1 (N-FET), driven from P0.13 via R_G1 (100Ω), with R_OFF_PD (1MΩ)
@@ -193,9 +214,15 @@ the benign direction.
   output ON — Q3 gate should read within a few mV of GND and Q2 gate
   within a few mV of VBAT. Don't raise R_CLAMP_PU / R_PD further to save
   current without re-checking this.
-- **Gate protection**: D_Z, 15V zener gate-source on Q3 (cathode to VBAT).
-  At 12.6V max a ±20V-rated gate is within spec without it; it's cheap
-  insurance against transients.
+- **Gate protection**: D_Z, 18V zener gate-source on Q3 (cathode to VBAT)
+  — **onsemi MMSZ5248B** (SOD-123, LCSC C2127). At 12.6V max the ±25V gate
+  is within spec without it; it's cheap insurance against transients.
+  18V rather than 15V because the zener sits reverse-biased at full pack
+  voltage whenever the output is ON, and its leakage flows into Q3's gate
+  node against R_PD: a 15V zener at 12.6V (84% of V_Z) is near its knee
+  and can leak µA, lifting the gate; the 18V part is specified at
+  ≤100nA at 14V (≤0.11V gate lift through 1.1MΩ), and still clamps well
+  below the 25V gate rating.
 
 **Reverse polarity protection**: servo-style RC plugs are easy to insert
 backwards, and a reversed pack would destroy not just this node but the
@@ -204,8 +231,8 @@ receiver/servos. So the protection covers the whole power path, right at
 the battery input:
 - **Q4**: P-FET "ideal diode" in the positive line between J3 and the VBAT
   rail — drain to the battery (+) pin of J3, source to VBAT, gate to GND
-  via R_REV (100kΩ), plus a 15V gate-source zener (D_Z2, cathode to
-  source) like Q3's. **Same part as Q3: AO4407A** (SO-8, LCSC C16072).
+  via R_REV (100kΩ), plus an 18V gate-source zener (D_Z2, cathode to
+  source, same MMSZ5248B) like Q3's. **Same part as Q3: AO4407A** (SO-8, LCSC C16072).
 - Correct polarity: Q4's body diode conducts first, lifting its source to
   ~VBAT, which pulls V_GS to −VBAT and turns it fully on. Reversed: the
   body diode is reverse-biased and V_GS ≈ 0, so Q4 stays off and nothing
@@ -306,13 +333,14 @@ TPS629206 (neither has an official KiCad library part) live in
 `heimdall-switch.kicad_sym`; opening the project should resolve them
 automatically via the project-local `sym-lib-table`.
 
-Drawn with real wires within each block (regulator, MCU + crystal/LED/
-button/SWD, switching stage + load output), KiCad power symbols (`GND`,
+Drawn with real wires within each block (regulator, MCU + crystal/SWD,
+status LED + button + J4 breakout, switching stage + load output), KiCad power symbols (`GND`,
 `+3V3`, `VBAT` — the latter is the stock `+BATT` symbol renamed) with
 PWR_FLAGs, and no-connect markers on the intentionally-open pins
-(VSET/PG, spare GPIOs). Only two signals cross between blocks as net
-labels: `OUT_OFF` (P0.13 → switching stage) and `ADC_FB` (divider →
-P0.02). J3 is the battery input connector.
+(VSET/PG, spare GPIOs). Only four signals cross between blocks as net
+labels: `OUT_OFF` (P0.13 → switching stage), `ADC_FB` (divider →
+P0.02), `LED_A` (R_LED → LED1/J4) and `BTN` (P0.20 → R_BTN/SW1/J4).
+J3 is the battery input connector.
 
 Verified with `kicad-cli sch erc`, netlist export (every pin checked
 against the intended net) and `sch export svg` (kicad-cli is installed
@@ -335,13 +363,16 @@ Reading the schematic:
   the BOM. It tells ERC "this net is powered from outside" — needed where
   power arrives through pins KiCad sees as passive (battery connector, Q4,
   L1). One each on VBAT (at Q4), GND (at J3) and +3V3 (at C_OUT).
-- A few GND symbols have their "GND" text hidden where it collided with
-  wires (U2 pin 5, LED1 cathode, SW1) — they're ordinary GND connections.
+- One GND symbol has its "GND" text hidden where it collided with
+  wires (U2 pin 5) — an ordinary GND connection.
 
 Known simplifications in this draft, worth revisiting before layout:
-- No footprints assigned yet (schematic-only pass).
-- No decoupling cap at the BT832's VDD pin — check the module datasheet
-  for whether onboard decoupling is sufficient.
+- No footprints assigned yet (schematic-only pass). Every part with an
+  LCSC number carries it in a hidden `LCSC` field (see [BOM](#bom)), so
+  `kicad-cli sch export bom --fields "Reference,Value,LCSC"` gives an
+  order list.
+- BT832 VDD decoupling (C_VDD1 4.7µF + C_VDD2 100nF, as on Fanstel's eval
+  board) sits left of U1 — place both right at pin 9 in layout.
 - The switching stage implements the fail-on design in
   [Switching stage](#switching-stage) (Q1 driver, Q2 gate clamp, Q3 load
   switch, R_LIM, R_PD1/R_PD2, C_SS, D_Z). All four FETs are selected
@@ -393,9 +424,14 @@ values select which mode):
   (power-save pulses: T_ON ≈ 100ns × VIN/(VIN−VOUT), Eq. 5-6).
 - Soft-start is **internal** (T_SS 600-700µs after a 1-1.8ms start-up
   delay) — no soft-start capacitor needed.
-- C_out = 22µF ceramic, X7R/X5R, low ESR
-- C_in = 4.7µF ceramic, X7R/X5R, voltage-rated well above the 12.6V max
-  (use a 25V-rated part to avoid DC-bias capacitance derating)
+- C_out = 22µF ceramic, X7R/X5R, low ESR — **selected: Samsung
+  CL21A226MAQNNNE** (22µF 25V X5R 0805, LCSC C45783); the 25V rating
+  keeps DC-bias derating at 3.3V small.
+- C_in: TI's reference is 4.7µF 25V 1206. **Selected: Samsung
+  CL31A106KBHNNNE, 10µF 50V X5R 1206** (LCSC C13585, JLCPCB basic): same
+  footprint, and at 12.6V it keeps roughly 5-6µF effective, where a
+  4.7µF 25V part drops to ~2µF. The 50V rating also gives headroom for
+  hot-plug ringing (see Open items).
 
 **Superseded**: an earlier pass at this section spec'd the TPS62901 (same
 family, VQFN-HR package) with a classic-mode R1/R2 divider (402k/100k for
@@ -425,26 +461,78 @@ during bring-up and a fallback to classic external-divider mode is needed
   continuous / 6-8A peaks comfortably and also accepts 20-22 AWG; the
   "Relief" variant adds holes to loop the insulated wire through as
   strain relief, so flexing never loads the solder joint.
+- **Clean the board** (IPA, brush) after assembly, especially around the
+  switching stage. R_PD1/R_PD2 (2.2MΩ) and R_CLAMP_PU (1MΩ) set the
+  fail-on margin at a few µA, and flux residue plus humidity (boat use)
+  can create leakage paths in the MΩ range. Conformal coating after
+  bring-up is worth considering for the same reason.
+
+## BOM
+
+All parts from LCSC; "basic" = JLCPCB basic part (only matters if a later
+batch is JLCPCB-assembled). Resistors are UNI-ROYAL 0603WAF thick film,
+1%, 0603. Stock checked 2026-09-30.
+
+| Ref | Value | Part | Package | LCSC | Basic |
+|---|---|---|---|---|---|
+| U1 | BT832 | Fanstel BT832 (nRF52832) | module | — (Fanstel/distributors) | |
+| U2 | 3.3V buck | TI TPS629206DRLR | SOT-583 | C5219292 | |
+| L1 | 2.2µH | Murata DFE252012PD-2R2M=P2 | 1008 | C237482 | |
+| Q1 | N-FET | AOS AO3400A | SOT-23 | C20917 | ✓ |
+| Q2 | P-FET | Nexperia BSS84 | SOT-23 | C493579 | |
+| Q3, Q4 | P-FET | AOS AO4407A | SO-8 | C16072 | |
+| D_Z, D_Z2 | 18V zener | onsemi MMSZ5248B | SOD-123 | C2127 | |
+| Y1 | 32.768kHz | Epson FC-135, CL 12.5pF | 3215 | C32346 | ✓ |
+| SW1 | tactile | C&K KSC221J LFS, IP67 | 6.2×6.2 SMD | C221726 | |
+| LED1 | red, 7.8cd, 35° | TONYU DY-324SVRC-H23-P-A4(FH) | 5mm THT, water clear | C7470729 | |
+| R_BTN | 1kΩ | 0603WAF1001T5E | 0603 | C21190 | ✓ |
+| J4 | UI breakout | 3 pads, 2.54mm pitch | — | — | |
+| C_IN | 10µF 50V X5R | Samsung CL31A106KBHNNNE | 1206 | C13585 | ✓ |
+| C_OUT | 22µF 25V X5R | Samsung CL21A226MAQNNNE | 0805 | C45783 | ✓ |
+| C_SS | 220nF 50V X7R | Samsung CL21B224KBFNNNE | 0805 | C5378 | ✓ |
+| C_VDD1 | 4.7µF 16V X5R | Samsung CL10A475KO8NNNC | 0603 | C19666 | ✓ |
+| C_VDD2, C_FB | 100nF 50V X7R | Yageo CC0603KRX7R9BB104 | 0603 | C14663 | ✓ |
+| C1, C2 | 18pF 50V C0G | Samsung CL10C180JB8NNNC | 0603 | C1647 | ✓ |
+| R_G1, R_LIM | 100Ω | 0603WAF1000T5E | 0603 | C22775 | ✓ |
+| R_LED | 330Ω | 0603WAF3300T5E | 0603 | C23138 | ✓ |
+| R_RST | 10kΩ | 0603WAF1002T5E | 0603 | C25804 | ✓ |
+| R_MODE | 27.4kΩ | 0603WAF2742T5E | 0603 | C22964 | |
+| R_FB_BOT | 33kΩ | 0603WAF3302T5E | 0603 | C4216 | ✓ |
+| R_FB_TOP, R_REV | 100kΩ | 0603WAF1003T5E | 0603 | C25803 | ✓ |
+| R_CLAMP_PU, R_OFF_PD | 1MΩ | 0603WAF1004T5E | 0603 | C22935 | ✓ |
+| R_PD1, R_PD2 | 2.2MΩ | 0603WAF2204T5E | 0603 | C22938 | |
+| J1 | SWD | 5 test pads / 1.27mm header | — | — | |
+| J2, J3 | wire pads | see Assembly | — | — | |
+
+Notes:
+- **R_MODE must be exactly 27.4kΩ (E96)**: it selects the TPS629206's
+  mode by resistor window, so a 27kΩ E24 substitute is not safe.
+- **LED1 red, 5mm high-intensity**: 7.8cd at 20mA, ~1.5cd at the ~4mA it
+  gets here, versus ~60mcd for a typical 0603 SMD LED. 35° beam: narrow
+  enough to be bright, wide enough to see off-axis (10° parts were
+  rejected for that reason). Red because its ~2V forward voltage leaves a
+  usable 1.3V across R_LED from 3.3V; green/blue (~3V) would be dim and
+  vary part to part. Cree C503B and Kingbright WP7113 equivalents were out
+  of stock at LCSC. It only blinks on events, so the current doesn't show
+  in the power budget.
+- **SW1**: IP67 sealed tactile switch (gull-wing J-lead, easy to solder by
+  hand). The plain KSC221J (C19458559) is the same switch but out of stock.
 
 ## Open items
 
 - Real hardware not yet built — wake interval, scan window length, and BLE
   advertising interval (see [protocol.md](protocol.md)) are all first
   estimates, not measured.
-- **Component selection** (next step) — values are fixed, part numbers
-  and footprints are not:
-  - ~~Q3, Q4~~: **done — AO4407A** (LCSC C16072), see Switching stage
-  - ~~Q1, Q2~~: **done — AO3400A** (C20917) / **Nexperia BSS84**
-    (C493579), plus R_LIM 100Ω added; see Switching stage
-  - ~~L1~~: **done — Murata DFE252012PD-2R2M=P2** (C237482), see Buck
-    regulator
-  - ~~J2, J3~~: **done — solder pads for wire pigtails**, no board-mounted
-    connector (see Assembly)
-  - SW1: sealed tactile switch (boat use)
-  - Y1: only if kept — match C1/C2 to its load capacitance (12pF assumes a
-    9pF-CL crystal)
-  - Capacitor voltage ratings / dielectrics, LED colour
-- **BT832 decoupling**: add 4.7µF + 100nF at VDD (Fanstel's eval board has
-  them) — not yet in the schematic.
+- **Component selection: done** (see [BOM](#bom)). Footprint assignment
+  is next, then annotation and layout.
+- **J1 footprint**: bare test pads for a pogo jig, or a 1.27mm header.
+  Undecided.
+- **Hot-plug ringing on 3S**: plugging a pack into a board with only
+  ceramic input capacitance can ring up to ~2× the pack voltage (~25V on
+  3S), above the TPS629206's 17V input maximum. Candidate fixes: a bulk
+  electrolytic or polymer cap (≈47µF 25V, its ESR damps the ringing) on
+  VBAT near J3, or a TVS. To decide before layout; 2S (≤7.3V) has ample
+  margin either way.
 - **Y1/C1/C2**: keep, leave unfitted, or remove (see LFCLK note above).
+  The BOM assumes fitted.
 - Power budget is estimated, not measured.
