@@ -384,7 +384,15 @@ values select which mode):
   classic external-divider mode this part also supports
 
 **Output filter** (Table 9-3 / component selection sections):
-- L1 = 2.2µH nominal
+- L1 = 2.2µH — **selected: Murata DFE252012PD-2R2M=P2** (LCSC C237482),
+  from TI's tested-inductor list (datasheet Table 9-4): 1008 / 2.5×2.0×1.2mm,
+  shielded, DCR 84mΩ, I_sat 2.8A (30% drop), rated 2.2A. Sizing: switch
+  current limit I_LIM_HS 1.1-1.7A plus ~0.2A propagation overshoot at
+  12.6V in (datasheet Eq. 2) ≈ 1.9A worst case — the inductor must not
+  saturate even in overload/short. Normal operation peaks only ~0.6A
+  (power-save pulses: T_ON ≈ 100ns × VIN/(VIN−VOUT), Eq. 5-6).
+- Soft-start is **internal** (T_SS 600-700µs after a 1-1.8ms start-up
+  delay) — no soft-start capacitor needed.
 - C_out = 22µF ceramic, X7R/X5R, low ESR
 - C_in = 4.7µF ceramic, X7R/X5R, voltage-rated well above the 12.6V max
   (use a 25V-rated part to avoid DC-bias capacitance derating)
@@ -407,6 +415,16 @@ during bring-up and a fallback to classic external-divider mode is needed
   soldering iron (60/40) for the BT832's castellated edges and connectors.
   **No 0402** — passives 0603, 0805 where voltage/capacitance needs it.
   No-lead packages (DFN, SOT-5X3) are fine with hot air.
+- **Battery in (J3) / load out (J2): solder pads, not connectors.** Wire
+  pigtails soldered to the board, with whatever plug the vehicle needs on
+  the end (JR/Futaba, XT30, …) — the same approach as the Jeti SPS-20, and
+  the most vibration-proof option (no board-mounted connector to rattle
+  loose or lever the joints). Footprint: KiCad
+  `Connector_Wire:SolderWire-0.75sqmm_1x02_P4.8mm_D1.25mm_OD2.3mm_Relief`
+  — through-hole pads for 0.75mm² (≈18 AWG) wire, which carries 3A
+  continuous / 6-8A peaks comfortably and also accepts 20-22 AWG; the
+  "Relief" variant adds holes to loop the insulated wire through as
+  strain relief, so flexing never loads the solder joint.
 
 ## Open items
 
@@ -418,9 +436,10 @@ during bring-up and a fallback to classic external-divider mode is needed
   - ~~Q3, Q4~~: **done — AO4407A** (LCSC C16072), see Switching stage
   - ~~Q1, Q2~~: **done — AO3400A** (C20917) / **Nexperia BSS84**
     (C493579), plus R_LIM 100Ω added; see Switching stage
-  - L1: 2.2µH shielded, I_sat ≈ 1A or more
-  - J2, J3: must carry 6-8A peaks (JST-XH at 3A is too small; XT30 or
-    soldered leads)
+  - ~~L1~~: **done — Murata DFE252012PD-2R2M=P2** (C237482), see Buck
+    regulator
+  - ~~J2, J3~~: **done — solder pads for wire pigtails**, no board-mounted
+    connector (see Assembly)
   - SW1: sealed tactile switch (boat use)
   - Y1: only if kept — match C1/C2 to its load capacitance (12pF assumes a
     9pF-CL crystal)
@@ -429,6 +448,3 @@ during bring-up and a fallback to classic external-divider mode is needed
   them) — not yet in the schematic.
 - **Y1/C1/C2**: keep, leave unfitted, or remove (see LFCLK note above).
 - Power budget is estimated, not measured.
-- TPS629206 soft-start behavior/capacitor (if any is needed) not yet
-  checked against the datasheet — carried over from the TPS62901
-  investigation, never resolved for either part.
