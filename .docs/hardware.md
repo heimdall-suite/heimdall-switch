@@ -53,10 +53,15 @@
   [BOM](#bom)).
   - **Driven from VBAT, not 3.3V**: high-intensity green/blue/white LEDs
     (InGaN) need ~3.0-3.4V forward, which leaves nothing across a
-    resistor on the 3.3V rail. Circuit: VBAT → R_LED (680Ω 1206) → LED →
-    Q5 (AO3400A, low-side) → GND, Q5's gate on P0.26 (`LED_DRV`) with
-    R_LED_PD (1MΩ) holding it off while the MCU is in reset or dead.
-    Plain GPIO drive; no high-drive mode needed.
+    resistor on the 3.3V rail. Circuit, **high-side switched** so the
+    LED's cathode can go straight to GND (3 daughter-board wires, not 4):
+    VBAT → Q6 (BSS84 P-FET) → R_LED (680Ω 1206) → LED → GND. Q6's gate is
+    pulled up to VBAT by R_Q6_PU (1MΩ) and pulled to GND by Q5 (AO3400A)
+    when P0.26 (`LED_DRV`) is high, giving Q6 |V_GS| = full pack voltage
+    (within BSS84's ±20V). R_LED_PD (1MΩ) holds Q5 off while the MCU is
+    in reset or dead. Plain GPIO drive; no high-drive mode needed. Cost:
+    ~6-13µA through R_Q6_PU *only while the LED is lit*; nothing when off.
+    Q6 is the same part as Q2 and Q5 as Q1, so no new part numbers.
   - **Current follows pack voltage** (V_F ≈ 3.1V at these currents):
     ~4.3mA at 6.0V (2S LiFePO4 near empty), ~5.1mA at 6.6V (2S LiFePO4
     nominal), ~7.8mA at 8.4V (2S LiPo full), ~14mA at 12.6V (3S full) —
@@ -64,15 +69,16 @@
     dissipates ≤0.13W. If an even brightness matters, firmware can PWM
     the LED against the pack voltage it reads through ADC_FB while the
     output is ON.
-  - **Short protection**: R_LED sits on the main board ahead of J4, so a
+  - **Short protection**: Q6 and R_LED sit on the main board ahead of J4, so a
     daughter-board wire shorted to GND draws at most 12.6V / 680Ω =
     18.5mA (0.23W, within the 1206's 0.25W).
 - **Breakout for a daughter board (J4)**: LED and button can sit on the
   main board (LED1/SW1 fitted) or on a small daughter board, positioned
-  wherever the vehicle needs them. J4 is four pads (1 LED_A, 2 LED_K,
-  3 BTN, 4 GND) wired in parallel with LED1/SW1; for off-board use leave
-  LED1/SW1 unfitted and run four wires from J4. R_LED and Q5 stay on the
-  main board, so the daughter board only needs the LED and the switch.
+  wherever the vehicle needs them. J4 is three pads (1 LED_A, 2 BTN,
+  3 GND — the LED cathode and the button share the GND wire) wired in
+  parallel with LED1/SW1; for off-board use leave LED1/SW1 unfitted and
+  run three wires from J4. Q5, Q6 and R_LED stay on the main board, so
+  the daughter board only needs the LED and the switch.
   **R_BTN (1kΩ)** in
   series with P0.20 protects the pin from ESD on the off-board wire (the
   button is the part people touch); with the internal pull-up (~13kΩ) the
@@ -357,8 +363,8 @@ PWR_FLAGs, and no-connect markers on the intentionally-open pins
 (VSET/PG, spare GPIOs). Only four signals cross between blocks as net
 labels: `OUT_OFF` (P0.13 → switching stage), `ADC_FB` (divider →
 P0.02), `LED_DRV` (P0.26 → Q5 gate) and `BTN` (P0.20 → R_BTN/SW1/J4).
-Within the LED/button block, `LED_A`/`LED_K` labels carry the LED's two
-legs to J4.
+Within the LED/button block, the `LED_A` label carries the LED anode to
+J4.
 J3 is the battery input connector.
 
 Verified with `kicad-cli sch erc`, netlist export (every pin checked
@@ -498,14 +504,14 @@ batch is JLCPCB-assembled). Resistors are UNI-ROYAL 0603WAF thick film,
 | U2 | 3.3V buck | TI TPS629206DRLR | SOT-583 | C5219292 | |
 | L1 | 2.2µH | Murata DFE252012PD-2R2M=P2 | 1008 | C237482 | |
 | Q1, Q5 | N-FET | AOS AO3400A | SOT-23 | C20917 | ✓ |
-| Q2 | P-FET | Nexperia BSS84 | SOT-23 | C493579 | |
+| Q2, Q6 | P-FET | Nexperia BSS84 | SOT-23 | C493579 | |
 | Q3, Q4 | P-FET | AOS AO4407A | SO-8 | C16072 | |
 | D_Z, D_Z2 | 18V zener | onsemi MMSZ5248B | SOD-123 | C2127 | |
 | Y1 | 32.768kHz | Epson FC-135, CL 12.5pF | 3215 | C32346 | ✓ |
 | SW1 | tactile | C&K KSC221J LFS, IP67 | 6.2×6.2 SMD | C221726 | |
 | LED1 | green 525nm, 3.2cd, 20° | Everlight 204-10SUGC/S400-A4 | 3mm THT, water clear | C414645 | |
 | R_BTN | 1kΩ | 0603WAF1001T5E | 0603 | C21190 | ✓ |
-| J4 | UI breakout | 4 pads, 2.54mm pitch | — | — | |
+| J4 | UI breakout | 3 pads, 2.54mm pitch | — | — | |
 | C_IN | 10µF 50V X5R | Samsung CL31A106KBHNNNE | 1206 | C13585 | ✓ |
 | C_OUT | 22µF 25V X5R | Samsung CL21A226MAQNNNE | 0805 | C45783 | ✓ |
 | C_SS | 220nF 50V X7R | Samsung CL21B224KBFNNNE | 0805 | C5378 | ✓ |
@@ -518,7 +524,7 @@ batch is JLCPCB-assembled). Resistors are UNI-ROYAL 0603WAF thick film,
 | R_MODE | 27.4kΩ | 0603WAF2742T5E | 0603 | C22964 | |
 | R_FB_BOT | 33kΩ | 0603WAF3302T5E | 0603 | C4216 | ✓ |
 | R_FB_TOP, R_REV | 100kΩ | 0603WAF1003T5E | 0603 | C25803 | ✓ |
-| R_CLAMP_PU, R_OFF_PD, R_LED_PD | 1MΩ | 0603WAF1004T5E | 0603 | C22935 | ✓ |
+| R_CLAMP_PU, R_OFF_PD, R_LED_PD, R_Q6_PU | 1MΩ | 0603WAF1004T5E | 0603 | C22935 | ✓ |
 | R_PD1, R_PD2 | 2.2MΩ | 0603WAF2204T5E | 0603 | C22938 | |
 | J1 | SWD | 5 test pads / 1.27mm header | — | — | |
 | J2, J3 | wire pads | see Assembly | — | — | |
