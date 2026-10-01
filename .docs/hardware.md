@@ -121,11 +121,11 @@ Notes:
   nRF52832 PS typicals — verify) and needs periodic calibration against
   the 32MHz crystal (cheap here: it can piggyback on the scan wake-ups).
   Net saving ~0.4-0.7µA, i.e. 1-2% of the ~34µA OFF budget — hard to
-  justify on power alone. **Decision: keep Y1/C1/C2 in the design and
-  fit them on the first boards.** Firmware should support both LFCLK
-  sources (LFXO and calibrated LFRC) so the real difference can be
-  measured at bring-up; if it's in the noise, later boards leave them
-  unfitted (DNP), which needs no hardware change. Part: **Epson FC-135** 32.768kHz, CL 12.5pF, ±20ppm
+  justify on power alone. **Decision: Y1/C1/C2 stay in the design;
+  whether to fit them is decided at assembly.** Firmware must therefore
+  support both LFCLK sources (LFXO and calibrated LFRC), ideally
+  detecting which is present; with the crystal fitted, the real
+  difference can be measured at bring-up. Part: **Epson FC-135** 32.768kHz, CL 12.5pF, ±20ppm
   (3.2×1.5mm, LCSC C32346, JLCPCB basic; the 9pF variant isn't stocked),
   with C1 = C2 = **18pF C0G**: nRF52 formula C = 2·CL − C_pin (4pF) −
   C_pcb (~1-2pF) ≈ 19-20pF → nearest E12 below.
@@ -590,7 +590,6 @@ Notes:
   estimates, not measured.
 - **Component selection: done** (see [BOM](#bom)). Footprint assignment
   is next, then annotation and layout.
-- **Y1/C1/C2**: kept and fitted on the first boards; measure LFXO vs.
-  LFRC sleep current at bring-up and DNP them later if the saving is in
-  the noise (see LFCLK note above).
+- **Y1/C1/C2**: kept in the design; fitted or not is decided at
+  assembly. Firmware supports both clock sources (see LFCLK note above).
 - Power budget is estimated, not measured.
