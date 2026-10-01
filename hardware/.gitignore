@@ -6,4 +6,4 @@ fp-info-cache
 _autosave-*
 ~*.lck
 .history/
-heimdall-switch-backups/
+*-backups/

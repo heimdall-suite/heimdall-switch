@@ -74,11 +74,14 @@
     18.5mA (0.23W, within the 1206's 0.25W).
 - **Breakout for a daughter board (J4)**: LED and button can sit on the
   main board (LED1/SW1 fitted) or on a small daughter board, positioned
-  wherever the vehicle needs them. J4 is three pads (1 LED_A, 2 BTN,
-  3 GND — the LED cathode and the button share the GND wire) wired in
-  parallel with LED1/SW1; for off-board use leave LED1/SW1 unfitted and
-  run three wires from J4. Q5, Q6 and R_LED stay on the main board, so
-  the daughter board only needs the LED and the switch.
+  wherever the vehicle needs them. J4 is a 3-pin **JST-XH** header
+  (B3B-XH-A, 2.5mm pitch; 1 LED_A, 2 BTN, 3 GND — the LED cathode and the
+  button share the GND wire) wired in parallel with LED1/SW1. In the main
+  schematic LED1/SW1 are the *optional on-board positions*; for off-board
+  use leave them unfitted and plug a crimped 3-wire XH cable (made to
+  length) from J4 to the daughter board's identical header. Q5, Q6 and
+  R_LED stay on the main board, so the daughter board only needs the LED
+  and the switch. See [Daughter board](#daughter-board-ui).
   **R_BTN (1kΩ)** in
   series with P0.20 protects the pin from ESD on the off-board wire (the
   button is the part people touch); with the internal pull-up (~13kΩ) the
@@ -548,10 +551,10 @@ batch is JLCPCB-assembled). Resistors are UNI-ROYAL 0603WAF thick film,
 | Q3, Q4 | P-FET | AOS AO4407A | SO-8 | C16072 | |
 | D_Z, D_Z2 | 18V zener | onsemi MMSZ5248B | SOD-123 | C2127 | |
 | Y1 | 32.768kHz | Epson FC-135, CL 12.5pF | 3215 | C32346 | ✓ |
-| SW1 | tactile | C&K KSC221J LFS, IP67 | 6.2×6.2 SMD | C221726 | |
+| SW1 | tactile | C&K KSC641J LFS, IP67, 3.4N | 6.2×6.2 SMD | C226344 | |
 | LED1 | green 525nm, 3.2cd, 20° | Everlight 204-10SUGC/S400-A4 | 3mm THT, water clear | C414645 | |
 | R_BTN | 1kΩ | 0603WAF1001T5E | 0603 | C21190 | ✓ |
-| J4 | UI breakout | 3 pads, 2.54mm pitch | — | — | |
+| J4 | UI breakout | JST B3B-XH-A(LF)(SN) | XH 1×3 2.5mm THT | C144394 | |
 | C_IN | 10µF 50V X5R | Samsung CL31A106KBHNNNE | 1206 | C13585 | ✓ |
 | C_OUT | 22µF 25V X5R | Samsung CL21A226MAQNNNE | 0805 | C45783 | ✓ |
 | C_SS | 220nF 50V X7R | Samsung CL21B224KBFNNNE | 0805 | C5378 | ✓ |
@@ -580,8 +583,42 @@ Notes:
   the -A5 variant (C2927624) is the same die with a 30° beam if 20° turns
   out too narrow to see off-axis. It only blinks on events, so its current
   doesn't show in the power budget.
-- **SW1**: IP67 sealed tactile switch (gull-wing J-lead, easy to solder by
-  hand). The plain KSC221J (C19458559) is the same switch but out of stock.
+- **SW1**: C&K KSC641J — IP67 sealed tactile switch, J-lead (easy to
+  solder by hand), 3.4N actuation (firm enough to resist vibration
+  presses). Chosen over the KSC221J because KiCad's stock
+  `Button_Switch_SMD:SW_Push_1P1T_NO_CK_KSC6xxJ` footprint matches it
+  exactly.
+
+## Daughter board (UI)
+
+Separate KiCad project in [hardware/kicad-ui/](../hardware/kicad-ui/)
+(`heimdall-switch-ui.kicad_pro/.kicad_sch/.kicad_pcb`, rendered
+[schematic](../hardware/kicad-ui/heimdall-switch-ui.svg),
+[top](../hardware/kicad-ui/render-top.png) and
+[bottom](../hardware/kicad-ui/render-bottom.png) views). Use it when the
+LED and button need to sit away from the main board, e.g. the LED
+showing through a 3mm hole drilled in the hull, as on the Jeti SPS-20.
+
+- **Parts**: LED1 (Everlight 204-10SUGC, 3mm green), SW1 (C&K KSC641J),
+  J1 (JST B3B-XH-A, same header as the main board's J4). Same part
+  numbers as the main board's on-board positions; nothing else, since the
+  LED driver, current limit and button ESD resistor live on the main
+  board.
+- **Cable**: 3-wire JST-XH, crimped to length, pin 1 ↔ pin 1 (1 LED_A,
+  2 BTN, 3 GND).
+- **Board**: 26 × 13mm, 2 layers. LED and button on the front (facing the
+  hull); the XH header is mounted on the **back**, so the cable plugs in
+  from behind and the board can sit flat against the hull. Back silk
+  carries the board name; pin 1 of J1 is the square pad.
+- Verified: ERC 0/0; DRC 0 violations, 0 unconnected, full schematic
+  parity (`kicad-cli pcb drc --schematic-parity`).
+- `gen_ui.sh` generated the first version (schematic + routed PCB, with
+  KiCad's Python API flipping J1 to the back). As with the main board, the
+  KiCad files are the source of truth once edited in the GUI.
+- **Open (mechanical)**: with the board against the hull, the button faces
+  the hull too, so it needs its own access: a hole for the plunger, a
+  flexible membrane, or mounting the board where the button can be
+  reached. Decide per vehicle.
 
 ## Open items
 

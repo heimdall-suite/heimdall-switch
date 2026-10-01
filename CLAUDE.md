@@ -24,6 +24,11 @@ build, lint, or test commands because there is nothing to build.
   retired generator for the first draft — don't run them). `kicad-cli`
   lives in `AppData/Local/Programs/KiCad/10.0/bin/` (not on PATH); run
   `sch erc` after any schematic change.
+- `hardware/kicad-ui/` — separate KiCad project for the optional UI
+  daughter board (LED + button, JST-XH to the main board's J4), with a
+  routed PCB. Same rules: the KiCad files are the source of truth
+  (`gen_ui.sh` made the first version); run `sch erc` and
+  `pcb drc --schematic-parity` after changes.
 - `.agents/AGENTS.md` — full cross-tool architecture/context notes (the
   primary reference — this file doesn't repeat it)
 - `src/` — firmware source, currently just a placeholder pending the
