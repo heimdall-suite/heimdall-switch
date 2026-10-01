@@ -596,29 +596,32 @@ Separate KiCad project in [hardware/kicad-ui/](../hardware/kicad-ui/)
 [schematic](../hardware/kicad-ui/heimdall-switch-ui.svg),
 [top](../hardware/kicad-ui/render-top.png) and
 [bottom](../hardware/kicad-ui/render-bottom.png) views). Use it when the
-LED and button need to sit away from the main board, e.g. the LED
-showing through a 3mm hole drilled in the hull, as on the Jeti SPS-20.
+LED and button need to sit away from the main board, e.g. in a housing
+on the outside of the hull, as on the Jeti SPS-20.
 
 - **Parts**: LED1 (Everlight 204-10SUGC, 3mm green), SW1 (C&K KSC641J),
-  J1 (JST B3B-XH-A, same header as the main board's J4). Same part
+  J1 (JST B3B-XH-A, same header as the main board's J4), H1/H2 (M3
+  mounting holes, not parts). Same part
   numbers as the main board's on-board positions; nothing else, since the
   LED driver, current limit and button ESD resistor live on the main
   board.
 - **Cable**: 3-wire JST-XH, crimped to length, pin 1 ↔ pin 1 (1 LED_A,
   2 BTN, 3 GND).
-- **Board**: 26 × 13mm, 2 layers. LED and button on the front (facing the
-  hull); the XH header is mounted on the **back**, so the cable plugs in
-  from behind and the board can sit flat against the hull. Back silk
-  carries the board name; pin 1 of J1 is the square pad.
+- **Board**: 39 × 13mm, 2 layers, two **M3 mounting holes** (H1/H2,
+  3.2mm, 32mm apart on the board's centreline, 3.45mm keep-out each). LED
+  and button on the front, facing out; the XH header is mounted on the
+  **back**, so the cable leaves straight backwards. Back silk carries the
+  board name; pin 1 of J1 is the square pad.
+- **Mounting**: in a 3D-printed housing screwed to the **outside** of the
+  hull (like the SPS-20's), the LED protruding through the housing and
+  the button sealed with an O-ring, so the only hull penetration is the
+  cable hole. The KSC641J is IP67 itself, so a leaking O-ring doesn't
+  kill the button.
 - Verified: ERC 0/0; DRC 0 violations, 0 unconnected, full schematic
   parity (`kicad-cli pcb drc --schematic-parity`).
 - `gen_ui.sh` generated the first version (schematic + routed PCB, with
   KiCad's Python API flipping J1 to the back). As with the main board, the
   KiCad files are the source of truth once edited in the GUI.
-- **Open (mechanical)**: with the board against the hull, the button faces
-  the hull too, so it needs its own access: a hole for the plunger, a
-  flexible membrane, or mounting the board where the button can be
-  reached. Decide per vehicle.
 
 ## Open items
 

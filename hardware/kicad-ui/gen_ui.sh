@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Generates the heimdall-switch UI daughter board project (schematic + PCB):
 #   J1 (3 wire pads: 1 LED_A, 2 BTN, 3 GND — matches main board J4),
-#   LED1 (3mm THT), SW1 (C&K KSC641J, IP67 tactile).
+#   LED1 (3mm THT), SW1 (C&K KSC641J, IP67 tactile), H1/H2 (M3 holes).
 # Usage: gen_ui.sh OUTDIR
 set -euo pipefail
 OUT="$1"
@@ -14,7 +14,7 @@ mkdir -p "$OUT"
 ROOT_UUID=pending; export ROOT_UUID
 eval "$(sed -n '1,/^# ---- pin geometry/p' "$GEN" | grep -v '^set -euo')"
 ROOT_UUID=$(gen_uuid); export ROOT_UUID
-U_J1=$(gen_uuid) U_LED=$(gen_uuid) U_SW=$(gen_uuid)
+U_J1=$(gen_uuid) U_LED=$(gen_uuid) U_SW=$(gen_uuid) U_H1=$(gen_uuid) U_H2=$(gen_uuid)
 
 # Project file: main project's settings, with names swapped
 sed -e "s/\"heimdall-switch\.kicad_pro\"/\"$NAME.kicad_pro\"/" \
@@ -33,6 +33,7 @@ sym() {
   [ "$just" != center ] && j=" (justify $just)"
   case "$rot" in 90|270) fa=90 ;; esac
   local bom=yes
+  case "$ref" in H*) bom=no ;; esac   # mounting holes
   printf '\t(symbol (lib_id "%s") (at %s %s %s)%s (unit 1)\n\t\t(exclude_from_sim no) (in_bom %s) (on_board yes) (dnp no)\n\t\t(uuid "%s")\n' \
     "$libid" "$x" "$y" "$rot" "$m" "$bom" "$uuid"
   printf '\t\t(property "Reference" "%s" (at %s %s %s) (effects (font (size 1.27 1.27))%s))\n' "$ref" "$rx" "$ry" "$fa" "$j"
@@ -51,6 +52,7 @@ instances() { printf '\t\t(instances (project "%s" (path "/%s" (reference "%s") 
 FP_J1="Connector_JST:JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical"
 FP_LED="LED_THT:LED_D3.0mm"
 FP_SW="Button_Switch_SMD:SW_Push_1P1T_NO_CK_KSC6xxJ"
+FP_H="MountingHole:MountingHole_3.2mm_M3"
 
 SCH="$OUT/$NAME.kicad_sch"
 {
@@ -62,6 +64,10 @@ SCH="$OUT/$NAME.kicad_sch"
     [ -n "$n" ] || { echo "missing lib symbol $s" >&2; exit 1; }
     awk -v start="$n" -f "$MAIN/extract_symbol.awk" "$MAIN/heimdall-switch.kicad_sch" | sed 's/^\t//'
   done
+  # MountingHole isn't used on the main sheet: take it from KiCad's library
+  L=/c/Users/svefre/AppData/Local/Programs/KiCad/10.0/share/kicad/symbols/Mechanical.kicad_sym
+  n=$(grep -n -F "$(printf '\t(symbol "MountingHole"')" "$L" | head -1 | cut -d: -f1)
+  awk -v start="$n" -f "$MAIN/extract_symbol.awk" "$L" | sed '1s/(symbol "MountingHole"/(symbol "Mechanical:MountingHole"/'
   printf '\t)\n'
 
   printf '\t(text "Daughter board for heimdall-switch: status LED + button, mounted\\nwherever the vehicle needs them (e.g. LED through a 3mm hole in\\nthe hull). Wire J1 to the main board'"'"'s J4 (1 LED_A, 2 BTN, 3 GND).\\nLED current limit (Q6 + R_LED) and button ESD resistor (R_BTN) are\\non the main board, so this board needs no other parts." (exclude_from_sim no)\n\t\t(at 76.2 55.88 0)\n\t\t(effects (font (size 1.27 1.27)) (justify left bottom))\n\t\t(uuid "%s")\n\t)\n' "$(gen_uuid)"
@@ -91,6 +97,9 @@ SCH="$OUT/$NAME.kicad_sch"
   instances "#FLG01"
   printf '\t)\n'
   pwr GND GND 109.22 88.9
+  # Mounting holes (M3), board ends
+  sym "Mechanical:MountingHole" H1 "M3" "$FP_H" "" "$U_H1" 88.9 99.06 0 "" 91.44 98.43 91.44 100.33 left
+  sym "Mechanical:MountingHole" H2 "M3" "$FP_H" "" "$U_H2" 101.6 99.06 0 "" 104.14 98.43 104.14 100.33 left
 
   printf '\t(sheet_instances\n\t\t(path "/"\n\t\t\t(page "1")\n\t\t)\n\t)\n)\n'
 } > "$SCH"
@@ -104,7 +113,7 @@ netname() { case "$1" in 1) echo "/LED_A";; 2) echo "/BTN";; 3) echo "GND";; esa
 # FABREF=1 moves the reference text from silk to the fab layer.
 fp() {
   local file="$1" libid="$2" ref="$3" value="$4" x="$5" y="$6" rot="$7" su="$8" pn="$9"
-  local lcsc="${10}" fabref="${11:-0}"
+  local lcsc="${10:-}" fabref="${11:-0}"
   awk -v libid="$libid" -v ref="$ref" -v value="$value" -v x="$x" -v y="$y" -v rot="$rot" \
       -v su="$su" -v pn="$pn" -v uuid="$(gen_uuid)" -v sheet="$NAME.kicad_sch" \
       -v lcsc="$lcsc" -v luuid="$(gen_uuid)" -v fabref="$fabref" '
@@ -149,8 +158,12 @@ PCB="$OUT/$NAME.kicad_pcb"
   # LED_A, 2 (121.5,106) BTN, 3 (121.5,108.5) GND
   fp "$FP/Connector_JST.pretty/JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical.kicad_mod" "$FP_J1" J1 B3B-XH-A 121.5 103.5 270 "$U_J1" "1=1 2=2 3=3" C144394 1
 
-  # Board outline 26 x 13 mm
-  printf '\t(gr_rect\n\t\t(start 100 100)\n\t\t(end 126 113)\n\t\t(stroke\n\t\t\t(width 0.05)\n\t\t\t(type default)\n\t\t)\n\t\t(fill no)\n\t\t(layer "Edge.Cuts")\n\t\t(uuid "%s")\n\t)\n' "$(gen_uuid)"
+  # Board outline 39 x 13 mm
+  # M3 mounting holes, 32mm apart on the board centreline
+  fp "$FP/MountingHole.pretty/MountingHole_3.2mm_M3.kicad_mod" "$FP_H" H1 M3 97.5 106.5 "" "$U_H1" ""
+  fp "$FP/MountingHole.pretty/MountingHole_3.2mm_M3.kicad_mod" "$FP_H" H2 M3 129.5 106.5 "" "$U_H2" ""
+
+  printf '\t(gr_rect\n\t\t(start 94 100)\n\t\t(end 133 113)\n\t\t(stroke\n\t\t\t(width 0.05)\n\t\t\t(type default)\n\t\t)\n\t\t(fill no)\n\t\t(layer "Edge.Cuts")\n\t\t(uuid "%s")\n\t)\n' "$(gen_uuid)"
   # Back silk: board name
   printf '\t(gr_text "heimdall UI"\n\t\t(at 106 110.9 0)\n\t\t(layer "B.SilkS")\n\t\t(uuid "%s")\n\t\t(effects\n\t\t\t(font\n\t\t\t\t(size 0.8 0.8)\n\t\t\t\t(thickness 0.12)\n\t\t\t)\n\t\t\t(justify mirror)\n\t\t)\n\t)\n' "$(gen_uuid)"
 
