@@ -571,7 +571,7 @@ good for ~10A in a harness.
   Default 0.2mm; vias 0.6/0.3 (Power 0.8/0.4). A custom rule
   (`heimdall-switch.kicad_dru`) allows neck-down to 0.15mm where traces
   enter fine-pitch pads (U1, U2), well inside JLCPCB's 0.127mm minimum.
-- 49 vias in total, ~570mm of track.
+- 44 vias in total, ~570mm of track.
 
 **How it was routed** (scripts in `hardware/kicad/`, run with KiCad's
 bundled python): `place_pcb.py` builds the board from the netlist and
