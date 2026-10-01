@@ -146,10 +146,18 @@ Notes:
   (2×5, 1.27mm pitch), male pins on the board, the probe's ribbon cable
   brings the female socket. J-Link, ST-Link, the Raspberry Pi Debug
   Probe, CMSIS-DAP probes and Nordic DKs' debug-out all plug straight in.
-  **Samtec FTSH-105-01-L-DV-K** (SMD, ~6.4×3.4mm, LCSC C5155080), the
-  header ARM's spec references. It's unshrouded, so mark pin 1 clearly on
-  the silkscreen; the shrouded, keyed Samtec SHF-105-01-L-D-SM-K
-  (C5143029) is the alternative if board space allows (≈2× the area).
+  **hanxia HX PZ1.27-2x5P TP** (SMD, LCSC C41376037, ~$0.10), a generic
+  2×5 1.27mm SMD header. The Samtec FTSH-105-01-L-DV-K (C5155080) that
+  ARM's spec references is the same thing at ~$1.46. Its recommended land
+  pattern (0.74 × 2.50mm pads, 6.50mm overall) matches KiCad's
+  `PinHeader_2x05_P1.27mm_Vertical_SMD` (0.74 × 2.40mm, 6.30mm overall,
+  same 1.5mm gap between rows) closely enough to keep the stock
+  footprint. Fitted on **every** board: each one needs SWD at least once
+  to flash the bootloader, and later for recovery. It's unshrouded, so
+  the cable can go on either way round: pin 1 is marked on the
+  silkscreen, match it to the ribbon's red stripe. Programmer: the nRF52
+  DK's Debug out (P19, same 10-pin connector) or any J-Link/CMSIS-DAP
+  probe, with a plain 10-pin 1.27mm ribbon cable.
 
   | J1 pin | Signal | BT832 pin |
   |---|---|---|
@@ -703,7 +711,7 @@ batch is JLCPCB-assembled). Resistors are UNI-ROYAL 0603WAF thick film,
 | R_FB_TOP, R_REV | 100kΩ | 0603WAF1003T5E | 0603 | C25803 | ✓ |
 | R_CLAMP_PU, R_OFF_PD, R_LED_PD, R_Q6_PU | 1MΩ | 0603WAF1004T5E | 0603 | C22935 | ✓ |
 | R_PD1, R_PD2 | 2.2MΩ | 0603WAF2204T5E | 0603 | C22938 | |
-| J1 | ARM 10-pin debug | Samtec FTSH-105-01-L-DV-K | 2×5 1.27mm SMD | C5155080 | |
+| J1 | ARM 10-pin debug | hanxia HX PZ1.27-2x5P TP | 2×5 1.27mm SMD | C41376037 | |
 | J2, J3 | wire pads | see Assembly | — | — | |
 
 Notes:
