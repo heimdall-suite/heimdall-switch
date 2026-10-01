@@ -57,7 +57,7 @@
     LED's cathode can go straight to GND (3 daughter-board wires, not 4):
     VBAT → Q6 (BSS84 P-FET) → R_LED (680Ω 1206) → LED → GND. Q6's gate is
     pulled up to VBAT by R_Q6_PU (1MΩ) and pulled to GND by Q5 (AO3400A)
-    when P0.26 (`LED_DRV`) is high, giving Q6 |V_GS| = full pack voltage
+    when P0.03 (`LED_DRV`) is high, giving Q6 |V_GS| = full pack voltage
     (within BSS84's ±20V). R_LED_PD (1MΩ) holds Q5 off while the MCU is
     in reset or dead. Plain GPIO drive; no high-drive mode needed. Cost:
     ~6-13µA through R_Q6_PU *only while the LED is lit*; nothing when off.
@@ -95,12 +95,12 @@ untouched. Programming pins (VDD/GND/RESET/SWDCLK/SWDIO) are covered in
 
 | Pin | Net | Function |
 |---|---|---|
-| 1 | P0.26 | Status LED drive (`LED_DRV`, Q5 gate; high = LED on) |
+| 1 | P0.26 | Spare GPIO (was the LED drive; moved to P0.03 so PCB traces from this pin row don't cross the crystal) |
 | 2 | P0.27 | Spare GPIO |
 | 3 | P0.00/XL1 | 32.768kHz crystal (LFCLK) |
 | 4 | P0.01/XL2 | 32.768kHz crystal (LFCLK) |
 | 5 | P0.02/AIN0 | ADC feedback (load-side sense divider) |
-| 6 | P0.03/AIN1 | Spare GPIO (analog-capable) |
+| 6 | P0.03/AIN1 | Status LED drive (`LED_DRV`, Q5 gate; high = LED on) |
 | 7 | P0.09 | Spare GPIO (NFC pin — needs `NFCPINS` UICR cleared to use as GPIO) |
 | 8 | P0.10 | Spare GPIO (NFC pin — needs `NFCPINS` UICR cleared to use as GPIO) |
 | 9 | VDD | Power |
@@ -170,7 +170,7 @@ Notes:
   the board from its battery while flashing. A probe set to *supply*
   3.3V with no battery connected back-feeds through the buck onto VBAT,
   and with fail-on Q3 then puts ~3V on the load output.
-- 4 spare GPIOs remain (2, 6, 7, 8) if anything else comes up.
+- 4 spare GPIOs remain (1, 2, 7, 8) if anything else comes up.
 - P0.13 must be driven to its saved state as early as possible in boot —
   see [Switching stage](#switching-stage).
 
@@ -378,7 +378,7 @@ status LED + button + J4 breakout, switching stage + load output), KiCad power s
 PWR_FLAGs, and no-connect markers on the intentionally-open pins
 (VSET/PG, spare GPIOs). Signals cross between blocks as net labels:
 `OUT_OFF` (P0.13 → switching stage), `ADC_FB` (divider → P0.02),
-`LED_DRV` (P0.26 → Q5 gate), `BTN` (P0.20 → R_BTN/SW1/J4), and the debug
+`LED_DRV` (P0.03 → Q5 gate), `BTN` (P0.20 → R_BTN/SW1/J4), and the debug
 signals `nRESET`, `SWDCLK`, `SWDIO`, `SWO` (U1 → J1).
 Within the LED/button block, the `LED_A` label carries the LED anode to
 J4.

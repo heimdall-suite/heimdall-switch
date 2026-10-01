@@ -4203,12 +4203,12 @@
 		(uuid "e8a572ed-7b44-483f-9229-cd7304290cef")
 	)
 	(no_connect
-		(at 195.58 83.82)
-		(uuid "44ca69eb-462b-4f98-8b7b-a0b88f435bee")
-	)
-	(no_connect
 		(at 279.4 116.84)
 		(uuid "58e9e802-2694-4721-8e68-42a925b158d0")
+	)
+	(no_connect
+		(at 195.58 71.12)
+		(uuid "6f0c2a1e-3b7d-4e55-9a10-2d8c1f4b7a01")
 	)
 	(no_connect
 		(at 195.58 88.9)
@@ -4289,16 +4289,6 @@
 			(type default)
 		)
 		(uuid "0cbaf628-d313-4ee9-8a32-8c835856dc73")
-	)
-	(wire
-		(pts
-			(xy 195.58 71.12) (xy 199.39 71.12)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "16ff2c99-01a2-4f12-aa60-731380ac0549")
 	)
 	(wire
 		(pts
@@ -4589,6 +4579,16 @@
 			(type default)
 		)
 		(uuid "6a39653d-5d2c-4e70-96be-8ab96037efb8")
+	)
+	(wire
+		(pts
+			(xy 195.58 83.82) (xy 199.39 83.82)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6f0c2a1e-3b7d-4e55-9a10-2d8c1f4b7a02")
 	)
 	(wire
 		(pts
@@ -5130,6 +5130,16 @@
 		)
 		(uuid "6ad34e5a-29f0-4fd3-b44a-62744b60d53e")
 	)
+	(label "LED_DRV"
+		(at 199.39 83.82 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "6f0c2a1e-3b7d-4e55-9a10-2d8c1f4b7a03")
+	)
 	(label "OUT_OFF"
 		(at 200.66 91.44 0)
 		(effects
@@ -5249,16 +5259,6 @@
 			(justify left bottom)
 		)
 		(uuid "f5bf8e1a-7f3b-4e1a-bfd9-06a921ce7e68")
-	)
-	(label "LED_DRV"
-		(at 199.39 71.12 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "fca291d9-3542-42c4-9e6e-6e18476e526c")
 	)
 	(symbol
 		(lib_id "Device:D_Zener")
