@@ -10387,7 +10387,7 @@
 				)
 			)
 		)
-		(property "Value" "KSC641J"
+		(property "Value" "PTS810"
 			(at 275.59 179.07 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10397,7 +10397,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Button_Switch_SMD:SW_Push_1P1T_NO_CK_KSC6xxJ"
+		(property "Footprint" "Button_Switch_SMD:SW_SPST_PTS810"
 			(at 275.59 173.99 0)
 			(hide yes)
 			(show_name no)
@@ -10429,7 +10429,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C226344"
+		(property "LCSC" "C116501"
 			(at 275.59 173.99 0)
 			(hide yes)
 			(show_name no)

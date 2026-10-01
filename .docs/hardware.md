@@ -589,7 +589,8 @@ batch is JLCPCB-assembled). Resistors are UNI-ROYAL 0603WAF thick film,
 | Q3, Q4 | P-FET | AOS AO4407A | SO-8 | C16072 | |
 | D_Z, D_Z2 | 18V zener | onsemi MMSZ5248B | SOD-123 | C2127 | |
 | Y1 | 32.768kHz | Epson FC-135, CL 12.5pF | 3215 | C32346 | ✓ |
-| SW1 | tactile | C&K KSC641J LFS, IP67, 3.4N | 6.2×6.2 SMD | C226344 | |
+| SW1 | tactile | C&K PTS810 SJM 250 SMTR LFS | 4.2×3.2 SMD | C116501 | |
+| (daughter SW1) | tactile, IP67 | C&K KSC641J LFS, 3.4N | 6.2×6.2 SMD | C226344 | |
 | LED1 | green 525nm, 3.2cd, 20° | Everlight 204-10SUGC/S400-A4 | 3mm THT, water clear | C414645 | |
 | R_BTN | 1kΩ | 0603WAF1001T5E | 0603 | C21190 | ✓ |
 | J4 | UI breakout | JST B3B-XH-A(LF)(SN) | XH 1×3 2.5mm THT | C144394 | |
@@ -621,9 +622,15 @@ Notes:
   the -A5 variant (C2927624) is the same die with a 30° beam if 20° turns
   out too narrow to see off-axis. It only blinks on events, so its current
   doesn't show in the power budget.
-- **SW1**: C&K KSC641J — IP67 sealed tactile switch, J-lead (easy to
-  solder by hand), 3.4N actuation (firm enough to resist vibration
-  presses). Chosen over the KSC221J because KiCad's stock
+- **SW1 (main board)**: C&K PTS810 SJM 250 SMTR LFS, 4.2 × 3.2mm
+  J-lead tactile (LCSC C116501; KiCad `Button_Switch_SMD:SW_SPST_PTS810`
+  matches exactly). The on-board button sits inside the hull, so it
+  needn't be sealed, and the KSC641J's 6.2mm body was too big for the
+  main board. Alps SKRPACE010 (C139797) is the same size/package if
+  stock runs out (check its land pattern against the PTS810 footprint).
+- **SW1 (daughter board)**: C&K KSC641J — IP67 sealed tactile switch,
+  J-lead (easy to solder by hand), 3.4N actuation (firm enough to resist
+  vibration presses), for the outside housing. KiCad's stock
   `Button_Switch_SMD:SW_Push_1P1T_NO_CK_KSC6xxJ` footprint matches it
   exactly.
 
