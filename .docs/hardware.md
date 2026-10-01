@@ -489,11 +489,14 @@ below), 3D [top](../hardware/kicad/render-top.png) /
 0 unconnected, full schematic parity. Not yet reviewed by eye in the
 KiCad GUI; treat it as a starting point to iterate on.
 
-**Board**: 63.5 × 23mm, 2 layers, 1.6mm FR4, parts on both sides (hand
+**Board**: 49 × 23mm, 2 layers, 1.6mm FR4, parts on both sides (hand
 assembly: bottom side first, then top, then the through-hole parts).
-- **Left end**: J3 (battery) and J2 (load) wire pads, wires entering from
-  the left end through the strain-relief holes. Q4 and Q3 right behind
-  them.
+- **Left end**: J3 (battery) and J2 (load) wire pads right at the edge,
+  wires entering from the left end. A **2 × 5mm slot** between the two
+  pairs splits the end into two tabs, as on the Jeti SPS-20: each pair
+  gets its own heat shrink over tab and solder joints, which is the
+  strain relief. Q4 and Q3 right behind them, R11 (ADC divider top) in
+  the strip below Q3.
 - **Middle**: the BT832 at its native orientation, antenna over a
   **15 × 6.3mm notch** cut into the top edge (no board or copper under the
   antenna, as Fanstel recommends). Its left pin column (crystal, ADC, LED
@@ -506,8 +509,7 @@ assembly: bottom side first, then top, then the through-hole parts).
 - **Bottom side**: only flat SMD parts, nothing that sticks out, so the
   board can lie flat on its back: Q4's gate parts (D1, R1); the regulator
   chain R2/C3 → U2 → L1 → C4 in one row; Q3's gate network (C7, D2,
-  R5–R10, Q1, Q2); the ADC divider (R11 at LOAD_OUT, R12/C8 at U1's ADC
-  pin); C5/C6 at U1's VDD pin and R4 under the module body; the crystal
+  R5–R10, Q1, Q2); the ADC divider bottom (R12/C8 at U1's ADC pin); C5/C6 at U1's VDD pin and R4 under the module body; the crystal
   load caps C1/C2 behind Y1; R16 by J4. Through-hole leads (J2–J4, LED1)
   are trimmed flush after soldering.
 - Silkscreen: every reference designator at 0.8mm, placed beside its own
@@ -553,7 +555,7 @@ good for ~10A in a harness.
   Default 0.2mm; vias 0.6/0.3 (Power 0.8/0.4). A custom rule
   (`heimdall-switch.kicad_dru`) allows neck-down to 0.15mm where traces
   enter fine-pitch pads (U1, U2), well inside JLCPCB's 0.127mm minimum.
-- 30 vias in total (7 GND stitching), ~645mm of track.
+- 38 vias in total, ~615mm of track.
 
 **How it was routed** (scripts in `hardware/kicad/`, run with KiCad's
 bundled python): `place_pcb.py` builds the board from the netlist and
@@ -563,7 +565,12 @@ and a few hand-placed VBAT/gate connections, exports a Specctra DSN;
 `route_pcb.py finish/gridstitch/islandstitch/cleanup` imports the result,
 pours GND and stitches it. These rebuild everything from scratch, so
 they're only for re-running from a new placement; once the board is
-edited in the GUI, the `.kicad_pcb` is the source of truth.
+edited in the GUI, the `.kicad_pcb` is the source of truth. The current
+board came from that layout shifted 14.5mm left when the relief
+footprints went (slot added, R11 moved to the top side), then
+re-routed with the same pre-routes and `finish/gridstitch/islandstitch/
+cleanup` steps; the coordinates in `place_pcb.py`/`route_pcb.py prep`
+are those of the earlier 63.5mm board.
 
 **Check before ordering**:
 - Print the BT832 footprint 1:1 and lay a module on it (drawn from a
@@ -660,11 +667,14 @@ during bring-up and a fallback to classic external-divider mode is needed
   the end (JR/Futaba, XT30, …) — the same approach as the Jeti SPS-20, and
   the most vibration-proof option (no board-mounted connector to rattle
   loose or lever the joints). Footprint: KiCad
-  `Connector_Wire:SolderWire-0.75sqmm_1x02_P4.8mm_D1.25mm_OD2.3mm_Relief`
-  — through-hole pads for 0.75mm² (≈18 AWG) wire, which carries 3A
-  continuous / 6-8A peaks comfortably and also accepts 20-22 AWG; the
-  "Relief" variant adds holes to loop the insulated wire through as
-  strain relief, so flexing never loads the solder joint.
+  `Connector_Wire:SolderWire-0.75sqmm_1x02_P4.8mm_D1.25mm_OD2.3mm`
+  — through-hole pads (1.6mm drill) for 0.75mm² (≈18 AWG) wire, which
+  carries 3A continuous / 6-8A peaks comfortably and also accepts 20-22
+  AWG. Strain relief is heat shrink: the slot between the battery and
+  load pairs makes two tabs, and a piece of heat shrink over each tab
+  and its two solder joints keeps flexing off the joints (SPS-20 style).
+  This replaced the "Relief" footprint variant (wire looped through
+  extra holes), which cost ~14mm of board length.
 - **Clean the board** (IPA, brush) after assembly, especially around the
   switching stage. R_PD1/R_PD2 (2.2MΩ) and R_CLAMP_PU (1MΩ) set the
   fail-on margin at a few µA, and flux residue plus humidity (boat use)
