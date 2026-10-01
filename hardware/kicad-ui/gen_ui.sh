@@ -147,10 +147,11 @@ DEMO=/c/Users/svefre/AppData/Local/Programs/KiCad/10.0/share/kicad/demos/ecc83/e
 PCB="$OUT/$NAME.kicad_pcb"
 {
   printf '(kicad_pcb\n\t(version 20241229)\n\t(generator "pcbnew")\n\t(generator_version "9.0")\n'
-  printf '\t(general\n\t\t(thickness 1.6)\n\t\t(legacy_teardrops no)\n\t)\n\t(paper "A5")\n'
+  printf '\t(general\n\t\t(thickness 2)\n\t\t(legacy_teardrops no)\n\t)\n\t(paper "A5")\n'
   printf '\t(title_block\n\t\t(title "heimdall-switch UI daughter board")\n\t)\n'
   awk '/^\t\(layers$/,/^\t\)$/' "$DEMO"
-  awk '/^\t\(setup$/,/^\t\)$/' "$DEMO"
+  # 2.0mm board (4 M3 threads in the tapped holes): core 1.51 -> 1.91
+  awk '/^\t\(setup$/,/^\t\)$/' "$DEMO" | sed 's/(thickness 1.51)/(thickness 1.91)/'
   printf '\t(net 0 "")\n\t(net 1 "/LED_A")\n\t(net 2 "/BTN")\n\t(net 3 "GND")\n'
 
   # SW1 centre (106,106): pad 1 (BTN) at y 104, pad 2 (GND) at y 108

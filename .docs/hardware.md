@@ -607,13 +607,16 @@ on the outside of the hull, as on the Jeti SPS-20.
   board.
 - **Cable**: 3-wire JST-XH, crimped to length, pin 1 ↔ pin 1 (1 LED_A,
   2 BTN, 3 GND).
-- **Board**: 35 × 13mm, 2 layers, two **tapped M3 holes** (H1/H2): 2.5mm
+- **Board**: 35 × 13mm, **2.0mm FR4** (order option at JLCPCB; the main
+  board stays 1.6mm), 2 layers, two **tapped M3 holes** (H1/H2): 2.5mm
   tap drill, 28.5mm apart on the board's centreline, H1 3.2mm from the
   left edge. The board itself is tapped M3 and the screws come in from
   the housing, so no head/washer/nut clearance is needed on the board,
   only ~2mm around the thread (project-local footprint
-  `heimdall-switch-ui:MountingHole_2.5mm_M3_Tapped`). 1.6mm FR4 holds ~3
-  threads: fine for clamping a light board, don't over-tighten. From H1:
+  `heimdall-switch-ui:MountingHole_2.5mm_M3_Tapped`). 2.0mm FR4 holds 4
+  threads (0.5mm pitch; 1.6mm would give ~3) and is stiffer under button
+  presses: fine for clamping a light board, don't over-tighten. Worn
+  threads: drill to 3.2mm and use screw + nut. From H1:
   button centre +6.8mm, LED centre +15.6mm, all on the centreline. LED
   and button on the front, facing out; the XH header is mounted on the
   **back**, so the cable leaves straight backwards. Back silk carries the
