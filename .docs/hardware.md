@@ -532,7 +532,9 @@ gate pad and via sit in it), so roughly 8-10A continuous on 1oz.
 AO4407A: −12A continuous, −60A pulsed; at 10A its ~13mΩ is 1.3W, too
 warm for SO-8 continuously, fine for the expected 2-5A (≤0.3W).
 **2oz copper** (a JLCPCB option, extra cost) roughly doubles the copper
-figures if long stalls are expected. The wire pads take 0.75mm² (18AWG),
+figures if long stalls are expected. **Decision: first iterations are
+ordered with standard 1oz**; 2oz is an option for later boards. The
+layout doesn't change (same clearances work for 2oz at JLCPCB). The wire pads take 0.75mm² (18AWG),
 good for ~10A in a harness.
 - **No copper on top under the BT832 body** (rule area): its unused LGA
   pads sit there and would only be separated from traces by solder mask.
