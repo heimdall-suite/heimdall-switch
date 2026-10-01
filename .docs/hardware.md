@@ -578,7 +578,9 @@ are those of the earlier 63.5mm board.
   low-resolution datasheet drawing).
 - Look over the buck loop (U2 → L1 → C4 → GND back to U2/C3) and the
   crystal traces in the GUI; tighten by hand if needed.
-- Wire-pad GND (J2/J3) is a solid connection: needs a hot iron.
+- Through-hole GND pads (J2/J3 pin 2, J4 pin 3, LED1 pin 1) connect
+  solid to the pours (no thermal relief): use a hot iron. J4/LED1 were
+  solid'ed because neighbouring traces clipped their relief spokes.
 
 ## Buck regulator (TPS629206) reference design
 
