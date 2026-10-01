@@ -600,7 +600,7 @@ values select which mode):
   CL21A226MAQNNNE** (22µF 25V X5R 0805, LCSC C45783); the 25V rating
   keeps DC-bias derating at 3.3V small.
 - C_in: TI's reference is 4.7µF 25V 1206. **Selected: Samsung
-  CL31A106KBHNNNE, 10µF 50V X5R 1206** (LCSC C13585, JLCPCB basic): same
+  CL31B106KBHNNNE, 10µF 50V X7R 1206** (LCSC C89632): same
   footprint, and at 12.6V it keeps roughly 5-6µF effective, where a
   4.7µF 25V part drops to ~2µF. The 50V rating also gives headroom for
   hot-plug ringing (below).
@@ -688,7 +688,7 @@ batch is JLCPCB-assembled). Resistors are UNI-ROYAL 0603WAF thick film,
 | LED1 | green 525nm, 3.2cd, 20° | Everlight 204-10SUGC/S400-A4 | 3mm THT, water clear | C414645 | |
 | R_BTN | 1kΩ | 0603WAF1001T5E | 0603 | C21190 | ✓ |
 | J4 | UI breakout | JST B3B-XH-A(LF)(SN) | XH 1×3 2.5mm THT | C144394 | |
-| C_IN | 10µF 50V X5R | Samsung CL31A106KBHNNNE | 1206 | C13585 | ✓ |
+| C_IN | 10µF 50V X7R | Samsung CL31B106KBHNNNE | 1206 | C89632 | |
 | C_OUT | 22µF 25V X5R | Samsung CL21A226MAQNNNE | 0805 | C45783 | ✓ |
 | C_SS | 220nF 50V X7R | Samsung CL21B224KBFNNNE | 0805 | C5378 | ✓ |
 | C_VDD1 | 4.7µF 16V X5R | Samsung CL10A475KO8NNNC | 0603 | C19666 | ✓ |
@@ -697,7 +697,7 @@ batch is JLCPCB-assembled). Resistors are UNI-ROYAL 0603WAF thick film,
 | R_IN | 22Ω | 0603WAF220JT5E | 0603 | C23345 | ✓ |
 | R_G1, R_LIM | 100Ω | 0603WAF1000T5E | 0603 | C22775 | ✓ |
 | R_LED | 680Ω 1/4W | 1206W4F6800T5E | 1206 | C17975 | |
-| R_RST | 10kΩ | 0603WAF1002T5E | 0603 | C25804 | ✓ |
+| R_RST | 10kΩ | Yageo RC0603FR-0710KL | 0603 | C98220 | ✓ |
 | R_MODE | 27.4kΩ | 0603WAF2742T5E | 0603 | C22964 | |
 | R_FB_BOT | 33kΩ | 0603WAF3302T5E | 0603 | C4216 | ✓ |
 | R_FB_TOP, R_REV | 100kΩ | 0603WAF1003T5E | 0603 | C25803 | ✓ |

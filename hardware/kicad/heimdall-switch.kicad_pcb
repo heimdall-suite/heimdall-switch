@@ -6579,7 +6579,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC" "C13585"
+		(property "LCSC" "C89632"
 			(at 0 0 0)
 			(layer "B.Fab")
 			(hide yes)
@@ -9539,7 +9539,7 @@
 				(justify mirror)
 			)
 		)
-		(property "LCSC" "C25804"
+		(property "LCSC" "C98220"
 			(at 0 0 0)
 			(layer "B.Fab")
 			(hide yes)
