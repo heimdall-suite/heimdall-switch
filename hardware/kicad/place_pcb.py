@@ -12,59 +12,58 @@ STOCK = r"C:\Users\svefre\AppData\Local\Programs\KiCad\10.0\share\kicad\footprin
 
 # ref: (x, y, rotation, side)   board origin (100,100), 23mm tall
 P = {
-    # ===== TOP: wires, power FETs, everything you see/touch/plug in
+    # ===== TOP
     "J3": (117.0, 102.8, 270, "F"),   # BATT_IN pads (relief holes at the left edge)
     "J2": (117.0, 115.2, 270, "F"),   # LOAD_OUT pads
     "Q4": (124.2, 103.4, 180, "F"),
     "Q3": (124.2, 116.0, 180, "F"),
-    "J4": (135.5, 111.0, 270, "F"),   # JST-XH to the daughter board
-    "LED1": (151.8, 120.2, 0, "F"),
-    "SW1": (146.4, 119.6, 0, "F"),   # PTS810, next to LED1
-    "J1": (157.0, 111.5, 0, "F"),     # ARM 10-pin debug
-    "U1": (170.0, 111.5, 270, "F"),   # antenna overhangs the right end
-    "Y1": (169.0, 101.9, 0, "F"),
-    # ===== BOTTOM: small parts
-    # Q4 gate (reverse polarity), under Q4
-    "D1": (127.5, 102.2, 0, "B"),
-    "R1": (127.5, 105.0, 0, "B"),
-    # regulator
-    "R2": (133.0, 101.5, 0, "B"),
-    "C3": (133.5, 104.5, 0, "B"),
-    "U2": (138.0, 103.5, 0, "B"),
-    "R3": (138.0, 106.3, 0, "B"),
-    "L1": (141.8, 103.0, 0, "B"),
-    "C4": (145.0, 103.5, 90, "B"),
-    # LED driver
-    "R13": (148.5, 101.5, 0, "B"),
-    "Q6": (152.0, 102.5, 0, "B"),
-    "R14": (156.8, 102.5, 0, "B"),
-    "Q5": (148.0, 105.4, 0, "B"),
-    "R15": (152.0, 106.0, 0, "B"),
-    # Q3 gate network (fail-on switching stage), under Q3 / beside J4
+    "U1": (147.0, 108.0, 0, "F"),     # BT832 mid-board, antenna over the edge notch
+    "Y1": (136.5, 108.5, 90, "F"),    # beside U1 pins 3/4
+    "SW1": (143.5, 120.0, 0, "F"),    # strip under the module body
+    "LED1": (149.0, 120.0, 0, "F"),
+    "J4": (159.5, 109.5, 270, "F"),   # JST-XH to the daughter board
+    # ===== BOTTOM, left section
+    "D1": (130.0, 101.6, 0, "B"),     # Q4 gate
+    "R1": (134.5, 101.6, 0, "B"),
+    "R2": (122.0, 105.0, 90, "B"),    # regulator: R_IN, C_IN, U2, L1, C_OUT
+    "C3": (125.0, 105.0, 90, "B"),
+    "U2": (128.3, 105.0, 0, "B"),
+    "L1": (131.7, 105.0, 0, "B"),
+    "C4": (135.4, 105.0, 90, "B"),
+    "R3": (128.3, 107.6, 0, "B"),
     "R11": (121.8, 110.0, 90, "B"),   # ADC divider top, at LOAD_OUT
-    "C7": (127.0, 109.5, 0, "B"),
-    "D2": (127.5, 112.0, 0, "B"),
-    "R9": (127.0, 115.0, 0, "B"),
-    "R10": (127.0, 117.0, 0, "B"),
-    "R8": (131.5, 114.0, 90, "B"),
-    "Q2": (140.0, 110.5, 0, "B"),
-    "R7": (143.5, 110.5, 0, "B"),
-    "Q1": (140.0, 114.5, 0, "B"),
-    "R5": (143.5, 114.5, 0, "B"),
-    "R6": (143.5, 116.5, 0, "B"),
-    "R16": (139.5, 118.5, 0, "B"),    # button ESD resistor
-    # MCU support
-    "R4": (157.0, 117.5, 0, "B"),     # nRESET pull-up, under J1
-    "C5": (163.8, 116.0, 90, "B"),    # VDD decoupling, under U1 pin 9
-    "C6": (165.6, 116.0, 90, "B"),
-    "R12": (166.4, 107.2, 90, "B"),   # ADC divider bottom + filter, under U1 pin 5
-    "C8": (164.6, 107.2, 90, "B"),
-    "C1": (170.25, 101.9, 90, "B"),   # crystal load caps, under Y1
-    "C2": (167.75, 101.9, 90, "B"),
+    "C7": (125.0, 109.6, 0, "B"),     # Q3 gate network
+    "D2": (130.0, 110.0, 0, "B"),
+    "R8": (134.5, 110.0, 0, "B"),
+    "Q2": (126.0, 114.0, 0, "B"),
+    "R7": (130.0, 113.0, 0, "B"),
+    "Q1": (134.0, 114.5, 0, "B"),
+    "R5": (130.0, 115.2, 0, "B"),
+    "R6": (130.0, 117.4, 0, "B"),
+    "R9": (122.5, 119.0, 0, "B"),
+    "R10": (126.0, 119.0, 0, "B"),
+    "C1": (137.3, 107.25, 90, "B"),   # crystal load caps, behind Y1
+    "C2": (137.3, 110.6, 90, "B"),
+    # ===== BOTTOM, under the module body
+    "J1": (147.0, 112.5, 0, "B"),     # ARM 10-pin debug header
+    "R12": (140.8, 111.0, 90, "B"),   # ADC divider bottom + filter, at pin 5
+    "C8": (140.8, 114.5, 90, "B"),
+    "C6": (152.4, 114.3, 90, "B"),    # VDD decoupling at pin 9
+    "C5": (152.4, 117.8, 90, "B"),
+    "R4": (147.0, 118.0, 0, "B"),     # nRESET pull-up
+    # ===== BOTTOM, right section
+    "Q6": (157.3, 102.5, 0, "B"),     # LED driver
+    "R13": (161.2, 101.4, 0, "B"),
+    "R14": (160.5, 105.6, 0, "B"),
+    "Q5": (157.0, 118.5, 0, "B"),
+    "R15": (161.2, 118.0, 90, "B"),
+    "R16": (157.0, 121.5, 0, "B"),    # button ESD resistor
 }
+# antenna notch in the top edge (no board, no copper under the antenna)
+NOTCH = (139.5, 154.5, 106.3)
 BOARD_X0, BOARD_Y0, BOARD_H = 100.0, 100.0, 23.0
 # right edge = module body/antenna boundary (antenna overhangs)
-BOARD_X1 = P["U1"][0] + 1.8
+BOARD_X1 = 163.5
 
 def lib_dir(nick):
     return LOCAL if nick == "heimdall-switch" else os.path.join(STOCK, nick + ".pretty")
@@ -116,13 +115,15 @@ for c in root.iter("comp"):
     if side == "B":
         fp.Flip(fp.GetPosition(), pcbnew.FLIP_DIRECTION_LEFT_RIGHT)
 
-# board outline
-r = pcbnew.PCB_SHAPE(board, pcbnew.SHAPE_T_RECT)
-r.SetStart(pcbnew.VECTOR2I_MM(BOARD_X0, BOARD_Y0))
-r.SetEnd(pcbnew.VECTOR2I_MM(BOARD_X1, BOARD_Y0 + BOARD_H))
-r.SetLayer(pcbnew.Edge_Cuts)
-r.SetWidth(pcbnew.FromMM(0.05))
-board.Add(r)
+# board outline with the antenna notch
+x0, y0, x1, y1 = BOARD_X0, BOARD_Y0, BOARD_X1, BOARD_Y0 + BOARD_H
+nx0, nx1, ny = NOTCH
+pts = [(x0, y0), (nx0, y0), (nx0, ny), (nx1, ny), (nx1, y0), (x1, y0), (x1, y1), (x0, y1), (x0, y0)]
+for (ax, ay), (bx, by) in zip(pts, pts[1:]):
+    l = pcbnew.PCB_SHAPE(board, pcbnew.SHAPE_T_SEGMENT)
+    l.SetStart(pcbnew.VECTOR2I_MM(ax, ay)); l.SetEnd(pcbnew.VECTOR2I_MM(bx, by))
+    l.SetLayer(pcbnew.Edge_Cuts); l.SetWidth(pcbnew.FromMM(0.05))
+    board.Add(l)
 
 pcbnew.SaveBoard(OUT, board)
 print("placed; unplaced:", missing, "board %.1f x %.1f mm" % (BOARD_X1 - BOARD_X0, BOARD_H))
