@@ -106,7 +106,7 @@ untouched. Programming pins (VDD/GND/RESET/SWDCLK/SWDIO) are covered in
 | 9 | VDD | Power |
 | 10 | GND | Ground |
 | 11 | P0.13 | Output OFF-hold (high = output OFF, released = ON) |
-| 12 | P0.18 | SWO (trace output to J1 pin 6) |
+| 12 | P0.18 | SWO (trace output to J1 pad 6) |
 | 13 | P0.20 | Button input (GPIOTE, must wake from System OFF) |
 | 14 | P0.21/RESET | SWD reset |
 | 15 | SWDCLK | SWD clock |
@@ -138,29 +138,35 @@ Notes:
 - **P0.09/P0.10** default to NFC antenna function at reset; firmware must
   clear the `NFCPINS` UICR register once to use them as plain GPIOs. No
   hardware-side implication, just a firmware bring-up step to remember.
-- Programming header: pins 9/10/14/15/16 (VDD/GND/RESET/SWDCLK/SWDIO) are
-  grouped on the same edge of the module — worth breaking out to a small
-  pogo-pin test-jig footprint or header for repeated flashing during
-  bring-up, rather than hand-wiring each time.
-- **SWD header J1**: the standard **ARM Cortex Debug 10-pin** connector
-  (2×5, 1.27mm pitch), male pins on the board, the probe's ribbon cable
-  brings the female socket. J-Link, ST-Link, the Raspberry Pi Debug
-  Probe, CMSIS-DAP probes and Nordic DKs' debug-out all plug straight in.
-  **Samtec FTSH-105-01-L-DV-K** (SMD, ~6.4×3.4mm, LCSC C5155080), the
-  header ARM's spec references. It's unshrouded, so mark pin 1 clearly on
-  the silkscreen; the shrouded, keyed Samtec SHF-105-01-L-D-SM-K
-  (C5143029) is the alternative if board space allows (≈2× the area).
+- Programming pins 9/10/14/15/16 (VDD/GND/RESET/SWDCLK/SWDIO) are
+  grouped on the same edge of the module, next to the Tag-Connect pads.
+- **SWD connector J1: Tag-Connect TC2030-NL** footprint (KiCad
+  `Connector:Tag-Connect_TC2030-IDC-NL_2x03_P1.27mm_Vertical`): six
+  plated pads plus three locating holes, **no part on the board** — the
+  pogo-pin cable is pressed onto the pads while flashing. Chosen over a
+  2×5 1.27mm header (the Samtec FTSH-105 was $1.46/board, the most
+  expensive part after the BT832 and U2): the footprint costs nothing,
+  and once a BLE DFU bootloader is in, SWD is only needed once per board
+  plus on the dev board. The no-legs variant was picked because its
+  locating holes take nothing through to the populated bottom side; hold
+  the plug by hand, or use Tag-Connect's TC2030-CLIP retainer for longer
+  debug sessions.
+  - Cable: **TC2030-CTX-NL** (Tag-Connect, one-off ≈ $40-50), which
+    ends in the standard ARM Cortex Debug 10-pin 1.27mm socket — J-Link,
+    ST-Link, Raspberry Pi Debug Probe, CMSIS-DAP and Nordic DKs plug in
+    as before. (TC2030-CTX-NL is the version for probes with that 10-pin
+    connector; the plain TC2030-IDC-NL has a 6-pin ribbon instead.)
+  - Keep the footprint area clear of tall parts: the plug sits flat on
+    the 7 × 4mm courtyard.
 
-  | J1 pin | Signal | BT832 pin |
+  | J1 pad | Signal | BT832 pin |
   |---|---|---|
-  | 1 | VTref (+3V3) | 9 (VDD) |
+  | 1 | VCC / VTref (+3V3) | 9 (VDD) |
   | 2 | SWDIO | 16 |
-  | 3, 5, 9 | GND (9 = GNDDetect) | 10 |
+  | 3 | nRESET (10k pull-up R_RST to +3V3) | 14 (P0.21/RESET) |
   | 4 | SWCLK | 15 |
+  | 5 | GND | 10 |
   | 6 | SWO | 12 (P0.18) |
-  | 7 | KEY (no pin function) | — |
-  | 8 | NC/TDI (not connected) | — |
-  | 10 | nRESET (10k pull-up R_RST to +3V3) | 14 (P0.21/RESET) |
 
   SWO is the nRF52832's trace output, fixed to P0.18 in silicon: wiring
   it gives printf-style logging over the debug probe (e.g. SEGGER SWO
@@ -395,7 +401,7 @@ connect (this happened once, to SWDCLK/SWDIO).
 Sheet layout: the reverse polarity block (J3 → Q4 → VBAT, with D_Z2 and
 R_REV) sits on its own below the regulator and connects to it through the
 `VBAT` power symbol; J3's pin 1 net is labelled `BATT+`. The debug
-header J1 (with R_RST) sits in its own block right of the crystal,
+connector J1 (with R_RST) sits in its own block right of the crystal,
 linked to U1 by labels, so no wires cross.
 
 Reading the schematic:
@@ -494,7 +500,7 @@ assembly: bottom side first, then top, then the through-hole parts).
 - **Top side** (what you see, touch or plug in): wire pads, Q3/Q4, U1,
   Y1 beside U1's crystal pins, the LED driver (Q5/Q6/R13–R15) next to the
   VBAT bar, SW1 + LED1 in the strip below the module, and at the right
-  end J1 (debug header, rotated so the cable leaves upwards) above J4.
+  end J1 (Tag-Connect TC2030-NL pads for SWD) above J4.
 - **Bottom side**: only flat SMD parts, nothing that sticks out, so the
   board can lie flat on its back: Q4's gate parts (D1, R1); the regulator
   chain R2/C3 → U2 → L1 → C4 in one row; Q3's gate network (C7, D2,
@@ -545,7 +551,7 @@ good for ~10A in a harness.
   Default 0.2mm; vias 0.6/0.3 (Power 0.8/0.4). A custom rule
   (`heimdall-switch.kicad_dru`) allows neck-down to 0.15mm where traces
   enter fine-pitch pads (U1, U2), well inside JLCPCB's 0.127mm minimum.
-- 30 vias in total (7 GND stitching), ~645mm of track.
+- 33 vias in total (7 GND stitching), ~635mm of track.
 
 **How it was routed** (scripts in `hardware/kicad/`, run with KiCad's
 bundled python): `place_pcb.py` builds the board from the netlist and
@@ -703,7 +709,7 @@ batch is JLCPCB-assembled). Resistors are UNI-ROYAL 0603WAF thick film,
 | R_FB_TOP, R_REV | 100kΩ | 0603WAF1003T5E | 0603 | C25803 | ✓ |
 | R_CLAMP_PU, R_OFF_PD, R_LED_PD, R_Q6_PU | 1MΩ | 0603WAF1004T5E | 0603 | C22935 | ✓ |
 | R_PD1, R_PD2 | 2.2MΩ | 0603WAF2204T5E | 0603 | C22938 | |
-| J1 | ARM 10-pin debug | Samtec FTSH-105-01-L-DV-K | 2×5 1.27mm SMD | C5155080 | |
+| J1 | SWD (footprint only) | Tag-Connect TC2030-NL pads, cable TC2030-CTX-NL | — | — | |
 | J2, J3 | wire pads | see Assembly | — | — | |
 
 Notes:
