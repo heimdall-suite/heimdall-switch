@@ -2518,6 +2518,400 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "heimdall-switch:AO4407A"
+			(pin_numbers
+				(hide yes)
+			)
+			(pin_names
+				(offset 0)
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(in_pos_files yes)
+			(duplicate_pin_numbers_are_jumpers no)
+			(property "Reference" "Q"
+				(at 5.08 1.905 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Value" "AO4407A"
+				(at 5.08 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(justify left)
+				)
+			)
+			(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
+				(at 5.08 2.54 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Description" "P-MOSFET transistor, gate/source/drain"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "ki_keywords" "transistor PMOS P-MOS P-MOSFET"
+				(at 0 0 0)
+				(show_name no)
+				(do_not_autoplace no)
+				(hide yes)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(symbol "AO4407A_0_1"
+				(polyline
+					(pts
+						(xy 0.254 1.905) (xy 0.254 -1.905)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.254 0) (xy -2.54 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.762 2.286) (xy 0.762 1.27)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.762 1.778) (xy 3.302 1.778) (xy 3.302 -1.778) (xy 0.762 -1.778)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.762 0.508) (xy 0.762 -0.508)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0.762 -1.27) (xy 0.762 -2.286)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 1.651 0)
+					(radius 2.794)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.286 0) (xy 1.27 0.381) (xy 1.27 -0.381) (xy 2.286 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.54 2.54) (xy 2.54 1.778)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(circle
+					(center 2.54 1.778)
+					(radius 0.254)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(circle
+					(center 2.54 -1.778)
+					(radius 0.254)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.54 -2.54) (xy 2.54 0) (xy 0.762 0)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 2.921 -0.381) (xy 3.683 -0.381)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 3.302 -0.381) (xy 2.921 0.254) (xy 3.683 0.254) (xy 3.302 -0.381)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "AO4407A_1_1"
+				(pin passive line
+					(at 2.54 -5.08 90)
+					(length 2.54)
+					(name "S"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 -5.08 90)
+					(length 2.54)
+					(name "S"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 -5.08 90)
+					(length 2.54)
+					(name "S"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin input line
+					(at -5.08 0 0)
+					(length 2.54)
+					(name "G"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 5.08 270)
+					(length 2.54)
+					(name "D"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 5.08 270)
+					(length 2.54)
+					(name "D"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "6"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 5.08 270)
+					(length 2.54)
+					(name "D"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "7"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 2.54 5.08 270)
+					(length 2.54)
+					(name "D"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "8"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "heimdall-switch:BT832"
 			(exclude_from_sim no)
 			(in_bom yes)
@@ -4877,7 +5271,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "0003eccf-5ad3-4352-be40-cc044ccf1d34")
-		(property "Reference" "D_Z2"
+		(property "Reference" "D1"
 			(at 105.41 105.41 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -4899,7 +5293,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Diode_SMD:D_SOD-123"
 			(at 102.87 106.68 0)
 			(hide yes)
 			(show_name no)
@@ -4942,6 +5336,17 @@
 				)
 			)
 		)
+		(property "Function" "D_Z2"
+			(at 102.87 106.68 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "a6e531c5-2739-4e9e-8623-5a9b647783d6")
 		)
@@ -4951,7 +5356,7 @@
 		(instances
 			(project "heimdall-switch"
 				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
-					(reference "D_Z2")
+					(reference "D1")
 					(unit 1)
 				)
 			)
@@ -5064,7 +5469,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Crystal:Crystal_SMD_3215-2Pin_3.2x1.5mm"
 			(at 236.22 80.01 0)
 			(hide yes)
 			(show_name no)
@@ -5231,7 +5636,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "LED_THT:LED_D3.0mm"
 			(at 237.49 198.12 0)
 			(hide yes)
 			(show_name no)
@@ -5300,7 +5705,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "08429f1d-444a-43d2-8091-0b5e9c12cc0c")
-		(property "Reference" "R_RST"
+		(property "Reference" "R4"
 			(at 271.78 96.52 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5322,7 +5727,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 274.32 100.33 0)
 			(hide yes)
 			(show_name no)
@@ -5365,6 +5770,17 @@
 				)
 			)
 		)
+		(property "Function" "R_RST"
+			(at 274.32 100.33 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "f539af81-da51-49c2-a90f-fd3ec051f084")
 		)
@@ -5374,7 +5790,7 @@
 		(instances
 			(project "heimdall-switch"
 				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
-					(reference "R_RST")
+					(reference "R4")
 					(unit 1)
 				)
 			)
@@ -5457,7 +5873,7 @@
 		)
 	)
 	(symbol
-		(lib_id "Transistor_FET:Q_PMOS_GSD")
+		(lib_id "heimdall-switch:AO4407A")
 		(at 90.17 105.41 90)
 		(unit 1)
 		(body_style 1)
@@ -5487,7 +5903,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
 			(at 90.17 105.41 0)
 			(hide yes)
 			(show_name no)
@@ -5531,13 +5947,28 @@
 			)
 		)
 		(pin "1"
-			(uuid "e2ef9699-a38c-4b49-9c14-b30269e434ec")
+			(uuid "d9ce4195-9653-6a84-351b-315b432247f5")
 		)
 		(pin "2"
-			(uuid "0740f692-b189-4e6e-a1c9-3bb4d2ec51ea")
+			(uuid "a4a4d44c-4cf2-c28c-fe18-415b4b3abda0")
 		)
 		(pin "3"
-			(uuid "4a429512-4fd1-43d8-afe5-8ca55a024e67")
+			(uuid "0ba7eebe-cea9-d026-df83-b316ac58f0ed")
+		)
+		(pin "4"
+			(uuid "96672da5-3523-aad0-8e69-1dc084c302eb")
+		)
+		(pin "5"
+			(uuid "459e8421-3b4f-8552-8700-2f842024d01d")
+		)
+		(pin "6"
+			(uuid "a46d9967-275c-a6f9-3799-1c831a34e185")
+		)
+		(pin "7"
+			(uuid "5b189fe7-bc26-5577-c186-e27fc762e1c1")
+		)
+		(pin "8"
+			(uuid "ab451d7e-006b-5f58-3818-78503f22b393")
 		)
 		(instances
 			(project "heimdall-switch"
@@ -5732,7 +6163,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "heimdall-switch:Fanstel_BT832"
 			(at 180.34 88.9 0)
 			(hide yes)
 			(show_name no)
@@ -5852,7 +6283,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Inductor_SMD:L_1008_2520Metric"
 			(at 114.3 52.07 0)
 			(hide yes)
 			(show_name no)
@@ -5921,7 +6352,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "1b95466d-9eb7-419c-aa05-4a9e898c2e8e")
-		(property "Reference" "R_OFF_PD"
+		(property "Reference" "R6"
 			(at 41.91 170.18 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -5943,7 +6374,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 44.45 171.45 0)
 			(hide yes)
 			(show_name no)
@@ -5986,6 +6417,17 @@
 				)
 			)
 		)
+		(property "Function" "R_OFF_PD"
+			(at 44.45 171.45 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "1e5b4bb7-806c-4525-b783-41773f806f36")
 		)
@@ -5995,7 +6437,7 @@
 		(instances
 			(project "heimdall-switch"
 				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
-					(reference "R_OFF_PD")
+					(reference "R6")
 					(unit 1)
 				)
 			)
@@ -6032,7 +6474,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-583-8"
 			(at 91.44 55.88 0)
 			(hide yes)
 			(show_name no)
@@ -6119,7 +6561,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "28243d24-120b-44e5-b4e5-a0d17de49308")
-		(property "Reference" "R_LED_PD"
+		(property "Reference" "R15"
 			(at 214.63 195.58 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6141,7 +6583,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 217.17 195.58 0)
 			(hide yes)
 			(show_name no)
@@ -6184,6 +6626,17 @@
 				)
 			)
 		)
+		(property "Function" "R_LED_PD"
+			(at 217.17 195.58 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "8e8766c7-8f68-4b10-9f77-a263c2c25be3")
 		)
@@ -6193,7 +6646,7 @@
 		(instances
 			(project "heimdall-switch"
 				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
-					(reference "R_LED_PD")
+					(reference "R15")
 					(unit 1)
 				)
 			)
@@ -6210,7 +6663,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "2876e9fa-51ae-412f-9224-9db85032bcfe")
-		(property "Reference" "D_Z"
+		(property "Reference" "D2"
 			(at 106.68 162.56 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6232,7 +6685,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Diode_SMD:D_SOD-123"
 			(at 104.14 163.83 0)
 			(hide yes)
 			(show_name no)
@@ -6275,6 +6728,17 @@
 				)
 			)
 		)
+		(property "Function" "D_Z"
+			(at 104.14 163.83 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "cc519974-3162-48fe-9311-8175a9d951c8")
 		)
@@ -6284,7 +6748,7 @@
 		(instances
 			(project "heimdall-switch"
 				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
-					(reference "D_Z")
+					(reference "D2")
 					(unit 1)
 				)
 			)
@@ -6322,7 +6786,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_Wire:SolderWire-0.75sqmm_1x02_P4.8mm_D1.25mm_OD2.3mm_Relief"
 			(at 69.85 102.87 0)
 			(hide yes)
 			(show_name no)
@@ -6380,7 +6844,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "2a042beb-a7f9-4fb2-81a4-6c580ae52fa8")
-		(property "Reference" "R_Q6_PU"
+		(property "Reference" "R13"
 			(at 224.79 176.53 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6402,7 +6866,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 227.33 177.8 0)
 			(hide yes)
 			(show_name no)
@@ -6445,6 +6909,17 @@
 				)
 			)
 		)
+		(property "Function" "R_Q6_PU"
+			(at 227.33 177.8 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "bd9cefaa-9432-4e90-bd66-8f453b35ddca")
 		)
@@ -6454,7 +6929,7 @@
 		(instances
 			(project "heimdall-switch"
 				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
-					(reference "R_Q6_PU")
+					(reference "R13")
 					(unit 1)
 				)
 			)
@@ -6471,7 +6946,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "2e4dbb62-c93d-492c-ab40-17b1f6c407a6")
-		(property "Reference" "R_G1"
+		(property "Reference" "R5"
 			(at 38.1 162.56 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6491,7 +6966,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 38.1 167.64 0)
 			(hide yes)
 			(show_name no)
@@ -6534,6 +7009,17 @@
 				)
 			)
 		)
+		(property "Function" "R_G1"
+			(at 38.1 167.64 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "760d9109-b612-491d-995d-008edc41ed37")
 		)
@@ -6543,7 +7029,7 @@
 		(instances
 			(project "heimdall-switch"
 				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
-					(reference "R_G1")
+					(reference "R5")
 					(unit 1)
 				)
 			)
@@ -6582,7 +7068,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 243.84 80.01 0)
 			(hide yes)
 			(show_name no)
@@ -6651,7 +7137,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "369c3e57-c674-4363-8cd4-d6f5f8f1c056")
-		(property "Reference" "C_FB"
+		(property "Reference" "C8"
 			(at 142.24 190.5 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6673,7 +7159,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 139.7 191.77 0)
 			(hide yes)
 			(show_name no)
@@ -6716,6 +7202,17 @@
 				)
 			)
 		)
+		(property "Function" "C_FB"
+			(at 139.7 191.77 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "f01baa7b-db76-43d4-8cfc-9f18785cf42a")
 		)
@@ -6725,7 +7222,7 @@
 		(instances
 			(project "heimdall-switch"
 				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
-					(reference "C_FB")
+					(reference "C8")
 					(unit 1)
 				)
 			)
@@ -6742,7 +7239,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "3c0ae9b1-f190-406d-8435-ca7c8b579bb9")
-		(property "Reference" "R_MODE"
+		(property "Reference" "R3"
 			(at 68.58 66.04 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6764,7 +7261,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 66.04 67.31 0)
 			(hide yes)
 			(show_name no)
@@ -6807,6 +7304,17 @@
 				)
 			)
 		)
+		(property "Function" "R_MODE"
+			(at 66.04 67.31 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "56ffe7ac-42c9-4a6b-a964-81648ab052e3")
 		)
@@ -6816,7 +7324,7 @@
 		(instances
 			(project "heimdall-switch"
 				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
-					(reference "R_MODE")
+					(reference "R3")
 					(unit 1)
 				)
 			)
@@ -6833,7 +7341,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "3e9f0b13-40d3-41b1-983f-43823ce77fe7")
-		(property "Reference" "R_REV"
+		(property "Reference" "R1"
 			(at 92.71 113.03 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6855,7 +7363,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 90.17 114.3 0)
 			(hide yes)
 			(show_name no)
@@ -6898,6 +7406,17 @@
 				)
 			)
 		)
+		(property "Function" "R_REV"
+			(at 90.17 114.3 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "7beb0e16-57f6-4d58-b236-014de7e2b991")
 		)
@@ -6907,7 +7426,7 @@
 		(instances
 			(project "heimdall-switch"
 				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
-					(reference "R_REV")
+					(reference "R1")
 					(unit 1)
 				)
 			)
@@ -6924,7 +7443,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "422ad13e-813b-4a89-b252-b0cc95ab71ff")
-		(property "Reference" "C_SS"
+		(property "Reference" "C7"
 			(at 93.98 161.29 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -6946,7 +7465,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 96.52 163.83 0)
 			(hide yes)
 			(show_name no)
@@ -6989,6 +7508,17 @@
 				)
 			)
 		)
+		(property "Function" "C_SS"
+			(at 96.52 163.83 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "262acf07-fa45-433c-97f0-1a4a9662238c")
 		)
@@ -6998,14 +7528,14 @@
 		(instances
 			(project "heimdall-switch"
 				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
-					(reference "C_SS")
+					(reference "C7")
 					(unit 1)
 				)
 			)
 		)
 	)
 	(symbol
-		(lib_id "Transistor_FET:Q_PMOS_GSD")
+		(lib_id "heimdall-switch:AO4407A")
 		(at 116.84 167.64 0)
 		(mirror x)
 		(unit 1)
@@ -7038,7 +7568,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_SO:SOIC-8_3.9x4.9mm_P1.27mm"
 			(at 116.84 167.64 0)
 			(hide yes)
 			(show_name no)
@@ -7082,13 +7612,28 @@
 			)
 		)
 		(pin "1"
-			(uuid "76ba8d06-ea8a-497b-8ef8-64b309ccb093")
+			(uuid "a88aabf3-f9b9-d651-0f77-3ecd19a73213")
 		)
 		(pin "2"
-			(uuid "ecd104aa-a00a-43bc-a972-750e2f0e1665")
+			(uuid "7dbbbc7e-8762-293f-0120-e4d69a18daf1")
 		)
 		(pin "3"
-			(uuid "49b9c6bb-de2f-4ffb-8be2-7f5b4b08df6c")
+			(uuid "1f572efe-9bb9-1e37-18b8-cfa683763bd2")
+		)
+		(pin "4"
+			(uuid "29be2813-7ea8-c94f-f247-cc21b7980a1c")
+		)
+		(pin "5"
+			(uuid "fe574f8a-a342-f836-41c2-aa611ca25a11")
+		)
+		(pin "6"
+			(uuid "b80c0352-c0cb-6200-5574-1fb01a4376b3")
+		)
+		(pin "7"
+			(uuid "3ed4a6e9-3449-3720-c5f5-88e2d5a5027f")
+		)
+		(pin "8"
+			(uuid "18429cf8-2ea0-38f8-df0b-5c7ced709df5")
 		)
 		(instances
 			(project "heimdall-switch"
@@ -7186,7 +7731,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "50e015a3-1d25-4038-b2be-8afc7074002c")
-		(property "Reference" "R_LED"
+		(property "Reference" "R14"
 			(at 240.03 187.96 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -7208,7 +7753,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_1206_3216Metric"
 			(at 237.49 190.5 0)
 			(hide yes)
 			(show_name no)
@@ -7251,6 +7796,17 @@
 				)
 			)
 		)
+		(property "Function" "R_LED"
+			(at 237.49 190.5 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "289a7cbb-9721-400f-a7af-a98c372931ff")
 		)
@@ -7260,7 +7816,7 @@
 		(instances
 			(project "heimdall-switch"
 				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
-					(reference "R_LED")
+					(reference "R14")
 					(unit 1)
 				)
 			)
@@ -7755,7 +8311,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
 			(at 224.79 191.77 0)
 			(hide yes)
 			(show_name no)
@@ -7926,7 +8482,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
 			(at 68.58 157.48 0)
 			(hide yes)
 			(show_name no)
@@ -8302,7 +8858,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "8b3a0252-5b9d-4de2-b079-3a71259e2313")
-		(property "Reference" "R_BTN"
+		(property "Reference" "R16"
 			(at 264.16 171.45 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8322,7 +8878,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 264.16 173.99 0)
 			(hide yes)
 			(show_name no)
@@ -8365,6 +8921,17 @@
 				)
 			)
 		)
+		(property "Function" "R_BTN"
+			(at 264.16 173.99 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "7f53a617-6990-4c09-acee-1ac01bb46402")
 		)
@@ -8374,7 +8941,7 @@
 		(instances
 			(project "heimdall-switch"
 				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
-					(reference "R_BTN")
+					(reference "R16")
 					(unit 1)
 				)
 			)
@@ -8414,7 +8981,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
 			(at 234.95 181.61 0)
 			(hide yes)
 			(show_name no)
@@ -8486,7 +9053,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "97c4363c-aa97-4fe1-ad0f-2a62665d4661")
-		(property "Reference" "C_OUT"
+		(property "Reference" "C4"
 			(at 127.46 64.69 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8506,7 +9073,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 124.46 59.69 0)
 			(hide yes)
 			(show_name no)
@@ -8549,6 +9116,17 @@
 				)
 			)
 		)
+		(property "Function" "C_OUT"
+			(at 124.46 59.69 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "355df246-8f4f-4122-be5f-d7069f57aa09")
 		)
@@ -8558,7 +9136,7 @@
 		(instances
 			(project "heimdall-switch"
 				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
-					(reference "C_OUT")
+					(reference "C4")
 					(unit 1)
 				)
 			)
@@ -8651,7 +9229,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "9bea7edd-6f88-4cae-a646-18447bafd0ef")
-		(property "Reference" "R_PD1"
+		(property "Reference" "R9"
 			(at 78.74 170.18 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -8673,7 +9251,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 81.28 171.45 0)
 			(hide yes)
 			(show_name no)
@@ -8716,6 +9294,17 @@
 				)
 			)
 		)
+		(property "Function" "R_PD1"
+			(at 81.28 171.45 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "fdd3dcdb-5ca0-4d85-b96f-03548a98cbdc")
 		)
@@ -8725,7 +9314,7 @@
 		(instances
 			(project "heimdall-switch"
 				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
-					(reference "R_PD1")
+					(reference "R9")
 					(unit 1)
 				)
 			)
@@ -9069,7 +9658,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_PinHeader_1.27mm:PinHeader_2x05_P1.27mm_Vertical_SMD"
 			(at 292.1 111.76 0)
 			(hide yes)
 			(show_name no)
@@ -9260,7 +9849,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Package_TO_SOT_SMD:SOT-23"
 			(at 53.34 167.64 0)
 			(hide yes)
 			(show_name no)
@@ -9408,7 +9997,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "b08e72a3-2399-4f7e-b778-35d921fe9792")
-		(property "Reference" "R_IN"
+		(property "Reference" "R2"
 			(at 39.37 50.8 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9428,7 +10017,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 39.37 48.26 0)
 			(hide yes)
 			(show_name no)
@@ -9471,6 +10060,17 @@
 				)
 			)
 		)
+		(property "Function" "R_IN"
+			(at 39.37 48.26 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "0cb773d4-8f6d-44ab-b8ba-37a0abeadc4a")
 		)
@@ -9480,7 +10080,7 @@
 		(instances
 			(project "heimdall-switch"
 				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
-					(reference "R_IN")
+					(reference "R2")
 					(unit 1)
 				)
 			)
@@ -9497,7 +10097,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "b0a6ca31-0df7-470d-ad4b-a6d0f9089e5a")
-		(property "Reference" "R_PD2"
+		(property "Reference" "R10"
 			(at 91.44 170.18 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9519,7 +10119,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 88.9 171.45 0)
 			(hide yes)
 			(show_name no)
@@ -9562,6 +10162,17 @@
 				)
 			)
 		)
+		(property "Function" "R_PD2"
+			(at 88.9 171.45 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "65998016-c5dd-437b-9078-cd5b62f51ae3")
 		)
@@ -9571,7 +10182,7 @@
 		(instances
 			(project "heimdall-switch"
 				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
-					(reference "R_PD2")
+					(reference "R10")
 					(unit 1)
 				)
 			)
@@ -9588,7 +10199,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "b22526b4-67c5-44af-9bd5-83c57b1d16c0")
-		(property "Reference" "R_FB_BOT"
+		(property "Reference" "R12"
 			(at 129.54 190.5 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -9610,7 +10221,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 132.08 191.77 0)
 			(hide yes)
 			(show_name no)
@@ -9653,6 +10264,17 @@
 				)
 			)
 		)
+		(property "Function" "R_FB_BOT"
+			(at 132.08 191.77 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "911666db-1ca6-48a5-bdae-22f184989b44")
 		)
@@ -9662,7 +10284,7 @@
 		(instances
 			(project "heimdall-switch"
 				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
-					(reference "R_FB_BOT")
+					(reference "R12")
 					(unit 1)
 				)
 			)
@@ -9775,7 +10397,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Button_Switch_SMD:SW_Push_1P1T_NO_CK_KSC6xxJ"
 			(at 275.59 173.99 0)
 			(hide yes)
 			(show_name no)
@@ -10018,7 +10640,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 231.14 87.63 0)
 			(hide yes)
 			(show_name no)
@@ -10087,7 +10709,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "bcd1f565-486a-4fcb-9f6d-03e41ba4e76d")
-		(property "Reference" "C_VDD1"
+		(property "Reference" "C5"
 			(at 144.78 81.28 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10109,7 +10731,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 147.32 82.55 0)
 			(hide yes)
 			(show_name no)
@@ -10152,6 +10774,17 @@
 				)
 			)
 		)
+		(property "Function" "C_VDD1"
+			(at 147.32 82.55 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "e4a8e8bd-4e44-4d8b-a7ff-e594fdd1863b")
 		)
@@ -10161,7 +10794,7 @@
 		(instances
 			(project "heimdall-switch"
 				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
-					(reference "C_VDD1")
+					(reference "C5")
 					(unit 1)
 				)
 			)
@@ -10178,7 +10811,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "bd925aa8-a741-4e41-b8fd-2539c8586e1b")
-		(property "Reference" "R_FB_TOP"
+		(property "Reference" "R11"
 			(at 129.54 182.88 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10200,7 +10833,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 132.08 184.15 0)
 			(hide yes)
 			(show_name no)
@@ -10243,6 +10876,17 @@
 				)
 			)
 		)
+		(property "Function" "R_FB_TOP"
+			(at 132.08 184.15 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "cde6a674-b30c-4e27-9fe6-150a6c2a41a3")
 		)
@@ -10252,7 +10896,7 @@
 		(instances
 			(project "heimdall-switch"
 				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
-					(reference "R_FB_TOP")
+					(reference "R11")
 					(unit 1)
 				)
 			)
@@ -10289,7 +10933,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_Wire:SolderWire-0.75sqmm_1x02_P4.8mm_D1.25mm_OD2.3mm_Relief"
 			(at 160.02 180.34 0)
 			(hide yes)
 			(show_name no)
@@ -10446,7 +11090,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_JST:JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical"
 			(at 303.53 181.61 0)
 			(hide yes)
 			(show_name no)
@@ -10594,7 +11238,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "d1fd0c63-6735-4faf-b782-e0f6758166a2")
-		(property "Reference" "C_IN"
+		(property "Reference" "C3"
 			(at 48.26 50.8 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10616,7 +11260,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_1206_3216Metric"
 			(at 45.72 52.07 0)
 			(hide yes)
 			(show_name no)
@@ -10659,6 +11303,17 @@
 				)
 			)
 		)
+		(property "Function" "C_IN"
+			(at 45.72 52.07 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "6c7a4990-1e4a-4998-b007-272c8f679b23")
 		)
@@ -10668,7 +11323,7 @@
 		(instances
 			(project "heimdall-switch"
 				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
-					(reference "C_IN")
+					(reference "C3")
 					(unit 1)
 				)
 			)
@@ -10761,7 +11416,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "d8c1355d-3774-42ef-bf10-9ed634573e98")
-		(property "Reference" "C_VDD2"
+		(property "Reference" "C6"
 			(at 157.48 81.28 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10783,7 +11438,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0603_1608Metric"
 			(at 154.94 82.55 0)
 			(hide yes)
 			(show_name no)
@@ -10826,6 +11481,17 @@
 				)
 			)
 		)
+		(property "Function" "C_VDD2"
+			(at 154.94 82.55 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "e1b23e87-7628-40fc-b855-e9df0b6d349b")
 		)
@@ -10835,7 +11501,7 @@
 		(instances
 			(project "heimdall-switch"
 				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
-					(reference "C_VDD2")
+					(reference "C6")
 					(unit 1)
 				)
 			)
@@ -10928,7 +11594,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "df0f5ce2-eb91-405c-a604-29ce28dfda0e")
-		(property "Reference" "R_LIM"
+		(property "Reference" "R8"
 			(at 76.2 162.56 90)
 			(show_name no)
 			(do_not_autoplace no)
@@ -10948,7 +11614,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 76.2 167.64 0)
 			(hide yes)
 			(show_name no)
@@ -10991,6 +11657,17 @@
 				)
 			)
 		)
+		(property "Function" "R_LIM"
+			(at 76.2 167.64 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "72ac0328-a346-4667-bc76-e9c7cd526eb9")
 		)
@@ -11000,7 +11677,7 @@
 		(instances
 			(project "heimdall-switch"
 				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
-					(reference "R_LIM")
+					(reference "R8")
 					(unit 1)
 				)
 			)
@@ -11475,7 +12152,7 @@
 		(in_pos_files yes)
 		(dnp no)
 		(uuid "ff2ad0a1-82a4-458c-99bd-cb9c1cc0ecdf")
-		(property "Reference" "R_CLAMP_PU"
+		(property "Reference" "R7"
 			(at 53.34 152.4 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11497,7 +12174,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0603_1608Metric"
 			(at 55.88 153.67 0)
 			(hide yes)
 			(show_name no)
@@ -11540,6 +12217,17 @@
 				)
 			)
 		)
+		(property "Function" "R_CLAMP_PU"
+			(at 55.88 153.67 0)
+			(hide yes)
+			(show_name no)
+			(do_not_autoplace no)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(pin "1"
 			(uuid "6891cced-a712-4535-a6a0-b5b65eb70723")
 		)
@@ -11549,7 +12237,7 @@
 		(instances
 			(project "heimdall-switch"
 				(path "/661790ab-8e2f-4c6b-b033-e8b244002c23"
-					(reference "R_CLAMP_PU")
+					(reference "R7")
 					(unit 1)
 				)
 			)

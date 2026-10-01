@@ -410,18 +410,56 @@ Reading the schematic:
 - One GND symbol has its "GND" text hidden where it collided with
   wires (U2 pin 5) — an ordinary GND connection.
 
+**Annotation and footprints**: the schematic is annotated with standard
+references and every part has a footprint. The design notes on this page
+keep the descriptive names (`R_PD1`, `C_SS`, …); each renamed symbol
+carries its old name in a hidden `Function` field, and the mapping is:
+
+| Ref | Name in these docs | Ref | Name in these docs |
+|---|---|---|---|
+| C3 | C_IN | R7 | R_CLAMP_PU |
+| C4 | C_OUT | R8 | R_LIM |
+| C5 | C_VDD1 | R9 | R_PD1 |
+| C6 | C_VDD2 | R10 | R_PD2 |
+| C7 | C_SS | R11 | R_FB_TOP |
+| C8 | C_FB | R12 | R_FB_BOT |
+| R1 | R_REV | R13 | R_Q6_PU |
+| R2 | R_IN | R14 | R_LED |
+| R3 | R_MODE | R15 | R_LED_PD |
+| R4 | R_RST | R16 | R_BTN |
+| R5 | R_G1 | D1 | D_Z2 |
+| R6 | R_OFF_PD | D2 | D_Z |
+
+Unchanged: C1/C2 (crystal caps), Q1–Q6, U1, U2, L1, Y1, LED1, SW1, J1–J4.
+Footprints are KiCad stock (0603 passives; 0805/1206 where the BOM says;
+SOT-23, SOIC-8, SOD-123, SOT-583-8, 1008, 3215 crystal, JST-XH, 2×5
+1.27mm SMD header, solder-wire pads) except two project-local items:
+- **`heimdall-switch:Fanstel_BT832`** (in `heimdall-switch.pretty`, via
+  the project `fp-lib-table`), drawn from Fanstel's datasheet (Ver 2.12,
+  p.8): 14.0 × 16.0mm module, 16 castellated pads at 1.10mm pitch, pins
+  1–8 down the left side and 9–16 up the right, pin 8/9 1.10mm above the
+  bottom edge. Pads are 0.70 × 1.75mm, reaching 0.85mm beyond the module
+  edge for the soldering iron. The 24 LGA pads are left off (unused; the
+  module's LGA pads then sit on solder mask). A copper keep-out (tracks,
+  vias, pads, pours, both layers) covers the 6.43mm antenna section.
+  **Check the printed footprint against a real module before ordering.**
+- **`heimdall-switch:AO4407A`** symbol (in `heimdall-switch.kicad_sym`):
+  the generic P-FET drawing with SO-8 pin numbers — G = 4, S = 1/2/3,
+  D = 5–8, the duplicates stacked on the same pin — so Q3/Q4 map onto the
+  stock SOIC-8 footprint without moving any wires.
+
+Verified after the change: ERC 0/0; the netlist is identical net-for-net
+(old references mapped, Q3/Q4 S/D pins expanded); every symbol pin has a
+matching footprint pad. Every part with an LCSC number carries it in a
+hidden `LCSC` field, so `kicad-cli sch export bom --fields
+"Reference,Value,Footprint,LCSC"` gives an order list.
+
 Known simplifications in this draft, worth revisiting before layout:
-- No footprints assigned yet (schematic-only pass). Every part with an
-  LCSC number carries it in a hidden `LCSC` field (see [BOM](#bom)), so
-  `kicad-cli sch export bom --fields "Reference,Value,LCSC"` gives an
-  order list.
-- BT832 VDD decoupling (C_VDD1 4.7µF + C_VDD2 100nF, as on Fanstel's eval
+- BT832 VDD decoupling (C5 4.7µF + C6 100nF, as on Fanstel's eval
   board) sits left of U1 — place both right at pin 9 in layout.
 - The switching stage implements the fail-on design in
   [Switching stage](#switching-stage) (Q1 driver, Q2 gate clamp, Q3 load
-  switch, R_LIM, R_PD1/R_PD2, C_SS, D_Z). All four FETs are selected
-  (Q1 AO3400A, Q2 BSS84, Q3/Q4 AO4407A) on generic FET symbols —
-  footprints not yet assigned.
+  switch, R_LIM, R_PD1/R_PD2, C_SS, D_Z).
 - **The KiCad file is now the source of truth.** `gen_body.sh` /
   `build_sch.sh` generated the first wired draft, but the schematic has
   since been rearranged in the GUI and patched (J1 layout, reverse
@@ -431,10 +469,6 @@ Known simplifications in this draft, worth revisiting before layout:
 - ADC divider (R_FB_TOP=100k, R_FB_BOT=33k) assumes sensing a ~12.6V max
   load rail scaled to a safe ADC input; revisit once the actual load
   voltage range is known.
-- **Not annotated**: references are descriptive names (`R_PD1`, `C_SS`,
-  `D_Z2`…) which KiCad treats as unannotated (`R_PD1?` in a BOM). Run
-  Tools → Annotate Schematic before PCB work; the names in these docs will
-  then need a mapping to the new references.
 
 ## Buck regulator (TPS629206) reference design
 
@@ -537,6 +571,10 @@ during bring-up and a fallback to classic external-divider mode is needed
 
 ## BOM
 
+References below are the descriptive names used throughout these notes;
+see [Schematic](#schematic) for the R1/C3/… mapping, or export the
+annotated BOM from KiCad.
+
 All parts from LCSC; "basic" = JLCPCB basic part (only matters if a later
 batch is JLCPCB-assembled). Resistors are UNI-ROYAL 0603WAF thick film,
 1%, 0603. Stock checked 2026-09-30.
@@ -637,8 +675,9 @@ on the outside of the hull, as on the Jeti SPS-20.
 - Real hardware not yet built — wake interval, scan window length, and BLE
   advertising interval (see [protocol.md](protocol.md)) are all first
   estimates, not measured.
-- **Component selection: done** (see [BOM](#bom)). Footprint assignment
-  is next, then annotation and layout.
+- **Component selection, annotation and footprints: done** (see
+  [BOM](#bom) and [Schematic](#schematic)). PCB layout of the main board
+  is next.
 - **Y1/C1/C2**: kept in the design; fitted or not is decided at
   assembly. Firmware supports both clock sources (see LFCLK note above).
 - Power budget is estimated, not measured.
