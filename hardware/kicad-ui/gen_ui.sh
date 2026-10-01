@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Generates the heimdall-switch UI daughter board project (schematic + PCB):
-#   J1 (3 wire pads: 1 LED_A, 2 BTN, 3 GND — matches main board J4),
-#   LED1 (3mm THT), SW1 (C&K KSC641J, IP67 tactile), H1/H2 (M3 holes).
+#   J1 (JST-XH 3-pin: 1 LED_A, 2 BTN, 3 GND — matches main board J4),
+#   LED1 (3mm THT), SW1 (C&K KSC641J, IP67 tactile), H1/H2 (M3 tapped holes, 2.5mm).
 # Usage: gen_ui.sh OUTDIR
 set -euo pipefail
 OUT="$1"
@@ -9,7 +9,10 @@ MAIN=/c/Projekt/heimdall-suite/heimdall-switch/hardware/kicad
 GEN=$MAIN/gen_body.sh
 FP=/c/Users/svefre/AppData/Local/Programs/KiCad/10.0/share/kicad/footprints
 NAME=heimdall-switch-ui
+HERE=$(cd "$(dirname "$0")" && pwd)
 mkdir -p "$OUT"
+# project-local footprint library (tapped M3 hole)
+[ "$HERE" -ef "$OUT" ] || cp -r "$HERE/heimdall-switch-ui.pretty" "$HERE/fp-lib-table" "$OUT/"
 
 ROOT_UUID=pending; export ROOT_UUID
 eval "$(sed -n '1,/^# ---- pin geometry/p' "$GEN" | grep -v '^set -euo')"
@@ -52,7 +55,7 @@ instances() { printf '\t\t(instances (project "%s" (path "/%s" (reference "%s") 
 FP_J1="Connector_JST:JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical"
 FP_LED="LED_THT:LED_D3.0mm"
 FP_SW="Button_Switch_SMD:SW_Push_1P1T_NO_CK_KSC6xxJ"
-FP_H="MountingHole:MountingHole_3.2mm_M3"
+FP_H="heimdall-switch-ui:MountingHole_2.5mm_M3_Tapped"
 
 SCH="$OUT/$NAME.kicad_sch"
 {
@@ -158,12 +161,12 @@ PCB="$OUT/$NAME.kicad_pcb"
   # LED_A, 2 (121.5,106) BTN, 3 (121.5,108.5) GND
   fp "$FP/Connector_JST.pretty/JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical.kicad_mod" "$FP_J1" J1 B3B-XH-A 121.5 103.5 270 "$U_J1" "1=1 2=2 3=3" C144394 1
 
-  # Board outline 39 x 13 mm
-  # M3 mounting holes, 32mm apart on the board centreline
-  fp "$FP/MountingHole.pretty/MountingHole_3.2mm_M3.kicad_mod" "$FP_H" H1 M3 97.5 106.5 "" "$U_H1" ""
-  fp "$FP/MountingHole.pretty/MountingHole_3.2mm_M3.kicad_mod" "$FP_H" H2 M3 129.5 106.5 "" "$U_H2" ""
+  # Board outline 35 x 13 mm
+  # M3 tapped holes (2.5mm), 28.5mm apart on the board centreline
+  fp "$HERE/heimdall-switch-ui.pretty/MountingHole_2.5mm_M3_Tapped.kicad_mod" "$FP_H" H1 M3 99.2 106.5 "" "$U_H1" ""
+  fp "$HERE/heimdall-switch-ui.pretty/MountingHole_2.5mm_M3_Tapped.kicad_mod" "$FP_H" H2 M3 127.7 106.5 "" "$U_H2" ""
 
-  printf '\t(gr_rect\n\t\t(start 94 100)\n\t\t(end 133 113)\n\t\t(stroke\n\t\t\t(width 0.05)\n\t\t\t(type default)\n\t\t)\n\t\t(fill no)\n\t\t(layer "Edge.Cuts")\n\t\t(uuid "%s")\n\t)\n' "$(gen_uuid)"
+  printf '\t(gr_rect\n\t\t(start 96 100)\n\t\t(end 131 113)\n\t\t(stroke\n\t\t\t(width 0.05)\n\t\t\t(type default)\n\t\t)\n\t\t(fill no)\n\t\t(layer "Edge.Cuts")\n\t\t(uuid "%s")\n\t)\n' "$(gen_uuid)"
   # Back silk: board name
   printf '\t(gr_text "heimdall UI"\n\t\t(at 106 110.9 0)\n\t\t(layer "B.SilkS")\n\t\t(uuid "%s")\n\t\t(effects\n\t\t\t(font\n\t\t\t\t(size 0.8 0.8)\n\t\t\t\t(thickness 0.12)\n\t\t\t)\n\t\t\t(justify mirror)\n\t\t)\n\t)\n' "$(gen_uuid)"
 

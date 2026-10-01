@@ -600,15 +600,21 @@ LED and button need to sit away from the main board, e.g. in a housing
 on the outside of the hull, as on the Jeti SPS-20.
 
 - **Parts**: LED1 (Everlight 204-10SUGC, 3mm green), SW1 (C&K KSC641J),
-  J1 (JST B3B-XH-A, same header as the main board's J4), H1/H2 (M3
-  mounting holes, not parts). Same part
+  J1 (JST B3B-XH-A, same header as the main board's J4), H1/H2 (tapped
+  M3 holes, not parts). Same part
   numbers as the main board's on-board positions; nothing else, since the
   LED driver, current limit and button ESD resistor live on the main
   board.
 - **Cable**: 3-wire JST-XH, crimped to length, pin 1 ↔ pin 1 (1 LED_A,
   2 BTN, 3 GND).
-- **Board**: 39 × 13mm, 2 layers, two **M3 mounting holes** (H1/H2,
-  3.2mm, 32mm apart on the board's centreline, 3.45mm keep-out each). LED
+- **Board**: 35 × 13mm, 2 layers, two **tapped M3 holes** (H1/H2): 2.5mm
+  tap drill, 28.5mm apart on the board's centreline, H1 3.2mm from the
+  left edge. The board itself is tapped M3 and the screws come in from
+  the housing, so no head/washer/nut clearance is needed on the board,
+  only ~2mm around the thread (project-local footprint
+  `heimdall-switch-ui:MountingHole_2.5mm_M3_Tapped`). 1.6mm FR4 holds ~3
+  threads: fine for clamping a light board, don't over-tighten. From H1:
+  button centre +6.8mm, LED centre +15.6mm, all on the centreline. LED
   and button on the front, facing out; the XH header is mounted on the
   **back**, so the cable leaves straight backwards. Back silk carries the
   board name; pin 1 of J1 is the square pad.
