@@ -3074,8 +3074,8 @@
 		(descr "Wire pads at 3.5mm pitch (heimdall-switch: + and - side by side under one heat shrink), from KiCad's P4.8mm version; for 2 times 0.75 mm² wires, basic insulation, conductor diameter 1.25mm, outer diameter 2.3mm, size source Multi-Contact FLEXI-E 0.75 (https://www.staubli.com/content/dam/ecs/catalogs-brochures/TM/CAB-Main-11014119-en.pdf#page=9), bend radius 3 times outer diameter")
 		(tags "connector wire 0.75sqmm")
 		(property "Reference" "J3"
-			(at 1.75 -2.4 90)
-			(layer "F.SilkS")
+			(at 1.75 0 0)
+			(layer "F.Fab")
 			(uuid "f13c82c6-5a07-4b56-a0a0-e8aa0ed9c0be")
 			(effects
 				(font
@@ -4243,8 +4243,8 @@
 		(descr "Wire pads at 3.5mm pitch (heimdall-switch: + and - side by side under one heat shrink), from KiCad's P4.8mm version; for 2 times 0.75 mm² wires, basic insulation, conductor diameter 1.25mm, outer diameter 2.3mm, size source Multi-Contact FLEXI-E 0.75 (https://www.staubli.com/content/dam/ecs/catalogs-brochures/TM/CAB-Main-11014119-en.pdf#page=9), bend radius 3 times outer diameter")
 		(tags "connector wire 0.75sqmm")
 		(property "Reference" "J2"
-			(at 1.75 -2.4 90)
-			(layer "F.SilkS")
+			(at 1.75 0 0)
+			(layer "F.Fab")
 			(uuid "a3c20ec6-0211-4611-a672-418e8ac1899a")
 			(effects
 				(font
@@ -10278,6 +10278,28 @@
 		)
 		(layer "Edge.Cuts")
 		(uuid "52aa4411-8e8e-4f32-a1bd-90243cbf8968")
+	)
+	(gr_text "BAT"
+		(at 104.9 104.55 90)
+		(layer "F.SilkS")
+		(uuid "99515750-65f1-4efd-a3bb-bbbf364c26a9")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(gr_text "OUT"
+		(at 104.9 116.95 90)
+		(layer "F.SilkS")
+		(uuid "94006f60-c76d-4c33-95bc-2c9729490624")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
 	)
 	(gr_text "+"
 		(at 99.6 102.8 0)
