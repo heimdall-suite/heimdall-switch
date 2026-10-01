@@ -543,6 +543,18 @@ IPC-2221 (outer layer, 1oz/35µm, 20°C rise): 1.4mm for 3A, 2.5mm for 5A,
 4.8mm for 10A. The power path's narrowest copper: BATT+ area 5.5mm,
 LOAD area 4.9mm, VBAT bar ~7mm (~5mm in parallel channels where Q3's
 gate pad and via sit in it), so roughly 8-10A continuous on 1oz.
+The **load return** (OUT− → BAT−) has to go around the slot between the
+wire tabs, and the top layer can't carry it there (the LOAD zone sits
+between the two − pads), so it runs as a solid **B.Cu GND strap**: a
+no-tracks rule area from BAT− around the slot end to OUT−, filled by
+the GND pour. Measured copper: 3.5mm on B alone past OUT+ (≈7A on the
+table above), ≥2.4mm on B beside the slot end with ~4.3mm of F.Cu
+BAT− copper in parallel. Both − pads are plated through-holes, so the
+current changes layer in the pad barrels; the F.Cu share drops to the
+strap through a block of 6 GND vias (0.6/0.3mm) plus ~3 stitching vias
+at the lower edge of that F copper (≈1A per via). Signal and stitching
+vias elsewhere carry no load current. R8 moved below Q2 (R9/R10 shifted
+down) to clear the strap.
 AO4407A: −12A continuous, −60A pulsed; at 10A its ~13mΩ is 1.3W, too
 warm for SO-8 continuously, fine for the expected 2-5A (≤0.3W).
 **2oz copper** (a JLCPCB option, extra cost) roughly doubles the copper
@@ -559,7 +571,7 @@ good for ~10A in a harness.
   Default 0.2mm; vias 0.6/0.3 (Power 0.8/0.4). A custom rule
   (`heimdall-switch.kicad_dru`) allows neck-down to 0.15mm where traces
   enter fine-pitch pads (U1, U2), well inside JLCPCB's 0.127mm minimum.
-- 42 vias in total, ~590mm of track.
+- 49 vias in total, ~570mm of track.
 
 **How it was routed** (scripts in `hardware/kicad/`, run with KiCad's
 bundled python): `place_pcb.py` builds the board from the netlist and
