@@ -470,6 +470,74 @@ Known simplifications in this draft, worth revisiting before layout:
   load rail scaled to a safe ADC input; revisit once the actual load
   voltage range is known.
 
+## PCB layout
+
+First full layout, in [hardware/kicad/](../hardware/kicad/)
+(`heimdall-switch.kicad_pcb`). Views:
+[top](../hardware/kicad/layout-top.png),
+[bottom](../hardware/kicad/layout-bottom.png) (mirrored, as seen from
+below), 3D [top](../hardware/kicad/render-top.png) /
+[bottom](../hardware/kicad/render-bottom.png). Status: DRC 0 violations,
+0 unconnected, full schematic parity. Not yet reviewed by eye in the
+KiCad GUI; treat it as a starting point to iterate on.
+
+**Board**: 63.5 × 23mm, 2 layers, 1.6mm FR4, parts on both sides (hand
+assembly: bottom side first, then top, then the through-hole parts).
+- **Left end**: J3 (battery) and J2 (load) wire pads, wires entering from
+  the left end through the strain-relief holes. Q4 and Q3 right behind
+  them.
+- **Middle**: the BT832 at its native orientation, antenna over a
+  **15 × 6.3mm notch** cut into the top edge (no board or copper under the
+  antenna, as Fanstel recommends). Its left pin column (crystal, ADC, LED
+  drive) faces the power half, the right column (debug, button, VDD)
+  faces J4.
+- **Top side** (what you see, touch or plug in): wire pads, Q3/Q4, U1,
+  Y1 beside U1's crystal pins, the LED driver (Q5/Q6/R13–R15) next to the
+  VBAT bar, SW1 + LED1 in the strip below the module, J4 at the right.
+- **Bottom side**: Q4's gate parts (D1, R1); the regulator chain R2/C3 →
+  U2 → L1 → C4 in one row; Q3's gate network (C7, D2, R5–R10, Q1, Q2);
+  the ADC divider (R11 at LOAD_OUT, R12/C8 at U1's ADC pin); J1 (debug
+  header) under the module body with C5/C6 at U1's VDD pin and R4; the
+  crystal load caps C1/C2 behind Y1; R16 by J4.
+- Silkscreen: every reference designator at 0.8mm, placed beside its own
+  part (`silk_labels.py`); values are on the fab layer only.
+
+**Copper**:
+- **3A path on top as solid copper**: BATT+ area (J3 pad → Q4 drain), the
+  **VBAT bar** joining Q4's and Q3's sources (with an arm reaching Q6/R13
+  of the LED driver), LOAD area (Q3 drain → J2 pad). All three carry
+  track keep-outs so no other net can cut them in two; Q3's and Q4's gates
+  leave through short stubs to vias, straight down to their gate networks
+  on the bottom.
+- **GND**: pours on both layers, ~12 stitching vias, solid (not
+  thermal-relief) connection on J2/J3's GND pads since they carry the 3A
+  return.
+- **No copper on top under the BT832 body** (rule area): its unused LGA
+  pads sit there and would only be separated from traces by solder mask.
+- Net classes: Power 0.3mm (VBAT branches, BATT+, LOAD_OUT, GND traces),
+  Reg 0.25mm (+3V3, regulator VIN, switch node; fits U2's 0.5mm pitch),
+  Default 0.2mm; vias 0.6/0.3 (Power 0.8/0.4). A custom rule
+  (`heimdall-switch.kicad_dru`) allows neck-down to 0.15mm where traces
+  enter fine-pitch pads (U1, U2), well inside JLCPCB's 0.127mm minimum.
+- 39 vias in total (12 GND stitching), ~630mm of track.
+
+**How it was routed** (scripts in `hardware/kicad/`, run with KiCad's
+bundled python): `place_pcb.py` builds the board from the netlist and
+places everything; `route_pcb.py prep` adds the power copper, keep-outs
+and a few hand-placed VBAT/gate connections, exports a Specctra DSN;
+[Freerouting](https://github.com/freerouting/freerouting) 2.4 routes it;
+`route_pcb.py finish/gridstitch/islandstitch/cleanup` imports the result,
+pours GND and stitches it. These rebuild everything from scratch, so
+they're only for re-running from a new placement; once the board is
+edited in the GUI, the `.kicad_pcb` is the source of truth.
+
+**Check before ordering**:
+- Print the BT832 footprint 1:1 and lay a module on it (drawn from a
+  low-resolution datasheet drawing).
+- Look over the buck loop (U2 → L1 → C4 → GND back to U2/C3) and the
+  crystal traces in the GUI; tighten by hand if needed.
+- Wire-pad GND (J2/J3) is a solid connection: needs a hot iron.
+
 ## Buck regulator (TPS629206) reference design
 
 Output is **3.3V**, chosen over 3.0V specifically because it's directly
@@ -683,8 +751,9 @@ on the outside of the hull, as on the Jeti SPS-20.
   advertising interval (see [protocol.md](protocol.md)) are all first
   estimates, not measured.
 - **Component selection, annotation and footprints: done** (see
-  [BOM](#bom) and [Schematic](#schematic)). PCB layout of the main board
-  is next.
+  [BOM](#bom) and [Schematic](#schematic)). **Main board layout: first
+  full routing done** (see [PCB layout](#pcb-layout)); needs a by-eye
+  review in KiCad, then Gerbers for JLCPCB.
 - **Y1/C1/C2**: kept in the design; fitted or not is decided at
   assembly. Firmware supports both clock sources (see LFCLK note above).
 - Power budget is estimated, not measured.

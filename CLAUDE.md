@@ -23,7 +23,10 @@ build, lint, or test commands because there is nothing to build.
   of truth, edited in the KiCad GUI; `build_sch.sh`/`gen_body.sh` are the
   retired generator for the first draft — don't run them). `kicad-cli`
   lives in `AppData/Local/Programs/KiCad/10.0/bin/` (not on PATH); run
-  `sch erc` after any schematic change.
+  `sch erc` after any schematic change. The PCB (`heimdall-switch.kicad_pcb`)
+  came from `place_pcb.py` + `route_pcb.py` + Freerouting; once edited in
+  the GUI it is the source of truth too. Run `pcb drc --schematic-parity`
+  after PCB changes.
 - `hardware/kicad-ui/` — separate KiCad project for the optional UI
   daughter board (LED + button, JST-XH to the main board's J4), with a
   routed PCB. Same rules: the KiCad files are the source of truth
