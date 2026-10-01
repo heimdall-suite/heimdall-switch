@@ -44,7 +44,7 @@ if sys.argv[1] == "prep":
     # 3A path on top: BATT+ (J3 -> Q4 drain), LOAD (Q3 drain -> J2), VBAT bar (Q4/Q3 sources)
     zone(b, "/BATT+", F, rect(115.4, 100.4, 123.0, 105.9), 10, name="BATT+")
     zone(b, "/LOAD_OUT", F, rect(115.4, 113.4, 123.0, 118.3), 10, name="LOAD_OUT")
-    zone(b, "VBAT", F, [(125.6, 102.2), (130.6, 102.2), (130.6, 102.5), (132.75, 102.5), (132.75, 105.4), (130.6, 105.4), (130.6, 118.4), (125.6, 118.4)], 10, name="VBAT bar")
+    zone(b, "VBAT", F, [(123.6, 102.2), (130.6, 102.2), (130.6, 102.5), (132.75, 102.5), (132.75, 105.4), (130.6, 105.4), (130.6, 118.4), (123.6, 118.4)], 10, name="VBAT bar")
     # no copper on top under the BT832 body (its unused LGA pads sit there)
     ko = pcbnew.ZONE(b); ko.SetIsRuleArea(True); ko.SetLayer(F)
     o = ko.Outline(); o.NewOutline()
@@ -54,7 +54,7 @@ if sys.argv[1] == "prep":
     b.Add(ko)
     # keep other nets' tracks from cutting the power copper in two (vias still allowed)
     for nm, (ax, ay, bx, by) in (("BATT+ area", (115.4, 100.4, 123.0, 105.9)), ("LOAD area", (115.4, 113.4, 123.0, 118.3)),
-                                 ("VBAT bar upper", (125.6, 102.2, 130.6, 113.6)), ("VBAT bar lower", (125.6, 114.6, 130.6, 118.4))):
+                                 ("VBAT bar upper", (123.6, 102.2, 130.6, 113.0)), ("VBAT bar lower", (123.6, 114.45, 130.6, 118.4))):
         k = pcbnew.ZONE(b); k.SetIsRuleArea(True); k.SetLayer(F)
         o = k.Outline(); o.NewOutline()
         for x, y in rect(ax, ay, bx, by): o.Append(MM(x), MM(y))
@@ -63,16 +63,16 @@ if sys.argv[1] == "prep":
         b.Add(k)
     # gate stubs: straight to a via, so nothing crosses the VBAT bar on top
     track(b, "Net-(D1-A)", F, 126.675, 101.495, 128.8, 101.3, 0.3); via(b, "Net-(D1-A)", 128.8, 101.3, 0.6, 0.3)
-    track(b, "/Q3_GATE", F, 126.675, 114.095, 128.8, 114.095, 0.3); via(b, "/Q3_GATE", 128.8, 114.095, 0.6, 0.3)
+    track(b, "/Q3_GATE", F, 126.675, 114.095, 126.675, 113.35, 0.3); via(b, "/Q3_GATE", 126.675, 113.35, 0.6, 0.3)
     # VBAT down from the bar to the Q3 gate network / R_IN on the bottom (hand-placed: the
     # bottom under the bar is too crowded for the autorouter to find via spots)
-    via(b, "VBAT", 129.6, 110.4); via(b, "VBAT", 126.2, 110.6); via(b, "VBAT", 131.6, 103.9)
+    via(b, "VBAT", 129.6, 110.4); via(b, "VBAT", 126.2, 110.6); via(b, "VBAT", 131.6, 103.9); via(b, "VBAT", 128.3, 117.9)
     track(b, "VBAT", B, 131.6, 103.9, 132.65, 102.6, 0.3); track(b, "VBAT", B, 132.65, 102.6, 132.65, 102.0, 0.3)   # -> D1 K
     for (x0, y0, x1, y1) in ((129.6, 110.4, 131.25, 110.4), (131.25, 110.4, 131.25, 112.2),     # -> D2 K
                              (131.25, 110.4, 134.82, 110.4), (134.82, 110.4, 134.82, 112.2),    # -> R7
                              (126.2, 110.6, 124.95, 111.85), (124.95, 111.85, 124.95, 112.6),   # -> C7
                              (126.2, 110.6, 122.2, 110.6), (122.2, 110.6, 122.2, 109.83),       # -> R2 (R_IN)
-                             (124.95, 112.6, 126.6, 113.3), (126.6, 113.3, 126.6, 116.95), (126.6, 116.95, 125.44, 116.95)):  # -> Q2 S
+                             (128.3, 117.9, 126.4, 117.9), (126.4, 117.9, 125.44, 116.95)):  # -> Q2 S (own via)
         track(b, "VBAT", B, x0, y0, x1, y1, 0.3)
     pcbnew.ZONE_FILLER(b).Fill(b.Zones())
     pcbnew.SaveBoard(sys.argv[3], b)

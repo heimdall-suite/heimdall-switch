@@ -21,7 +21,7 @@ P = {
     "Y1": (136.5, 108.5, 90, "F"),    # beside U1 pins 3/4
     "SW1": (143.5, 120.0, 0, "F"),    # strip under the module body
     "LED1": (149.0, 120.0, 0, "F"),
-    "J4": (159.5, 109.5, 270, "F"),   # JST-XH to the daughter board
+    "J4": (159.5, 113.0, 270, "F"),   # JST-XH to the daughter board
     # ===== BOTTOM, left section
     "D1": (131.0, 102.0, 0, "B"),     # Q4 gate
     "R1": (135.2, 102.0, 0, "B"),
@@ -45,7 +45,7 @@ P = {
     "C1": (137.5, 107.25, 90, "B"),   # crystal load caps, behind Y1
     "C2": (137.5, 110.6, 90, "B"),
     # ===== BOTTOM, under the module body
-    "J1": (147.0, 112.5, 0, "B"),     # ARM 10-pin debug header
+    "J1": (159.4, 104.4, 90, "F"),     # ARM 10-pin debug header
     "R12": (140.8, 111.0, 90, "B"),   # ADC divider bottom + filter, at pin 5
     "C8": (140.8, 114.5, 90, "B"),
     "C6": (152.4, 114.3, 90, "B"),    # VDD decoupling at pin 9

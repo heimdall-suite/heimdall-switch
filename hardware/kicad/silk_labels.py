@@ -22,10 +22,10 @@ notch = []
 segs = [d for d in b.GetDrawings() if d.GetLayer() == pcbnew.Edge_Cuts and d.GetShape() == pcbnew.SHAPE_T_SEGMENT]
 xs = sorted({round(pcbnew.ToMM(p), 3) for s in segs for p in (s.GetStart().x, s.GetEnd().x)})
 ys = sorted({round(pcbnew.ToMM(p), 3) for s in segs for p in (s.GetStart().y, s.GetEnd().y)})
-inner_x = [x for x in xs if X0 < x < X1]
-inner_y = [y for y in ys if Y0 < y < Y1 and any(abs(pcbnew.ToMM(s.GetStart().y) - y) < 1e-3 and abs(pcbnew.ToMM(s.GetEnd().y) - y) < 1e-3 for s in segs)]
+inner_x = [x for x in xs if X0 + 0.1 < x < X1 - 0.1]
+inner_y = [y for y in ys if Y0 + 0.1 < y < Y1 - 0.1 and any(abs(pcbnew.ToMM(s.GetStart().y) - y) < 1e-3 and abs(pcbnew.ToMM(s.GetEnd().y) - y) < 1e-3 for s in segs)]
 if len(inner_x) == 2 and inner_y:
-    notch.append((inner_x[0], Y0 - 1, inner_x[1], min(inner_y)))
+    notch.append((inner_x[0] - 0.3, Y0 - 1, inner_x[1] + 0.3, min(inner_y) + 0.3))
 
 def obstacles(side):
     obs = []

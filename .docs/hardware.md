@@ -493,12 +493,15 @@ assembly: bottom side first, then top, then the through-hole parts).
   faces J4.
 - **Top side** (what you see, touch or plug in): wire pads, Q3/Q4, U1,
   Y1 beside U1's crystal pins, the LED driver (Q5/Q6/R13–R15) next to the
-  VBAT bar, SW1 + LED1 in the strip below the module, J4 at the right.
-- **Bottom side**: Q4's gate parts (D1, R1); the regulator chain R2/C3 →
-  U2 → L1 → C4 in one row; Q3's gate network (C7, D2, R5–R10, Q1, Q2);
-  the ADC divider (R11 at LOAD_OUT, R12/C8 at U1's ADC pin); J1 (debug
-  header) under the module body with C5/C6 at U1's VDD pin and R4; the
-  crystal load caps C1/C2 behind Y1; R16 by J4.
+  VBAT bar, SW1 + LED1 in the strip below the module, and at the right
+  end J1 (debug header, rotated so the cable leaves upwards) above J4.
+- **Bottom side**: only flat SMD parts, nothing that sticks out, so the
+  board can lie flat on its back: Q4's gate parts (D1, R1); the regulator
+  chain R2/C3 → U2 → L1 → C4 in one row; Q3's gate network (C7, D2,
+  R5–R10, Q1, Q2); the ADC divider (R11 at LOAD_OUT, R12/C8 at U1's ADC
+  pin); C5/C6 at U1's VDD pin and R4 under the module body; the crystal
+  load caps C1/C2 behind Y1; R16 by J4. Through-hole leads (J2–J4, LED1)
+  are trimmed flush after soldering.
 - Silkscreen: every reference designator at 0.8mm, placed beside its own
   part (`silk_labels.py`); values are on the fab layer only.
 
@@ -506,12 +509,31 @@ assembly: bottom side first, then top, then the through-hole parts).
 - **3A path on top as solid copper**: BATT+ area (J3 pad → Q4 drain), the
   **VBAT bar** joining Q4's and Q3's sources (with an arm reaching Q6/R13
   of the LED driver), LOAD area (Q3 drain → J2 pad). All three carry
-  track keep-outs so no other net can cut them in two; Q3's and Q4's gates
-  leave through short stubs to vias, straight down to their gate networks
-  on the bottom.
-- **GND**: pours on both layers, ~12 stitching vias, solid (not
-  thermal-relief) connection on J2/J3's GND pads since they carry the 3A
-  return.
+  track keep-outs so no other net can cut them in two. Q4's gate leaves
+  above the bar; Q3's gate (which sits in the bar's current path, at the
+  top of its source-pin column) goes straight up to a via right above
+  its pad, so the current flows around both sides of it.
+- **GND**: pours on both layers, stitched, solid (not thermal-relief)
+  connection on J2/J3's GND pads since they carry the load return. The
+  return path J2 GND → J3 GND runs through the pours at the left end,
+  ≥5mm wide on both layers.
+
+**Current capacity** (design target **5A continuous, 15A peaks <1s**).
+Expected load, per servo: analog standard servos stall at ~0.8-1.2A
+(4.8-6V); digital high-torque standard ~2.5-3.5A at 6V; HV high-torque
+standard up to ~4-5A at 7.4-8.4V. Six digital servos all stalled at once
+would be ~18-20A, which in practice doesn't happen; realistic peaks are
+6-12A for 10-100ms when everything moves at once, with 2-5A continuous.
+Short peaks barely heat copper; the continuous figure sets the width.
+IPC-2221 (outer layer, 1oz/35µm, 20°C rise): 1.4mm for 3A, 2.5mm for 5A,
+4.8mm for 10A. The power path's narrowest copper: BATT+ area 5.5mm,
+LOAD area 4.9mm, VBAT bar ~7mm (~5mm in parallel channels where Q3's
+gate pad and via sit in it), so roughly 8-10A continuous on 1oz.
+AO4407A: −12A continuous, −60A pulsed; at 10A its ~13mΩ is 1.3W, too
+warm for SO-8 continuously, fine for the expected 2-5A (≤0.3W).
+**2oz copper** (a JLCPCB option, extra cost) roughly doubles the copper
+figures if long stalls are expected. The wire pads take 0.75mm² (18AWG),
+good for ~10A in a harness.
 - **No copper on top under the BT832 body** (rule area): its unused LGA
   pads sit there and would only be separated from traces by solder mask.
 - Net classes: Power 0.3mm (VBAT branches, BATT+, LOAD_OUT, GND traces),
@@ -519,7 +541,7 @@ assembly: bottom side first, then top, then the through-hole parts).
   Default 0.2mm; vias 0.6/0.3 (Power 0.8/0.4). A custom rule
   (`heimdall-switch.kicad_dru`) allows neck-down to 0.15mm where traces
   enter fine-pitch pads (U1, U2), well inside JLCPCB's 0.127mm minimum.
-- 39 vias in total (12 GND stitching), ~630mm of track.
+- 30 vias in total (7 GND stitching), ~645mm of track.
 
 **How it was routed** (scripts in `hardware/kicad/`, run with KiCad's
 bundled python): `place_pcb.py` builds the board from the netlist and
