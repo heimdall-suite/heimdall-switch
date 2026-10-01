@@ -489,13 +489,14 @@ below), 3D [top](../hardware/kicad/render-top.png) /
 0 unconnected, full schematic parity. Not yet reviewed by eye in the
 KiCad GUI; treat it as a starting point to iterate on.
 
-**Board**: 49 × 23mm, 2 layers, 1.6mm FR4, parts on both sides (hand
+**Board**: 53 × 23mm, 2 layers, 1.6mm FR4, parts on both sides (hand
 assembly: bottom side first, then top, then the through-hole parts).
 - **Left end**: J3 (battery) and J2 (load) wire pads right at the edge,
-  wires entering from the left end. A **2 × 5mm slot** between the two
-  pairs splits the end into two tabs, as on the Jeti SPS-20: each pair
-  gets its own heat shrink over tab and solder joints, which is the
-  strain relief. Q4 and Q3 right behind them, R11 (ADC divider top) in
+  wires entering from the left end. A **2 × 9mm slot** between the two
+  pairs splits the end into two tabs, as on the Jeti SPS-20, and the tabs
+  run **4mm past the pads** (bare board, no copper): each pair gets its
+  own heat shrink over tab, solder joints and wire insulation, so the
+  shrink grips the board and the insulation, not the joints. Q4 and Q3 right behind them, R11 (ADC divider top) in
   the strip below Q3.
 - **Middle**: the BT832 at its native orientation, antenna over a
   **15 × 6.3mm notch** cut into the top edge (no board or copper under the
@@ -671,8 +672,10 @@ during bring-up and a fallback to classic external-divider mode is needed
   — through-hole pads (1.6mm drill) for 0.75mm² (≈18 AWG) wire, which
   carries 3A continuous / 6-8A peaks comfortably and also accepts 20-22
   AWG. Strain relief is heat shrink: the slot between the battery and
-  load pairs makes two tabs, and a piece of heat shrink over each tab
-  and its two solder joints keeps flexing off the joints (SPS-20 style).
+  load pairs makes two ~10mm-wide tabs reaching 4mm past the pads, and
+  a piece of heat shrink (~12mm, adhesive-lined is best) over each tab,
+  its two solder joints and the first few mm of insulation keeps flexing
+  off the joints (SPS-20 style).
   This replaced the "Relief" footprint variant (wire looped through
   extra holes), which cost ~14mm of board length.
 - **Clean the board** (IPA, brush) after assembly, especially around the
