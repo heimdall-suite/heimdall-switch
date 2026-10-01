@@ -12,57 +12,55 @@ STOCK = r"C:\Users\svefre\AppData\Local\Programs\KiCad\10.0\share\kicad\footprin
 
 # ref: (x, y, rotation, side)   board origin (100,100), 23mm tall
 P = {
-    # --- wire entry (left end): relief holes at the edge, pads inboard
-    "J3": (117.0, 102.8, 270, "F"),   # BATT_IN: pad1 BATT+ (117,102.8), pad2 GND (117,107.6)
-    "J2": (117.0, 115.2, 270, "F"),   # LOAD_OUT: pad1 LOAD (117,115.2), pad2 GND (117,120.0)
-    # --- power FETs, drains facing the wire pads, sources on the VBAT bar
+    # ===== TOP: wires, power FETs, everything you see/touch/plug in
+    "J3": (117.0, 102.8, 270, "F"),   # BATT_IN pads (relief holes at the left edge)
+    "J2": (117.0, 115.2, 270, "F"),   # LOAD_OUT pads
     "Q4": (124.2, 103.4, 180, "F"),
     "Q3": (124.2, 116.0, 180, "F"),
-    "R11": (121.8, 110.0, 90, "F"),   # ADC divider top, right at LOAD_OUT
-    # --- Q4 gate (reverse polarity)
-    "D1": (133.0, 104.0, 90, "F"),
-    "R1": (135.7, 102.35, 0, "F"),
-    # --- regulator
-    "R2": (138.9, 103.75, 0, "F"),
-    "C3": (142.5, 101.5, 0, "F"),
-    "U2": (144.0, 104.0, 180, "F"),
-    "R3": (142.2, 107.0, 270, "F"),
-    "L1": (147.4, 103.25, 0, "F"),
-    "C4": (150.6, 104.0, 270, "F"),
-    # --- Q3 gate network (fail-on switching stage)
-    "C7": (132.6, 111.6, 0, "F"),
-    "D2": (135.0, 109.3, 0, "F"),
-    "R9": (135.0, 116.4, 270, "F"),
-    "R10": (137.0, 116.4, 270, "F"),
-    "R8": (140.0, 114.1, 180, "F"),
-    "Q2": (143.6, 114.1, 180, "F"),
-    "R7": (146.4, 111.4, 0, "F"),
-    "Q1": (147.6, 117.0, 0, "F"),
-    "R5": (150.5, 115.5, 90, "F"),
-    "R6": (150.5, 119.0, 90, "F"),
-    # --- LED driver (high side)
-    "R13": (154.6, 101.6, 0, "F"),
-    "Q6": (158.3, 103.2, 0, "F"),
-    "R14": (162.8, 103.2, 0, "F"),
-    "Q5": (154.8, 106.0, 0, "F"),
-    "R15": (154.8, 108.6, 0, "F"),
-    "LED1": (159.6, 107.2, 0, "F"),
-    # --- UI breakout + on-board button
-    "J4": (155.2, 118.9, 0, "F"),
-    "R16": (158.0, 113.5, 0, "F"),
-    "SW1": (168.0, 116.6, 0, "F"),
-    # --- debug header, MCU support
-    "J1": (177.0, 115.8, 0, "F"),
-    "R4": (177.0, 110.6, 0, "F"),
-    "R12": (171.0, 106.8, 270, "F"),
-    "C8": (173.0, 106.8, 270, "F"),
-    "C5": (182.4, 119.2, 90, "F"),
-    "C6": (184.2, 119.2, 90, "F"),
-    # --- BT832, antenna overhanging the right end; crystal in the strip
-    "U1": (194.0, 111.5, 270, "F"),
-    "Y1": (193.0, 101.9, 0, "F"),
-    "C1": (194.25, 101.9, 90, "B"),
-    "C2": (191.75, 101.9, 90, "B"),
+    "J4": (135.5, 111.0, 270, "F"),   # JST-XH to the daughter board
+    "LED1": (151.8, 120.2, 0, "F"),
+    "SW1": (146.0, 114.5, 0, "F"),
+    "J1": (157.0, 111.5, 0, "F"),     # ARM 10-pin debug
+    "U1": (170.0, 111.5, 270, "F"),   # antenna overhangs the right end
+    "Y1": (169.0, 101.9, 0, "F"),
+    # ===== BOTTOM: small parts
+    # Q4 gate (reverse polarity), under Q4
+    "D1": (127.5, 102.2, 0, "B"),
+    "R1": (127.5, 105.0, 0, "B"),
+    # regulator
+    "R2": (133.0, 101.5, 0, "B"),
+    "C3": (133.5, 104.5, 0, "B"),
+    "U2": (138.0, 103.5, 0, "B"),
+    "R3": (138.0, 106.3, 0, "B"),
+    "L1": (141.8, 103.0, 0, "B"),
+    "C4": (145.0, 103.5, 90, "B"),
+    # LED driver
+    "R13": (148.5, 101.5, 0, "B"),
+    "Q6": (152.0, 102.5, 0, "B"),
+    "R14": (156.8, 102.5, 0, "B"),
+    "Q5": (148.0, 105.4, 0, "B"),
+    "R15": (152.0, 106.0, 0, "B"),
+    # Q3 gate network (fail-on switching stage), under Q3 / beside J4
+    "R11": (121.8, 110.0, 90, "B"),   # ADC divider top, at LOAD_OUT
+    "C7": (127.0, 109.5, 0, "B"),
+    "D2": (127.5, 112.0, 0, "B"),
+    "R9": (127.0, 115.0, 0, "B"),
+    "R10": (127.0, 117.0, 0, "B"),
+    "R8": (131.5, 114.0, 90, "B"),
+    "Q2": (140.0, 110.5, 0, "B"),
+    "R7": (143.5, 110.5, 0, "B"),
+    "Q1": (140.0, 114.5, 0, "B"),
+    "R5": (143.5, 114.5, 0, "B"),
+    "R6": (143.5, 116.5, 0, "B"),
+    "R16": (139.5, 118.5, 0, "B"),    # button ESD resistor
+    # MCU support
+    "R4": (157.0, 117.5, 0, "B"),     # nRESET pull-up, under J1
+    "C5": (163.8, 116.0, 90, "B"),    # VDD decoupling, under U1 pin 9
+    "C6": (165.6, 116.0, 90, "B"),
+    "R12": (166.4, 107.2, 90, "B"),   # ADC divider bottom + filter, under U1 pin 5
+    "C8": (164.6, 107.2, 90, "B"),
+    "C1": (170.25, 101.9, 90, "B"),   # crystal load caps, under Y1
+    "C2": (167.75, 101.9, 90, "B"),
 }
 BOARD_X0, BOARD_Y0, BOARD_H = 100.0, 100.0, 23.0
 # right edge = module body/antenna boundary (antenna overhangs)
