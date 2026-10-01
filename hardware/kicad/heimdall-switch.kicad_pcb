@@ -10008,6 +10008,17 @@
 			)
 		)
 	)
+	(gr_circle
+		(center 141.15 106.4)
+		(end 141.45 106.4)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(fill yes)
+		(layer "F.SilkS")
+		(uuid "d6b30d67-1009-4290-8c26-eb70a15432f1")
+	)
 	(gr_line
 		(start 96 102)
 		(end 96 107.3)
