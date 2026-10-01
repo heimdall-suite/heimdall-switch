@@ -2,7 +2,7 @@
 	(version 20260206)
 	(generator "pcbnew")
 	(layer "F.Cu")
-	(descr "Fanstel BT832/BT832A (nRF52832) module, 14.0x16.0mm, 16 castellated pads at 1.10mm pitch (pads extend 0.85mm beyond the module edge for hand soldering). The 24 LGA pads are intentionally omitted (unused). Antenna keep-out on all copper layers. Datasheet Ver 2.12, Dec 2018, p.8.")
+	(descr "Fanstel BT832/BT832A (nRF52832) module, 14.0x16.0mm, 16 castellated pads at 1.10mm pitch (pads extend 0.85mm beyond the module edge for hand soldering). The 24 LGA pads are intentionally omitted (unused). Antenna keep-out on all copper layers; no silk over the antenna (it can sit over a board notch). Datasheet Ver 2.12, Dec 2018, p.8.")
 	(tags "Fanstel BT832 nRF52832 BLE module castellated")
 	(property "Reference" "REF**"
 		(at 0 -9.2 0)
@@ -73,33 +73,6 @@
 		)
 		(fill no)
 		(layer "F.CrtYd")
-	)
-	(fp_line
-		(start -7.12 -8.12)
-		(end 7.12 -8.12)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(layer "F.SilkS")
-	)
-	(fp_line
-		(start -7.12 -8.12)
-		(end -7.12 -1.6)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(layer "F.SilkS")
-	)
-	(fp_line
-		(start 7.12 -8.12)
-		(end 7.12 -1.6)
-		(stroke
-			(width 0.12)
-			(type solid)
-		)
-		(layer "F.SilkS")
 	)
 	(fp_line
 		(start -7.12 7.6)
