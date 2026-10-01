@@ -491,12 +491,15 @@ KiCad GUI; treat it as a starting point to iterate on.
 
 **Board**: 53 × 23mm, 2 layers, 1.6mm FR4, parts on both sides (hand
 assembly: bottom side first, then top, then the through-hole parts).
-- **Left end**: J3 (battery) and J2 (load) wire pads right at the edge,
-  wires entering from the left end. A **2 × 9mm slot** between the two
-  pairs splits the end into two tabs, as on the Jeti SPS-20, and the tabs
-  run **4mm past the pads** (bare board, no copper): each pair gets its
+- **Left end**: J3 (battery) and J2 (load) wire pads, + and − of each
+  pair 3.5mm apart, wires entering from the left end. The end is cut into
+  **two 7.3mm-wide tabs**, one per pair, as on the Jeti SPS-20: straight
+  edges with 1mm corner radii, a 5.1mm gap between them, and each tab
+  runs **4mm past its pads** (bare board, no pour). Each pair gets its
   own heat shrink over tab, solder joints and wire insulation, so the
-  shrink grips the board and the insulation, not the joints. Q4 and Q3 right behind them, R11 (ADC divider top) in
+  shrink grips the board and the insulation, not the joints. "+"/"−" are
+  marked on the silkscreen next to the pads. No GND pour on the tab
+  extensions or around the + pads on the bottom (rule areas). Q4 and Q3 right behind them, R11 (ADC divider top) in
   the strip below Q3.
 - **Middle**: the BT832 at its native orientation, antenna over a
   **15 × 6.3mm notch** cut into the top edge (no board or copper under the
@@ -556,7 +559,7 @@ good for ~10A in a harness.
   Default 0.2mm; vias 0.6/0.3 (Power 0.8/0.4). A custom rule
   (`heimdall-switch.kicad_dru`) allows neck-down to 0.15mm where traces
   enter fine-pitch pads (U1, U2), well inside JLCPCB's 0.127mm minimum.
-- 38 vias in total, ~615mm of track.
+- 42 vias in total, ~590mm of track.
 
 **How it was routed** (scripts in `hardware/kicad/`, run with KiCad's
 bundled python): `place_pcb.py` builds the board from the netlist and
@@ -670,12 +673,14 @@ during bring-up and a fallback to classic external-divider mode is needed
   the end (JR/Futaba, XT30, …) — the same approach as the Jeti SPS-20, and
   the most vibration-proof option (no board-mounted connector to rattle
   loose or lever the joints). Footprint: KiCad
-  `Connector_Wire:SolderWire-0.75sqmm_1x02_P4.8mm_D1.25mm_OD2.3mm`
+  `heimdall-switch:SolderWire-0.75sqmm_1x02_P3.5mm_D1.25mm_OD2.3mm`
+  (KiCad's `Connector_Wire` P4.8mm footprint with the pads moved to
+  3.5mm, so a pair sits side by side under one heat shrink)
   — through-hole pads (1.6mm drill) for 0.75mm² (≈18 AWG) wire, which
   carries 3A continuous / 6-8A peaks comfortably and also accepts 20-22
   AWG. Strain relief is heat shrink: the slot between the battery and
-  load pairs makes two ~10mm-wide tabs reaching 4mm past the pads, and
-  a piece of heat shrink (~12mm, adhesive-lined is best) over each tab,
+  load pairs makes two 7.3mm-wide tabs reaching 4mm past the pads, and
+  a piece of heat shrink (~9-10mm, adhesive-lined is best) over each tab,
   its two solder joints and the first few mm of insulation keeps flexing
   off the joints (SPS-20 style).
   This replaced the "Relief" footprint variant (wire looped through
