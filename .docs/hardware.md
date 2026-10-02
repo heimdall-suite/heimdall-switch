@@ -530,11 +530,17 @@ assembly: bottom side first, then top, then the through-hole parts).
 - **Bottom side**: only flat SMD parts, nothing that sticks out, so the
   board can lie flat on its back: Q4's gate parts (D1, R1); the regulator
   chain R2/C3 → U2 → L1 → C4 in one row; Q3's gate network (C7, D2,
-  R5–R10, Q1, Q2); the ADC divider bottom (R12/C8 at U1's ADC pin); C5/C6 at U1's VDD pin and R4 under the module body; the crystal
+  R5–R10, Q1, Q2); the ADC divider bottom (R12/C8 at U1's ADC pin); C5/C6 at U1's VDD pin (C5 moved there from beside LED1, whose
+  leads it sat 0.22mm from) and R4 under the module body; the crystal
   load caps C1/C2 behind Y1; R16 by J4. Through-hole leads (J2–J4, LED1)
   are trimmed flush after soldering.
-- Silkscreen: every reference designator at 0.8mm, placed beside its own
-  part (`silk_labels.py`); values are on the fab layer only.
+- Silkscreen (sized for JLCPCB's DFM check): reference designators at
+  1.0mm text / 0.15mm stroke (0.85mm where a part has no room), placed
+  beside their part by `silk_labels.py`, which avoids pads, holes, vias and
+  the board outline; values are on the fab layer only. Every silk line is
+  ≥0.15mm and clipped ≥0.15mm clear of pad mask openings and holes (so the
+  footprints differ from the library: `lib_footprint_mismatch` is set to
+  ignore in the project).
 
 **Copper**:
 - **3A path on top as solid copper**: BATT+ area (J3 pad → Q4 drain), the
@@ -586,7 +592,9 @@ good for ~10A in a harness.
   pads sit there and would only be separated from traces by solder mask.
 - Net classes: Power 0.3mm (VBAT branches, BATT+, LOAD_OUT, GND traces),
   Reg 0.25mm (+3V3, regulator VIN, switch node; fits U2's 0.5mm pitch),
-  Default 0.2mm; vias 0.6/0.3 (Power 0.8/0.4). A custom rule
+  Default 0.2mm; vias 0.7/0.3 (0.2mm annular ring, JLCPCB's recommended
+  value; Power 0.8/0.4). Solder mask expansion 0.05mm (0.025mm on U2's
+  0.5mm-pitch pins, keeping 0.15mm webs). A custom rule
   (`heimdall-switch.kicad_dru`) allows neck-down to 0.15mm where traces
   enter fine-pitch pads (U1, U2), well inside JLCPCB's 0.127mm minimum.
 - 44 vias in total, ~555mm of track.
@@ -605,6 +613,13 @@ footprints went (slot added, R11 moved to the top side), then
 re-routed with the same pre-routes and `finish/gridstitch/islandstitch/
 cleanup` steps; the coordinates in `place_pcb.py`/`route_pcb.py prep`
 are those of the earlier 63.5mm board.
+
+**Ordering (JLCPCB)**: Gerbers + Excellon drill (separate PTH/NPTH) go
+in `hardware/kicad/gerber/` with the board's plot settings (Protel
+extensions, mask subtracted from silk); zip and upload. JLCDFM is clean
+except **"THT to SMD"**, an assembly-service rule (2-2.5mm wave-solder
+keep-outs around through-hole pads, e.g. Q3/Q4 next to the wire pads):
+irrelevant for bare boards and hand assembly.
 
 **Check before ordering**:
 - Print the BT832 footprint 1:1 and lay a module on it (drawn from a
