@@ -372,6 +372,23 @@ the leakage constraint above).
 
 ## Schematic
 
+**Circuit at a glance** (each block is also labelled on the schematic
+sheet). Four ideas explain most of it: a P-FET turns on when its gate is
+pulled well below its source; an N-FET pulling a P-FET's gate down lets
+a 3.3V GPIO switch a 12V path (Q1/Q2, Q5/Q6); the 1-2.2MΩ resistors set
+the safe default when the MCU isn't driving (output ON, LED off); the
+rest is supply plumbing.
+
+| # | Block | Parts | Job |
+|---|---|---|---|
+| 1 | Battery in + reverse polarity | J3, Q4, R1, D1 | Q4 is an ideal diode: body diode lifts VBAT, R1 pulls the gate to GND, Q4 turns fully on; a reversed pack leaves it off. D1 clamps V_GS. |
+| 2 | Load switch (fail-on) | Q3, R9, R10, C7, D2 | Q3 is the switch. R9 ‖ R10 hold it ON by default, C7 slows turn-on (gives the MCU time after reset), D2 clamps V_GS. |
+| 3 | Switch-off circuit | Q1, R5, R6, Q2, R7, R8 | P0.13 high → Q1 on → Q2 on → R8 pulls Q3's gate to VBAT → output OFF. R6/R7 keep the chain idle when the MCU is dead. |
+| 4 | Load out + voltage sense | J2, R11, R12, C8 | R11/R12 scale LOAD_OUT to the ADC (12.6V → 3.1V), C8 filters: pack voltage while ON, ~0V while OFF. |
+| 5 | 3.3V regulator | R2, C3, U2, R3, L1, C4 | R2 + C3 damp the plug-in spike; U2 buck with L1/C4; R3 sets its mode. |
+| 6 | MCU | U1, C5, C6, Y1, C1, C2, R4, J1 | BT832 (nRF52832 + antenna), supply decoupling, 32kHz crystal, reset pull-up, SWD header. |
+| 7 | Status LED + button | Q5, Q6, R13, R14, R15, LED1, SW1, R16, J4 | P0.03 high → Q5 pulls Q6's gate low → Q6 feeds VBAT through R14 to the LED (off by default). SW1 to GND with R16 protecting the pin. J4 breaks LED/BTN/GND out to the daughter board. |
+
 A first-draft KiCad schematic implementing everything on this page lives in
 [hardware/kicad/](../hardware/kicad/) (`heimdall-switch.kicad_pro` +
 `.kicad_sch`), with a rendered [heimdall-switch.svg](../hardware/kicad/heimdall-switch.svg)

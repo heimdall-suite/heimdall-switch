@@ -4005,7 +4005,62 @@
 			(embedded_fonts no)
 		)
 	)
-	(text "Status LED + button: fit LED1/SW1 here, or leave them\nunfitted and wire J4 to a daughter board"
+	(text "3.3V REGULATOR (block 5)\nR2 + C3 damp the plug-in spike. U2 is the buck regulator, L1 + C4 its\ninductor and output cap. R3 sets its mode (must be 27.4k, E96)."
+		(exclude_from_sim no)
+		(at 35 38 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "be8a6367-5092-4ee8-8205-270d32e7c6a9")
+	)
+	(text "BATTERY IN + REVERSE POLARITY (block 1)\nQ4 works as an ideal diode: its body diode\nlifts VBAT, R1 holds the gate at GND, so Q4\nturns fully on. Pack reversed: Q4 stays off.\nD1 clamps Q4's gate-source voltage."
+		(exclude_from_sim no)
+		(at 16 120 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "6287d5e0-955d-4ffb-ab89-9abe5b6d41b1")
+	)
+	(text "LOAD SWITCH, FAIL-ON (blocks 2 + 3)\nQ3 is the switch: R9 || R10 hold its gate at GND, so it is ON by default.\nC7 slows turn-on (~30-60ms: time for the MCU after a reset). D2 clamps V_GS.\nOFF: OUT_OFF high -> Q1 on -> Q2 on -> R8 pulls Q3's gate to VBAT.\nR6/R7 keep Q1/Q2 off while the MCU is dead, so the output stays ON."
+		(exclude_from_sim no)
+		(at 20 215 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "b4af521f-cc03-4fac-93c9-4b4ebdfd1efc")
+	)
+	(text "LOAD OUT + VOLTAGE SENSE (block 4)\nR11/R12 scale LOAD_OUT to the ADC (12.6V -> 3.1V), C8 filters.\nReads the pack voltage while ON, ~0V while OFF."
+		(exclude_from_sim no)
+		(at 124 222 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "56958103-66f4-4740-8fdd-ffda1fce32b7")
+	)
+	(text "MCU (block 6)\nU1 BT832 (nRF52832 + antenna). C5/C6 decouple its supply,\nY1 + C1/C2 are the 32kHz crystal, R4 the reset pull-up, J1 the SWD header."
+		(exclude_from_sim no)
+		(at 139 128 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left bottom)
+		)
+		(uuid "f8b648b8-db4f-4d5d-b675-1754394f9726")
+	)
+	(text "STATUS LED + BUTTON (block 7)\nLED: LED_DRV high -> Q5 pulls Q6's gate low -> Q6 feeds VBAT through R14 to the LED.\nR13/R15 keep the LED off while the MCU is dead.\nButton: SW1 to GND, R16 protects the pin. J4 breaks LED_A/BTN/GND out:\nfit LED1/SW1 here, or leave them unfitted and use the daughter board."
 		(exclude_from_sim no)
 		(at 224.282 153.924 0)
 		(effects
