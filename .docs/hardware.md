@@ -551,9 +551,10 @@ the GND pour. Measured copper: 3.5mm on B alone past OUT+ (≈7A on the
 table above), ≥2.4mm on B beside the slot end with ~4.3mm of F.Cu
 BAT− copper in parallel. Both − pads are plated through-holes, so the
 current changes layer in the pad barrels; the F.Cu share drops to the
-strap through a block of 6 GND vias (0.6/0.3mm) plus ~3 stitching vias
-at the lower edge of that F copper (≈1A per via). Signal and stitching
-vias elsewhere carry no load current. R8 moved below Q2 (R9/R10 shifted
+strap through a 2 × 5 grid of GND vias (0.6/0.3mm, 1.2mm pitch, ≈1A
+each) in that F copper. OUT− needs no vias: its pad sits directly on the
+strap, and the F.Cu GND around it only carries the MCU/LED return.
+Signal and stitching vias elsewhere carry no load current. R8 moved below Q2 (R9/R10 shifted
 down) to clear the strap.
 AO4407A: −12A continuous, −60A pulsed; at 10A its ~13mΩ is 1.3W, too
 warm for SO-8 continuously, fine for the expected 2-5A (≤0.3W).
@@ -571,7 +572,7 @@ good for ~10A in a harness.
   Default 0.2mm; vias 0.6/0.3 (Power 0.8/0.4). A custom rule
   (`heimdall-switch.kicad_dru`) allows neck-down to 0.15mm where traces
   enter fine-pitch pads (U1, U2), well inside JLCPCB's 0.127mm minimum.
-- 44 vias in total, ~570mm of track.
+- 44 vias in total, ~555mm of track.
 
 **How it was routed** (scripts in `hardware/kicad/`, run with KiCad's
 bundled python): `place_pcb.py` builds the board from the netlist and
