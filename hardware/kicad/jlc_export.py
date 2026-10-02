@@ -17,7 +17,7 @@ KICAD_CLI = r"C:\Users\svefre\AppData\Local\Programs\KiCad\10.0\bin\kicad-cli.ex
 BOARD, SCH, OUT = "heimdall-switch.kicad_pcb", "heimdall-switch.kicad_sch", "gerber"
 ROT_OFFSET = {
     "D_SOD-123": 180,      # JLC's model has the cathode band on pad 2 (checked in their preview)
-    # "SOT-583-8": ?,      # U2: needed a manual rotation in the first upload - fill in
+    "SOT-583-8": 90,       # U2: JLC preview needed it turned 90 deg counter-clockwise
 }
 LAYERS = "F.Cu,B.Cu,F.Paste,B.Paste,F.Silkscreen,B.Silkscreen,F.Mask,B.Mask,Edge.Cuts"
 
