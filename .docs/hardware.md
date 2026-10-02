@@ -614,9 +614,17 @@ re-routed with the same pre-routes and `finish/gridstitch/islandstitch/
 cleanup` steps; the coordinates in `place_pcb.py`/`route_pcb.py prep`
 are those of the earlier 63.5mm board.
 
-**Ordering (JLCPCB)**: Gerbers + Excellon drill (separate PTH/NPTH) go
-in `hardware/kicad/gerber/` with the board's plot settings (Protel
-extensions, mask subtracted from silk); zip and upload. JLCDFM is clean
+**Ordering (JLCPCB)**: `python jlc_export.py` (KiCad's python, from
+`hardware/kicad/`) writes the whole order package to `gerber/`: the
+Gerber + Excellon zip (board plot settings: Protel extensions, mask
+subtracted from silk), and JLC-format BOM/CPL files, both for all parts
+and `-bottom` only. The bottom side (26 small SMD parts incl. U2) is
+ordered machine-assembled ("Economic" PCBA, bottom side); the top is
+hand-soldered. JLC's part models don't always share KiCad's zero angle:
+`ROT_OFFSET` in the script holds the corrections per footprint (D_SOD-123
++180°: their zener model had the band on the anode). **Check the
+placement preview every time**, especially D1/D2 (cathode band on pad
+1, the VBAT end: reversed zeners keep Q3/Q4 off), U2 and Q1/Q2. JLCDFM is clean
 except **"THT to SMD"**, an assembly-service rule (2-2.5mm wave-solder
 keep-outs around through-hole pads, e.g. Q3/Q4 next to the wire pads):
 irrelevant for bare boards and hand assembly.
