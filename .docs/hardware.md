@@ -482,7 +482,8 @@ hidden `LCSC` field, so `kicad-cli sch export bom --fields
 
 Known simplifications in this draft, worth revisiting before layout:
 - BT832 VDD decoupling (C5 4.7µF + C6 100nF, as on Fanstel's eval
-  board) sits left of U1 — place both right at pin 9 in layout.
+  board) sits left of U1 on the sheet; on the PCB both sit at U1's VDD
+  pin.
 - The switching stage implements the fail-on design in
   [Switching stage](#switching-stage) (Q1 driver, Q2 gate clamp, Q3 load
   switch, R_LIM, R_PD1/R_PD2, C_SS, D_Z).
@@ -498,64 +499,79 @@ Known simplifications in this draft, worth revisiting before layout:
 
 ## PCB layout
 
-First full layout, in [hardware/kicad/](../hardware/kicad/)
+**Rev 2** (current), in [hardware/kicad/](../hardware/kicad/)
 (`heimdall-switch.kicad_pcb`). Views:
 [top](../hardware/kicad/layout-top.png),
 [bottom](../hardware/kicad/layout-bottom.png) (mirrored, as seen from
 below), 3D [top](../hardware/kicad/render-top.png) /
 [bottom](../hardware/kicad/render-bottom.png). Status: DRC 0 violations,
-0 unconnected, full schematic parity. Not yet reviewed by eye in the
-KiCad GUI; treat it as a starting point to iterate on.
+0 unconnected, full schematic parity; reviewed by eye in the KiCad GUI.
+Rev 1 (53 × 23mm, power path on top) was never ordered; it stays in git
+under the tag `main-pcb-rev1`.
 
-**Board**: 53 × 23mm, 2 layers, 1.6mm FR4, parts on both sides (hand
-assembly: bottom side first, then top, then the through-hole parts).
-- **Left end**: J3 (battery) and J2 (load) wire pads, + and − of each
-  pair 3.5mm apart, wires entering from the left end. The end is cut into
-  **two 7.3mm-wide tabs**, one per pair, as on the Jeti SPS-20: straight
-  edges with 1mm corner radii, a 5.1mm gap between them, and each tab
-  runs **4mm past its pads** (bare board, no pour). Each pair gets its
-  own heat shrink over tab, solder joints and wire insulation, so the
-  shrink grips the board and the insulation, not the joints. "+"/"−" are
-  marked on the silkscreen next to the pads. No GND pour on the tab
-  extensions or around the + pads on the bottom (rule areas). Q4 and Q3 right behind them, R11 (ADC divider top) in
-  the strip below Q3.
+**Board**: 45.5 × 23mm, 2 layers, 1.6mm FR4, parts on both sides, laid
+out in **zones by function**, like a high-voltage and a low-voltage side:
+everything that carries or switches pack power (blocks 1–5 in the
+[Schematic](#schematic) table) is on the **bottom**, the MCU and the
+user interface (blocks 6–7) on the **top**.
+- **Left end**: J3 (BAT) and J2 (OUT) wire pads, + and − of each pair
+  3.5mm apart, wires entering from the left. The end is cut into **two
+  symmetric tabs**, one per pair (mirror images about the board's
+  centreline), as on the Jeti SPS-20: straight edges, 1mm corner radii,
+  and each tab runs past its pads as bare board (no pour on either
+  layer). Each pair gets its own heat shrink over tab, solder joints and
+  wire insulation, so the shrink grips the board and the insulation, not
+  the joints. "BAT"/"OUT" and "+"/"−" are on the top silkscreen.
 - **Middle**: the BT832 at its native orientation, antenna over a
-  **15 × 6.3mm notch** cut into the top edge (no board or copper under the
+  **15 × 6.3mm notch** in the top edge (no board or copper under the
   antenna, as Fanstel recommends). Its left pin column (crystal, ADC, LED
-  drive) faces the power half, the right column (debug, button, VDD)
-  faces J4.
-- **Top side** (what you see, touch or plug in): wire pads, Q3/Q4, U1,
-  Y1 beside U1's crystal pins, the LED driver (Q5/Q6/R13–R15) next to the
-  VBAT bar, SW1 + LED1 in the strip below the module, and at the right
-  end J1 (debug header, rotated so the cable leaves upwards) above J4
-  (right-angle GH, cable entry flush with the right edge).
-- **Bottom side**: only flat SMD parts, nothing that sticks out, so the
-  board can lie flat on its back: Q4's gate parts (D1, R1); the regulator
-  chain R2/C3 → U2 → L1 → C4 in one row; Q3's gate network (C7, D2,
-  R5–R10, Q1, Q2); the ADC divider bottom (R12/C8 at U1's ADC pin); C5/C6 at U1's VDD pin (C5 moved there from beside LED1, whose
-  leads it sat 0.22mm from) and R4 under the module body; the crystal
-  load caps C1/C2 behind Y1; R16 by J4. Through-hole leads (J2/J3, LED1)
-  are trimmed flush after soldering.
-- Silkscreen (sized for JLCPCB's DFM check): reference designators at
-  1.0mm text / 0.15mm stroke (0.85mm where a part has no room), placed
-  beside their part by `silk_labels.py`, which avoids pads, holes, vias and
-  the board outline; values are on the fab layer only. Every silk line is
-  ≥0.15mm and clipped ≥0.15mm clear of pad mask openings and holes (so the
+  drive) faces the power end, the right column (debug, button, VDD) faces
+  J1/J4.
+- **Top side** (what you see, touch or plug in): U1; Y1 with C1/C2 in a
+  column beside U1's crystal pins; the LED driver (Q5/Q6 with R13–R15)
+  between the wire tabs and U1; LED1 and SW1 below the module; at the
+  right end J1 (SWD header, top-right corner) and J4 (right-angle GH,
+  cable entry flush with the right edge), with C5, C6 (VDD decoupling),
+  R4 (reset pull-up) and R16 (button) in one row between them. **J1 stays
+  on the top** (needed for the debug cable with the board in its case).
+- **Bottom side** (power), left to right: Q4 with D1/R1 behind the BAT
+  tab (reverse polarity), Q3 with R9/R10/C7/D2 behind the OUT tab (load
+  switch), R11 in the corner below Q3; the switch-off chain (Q1, R5, R6,
+  Q2, R7, R8) and the ADC divider bottom (R12/C8) under the module; the
+  regulator chain R2/C3 → U2 (R3) → L1/C4 under J4. The board goes into a
+  **3D-printed case**, so tall SMD parts on the bottom are fine; what
+  must not stick out are through-hole leads: J2/J3 wires and LED1's leads
+  are **trimmed flush** after soldering.
+- **Silkscreen**: reference designators horizontal, right beside their
+  part (left of it or above it where there's room), **0.85mm text /
+  0.15mm stroke** throughout, rows of parts with their labels on one line.
+  BAT/OUT 1.0mm, +/− 1.2mm. Values are on the fab layer only. Silk lines
+  are clipped ≥0.15mm clear of pad mask openings and holes (so the
   footprints differ from the library: `lib_footprint_mismatch` is set to
   ignore in the project).
 
 **Copper**:
-- **3A path on top as solid copper**: BATT+ area (J3 pad → Q4 drain), the
-  **VBAT bar** joining Q4's and Q3's sources (with an arm reaching Q6/R13
-  of the LED driver), LOAD area (Q3 drain → J2 pad). All three carry
-  track keep-outs so no other net can cut them in two. Q4's gate leaves
-  above the bar; Q3's gate (which sits in the bar's current path, at the
-  top of its source-pin column) goes straight up to a via right above
-  its pad, so the current flows around both sides of it.
-- **GND**: pours on both layers, stitched, solid (not thermal-relief)
-  connection on J2/J3's GND pads since they carry the load return. The
-  return path J2 GND → J3 GND runs through the pours at the left end,
-  ≥5mm wide on both layers.
+- **Power path on the bottom as solid copper**: BATT+ pour (J3+ → Q4
+  drain), the **VBAT bar** (pour joining Q4's and Q3's sources, ~7.9mm
+  wide, with a no-tracks rule area across its middle so no other net cuts
+  it in two), LOAD_OUT pour (Q3 drain → J2+).
+- **GND**: pours on both layers, stitched. The **load return** (OUT− →
+  BAT−) runs along the left end as a **top-side GND strap**: a no-tracks
+  rule area (~6mm wide, past both − pads) filled by the F.Cu GND pour, so
+  no signal can cut it. J2/J3's GND pads connect solid (no thermal
+  relief), since they carry the load return. No GND pour around the + pads
+  on the top (rule areas), so the + pad never sits next to GND copper.
+- **No copper on top under the BT832 body** (rule area, tracks and pours):
+  its unused LGA pads sit there and would only be separated from traces by
+  solder mask.
+- Only **45° corners** (no 90° bends).
+- Net classes: Power 0.3mm (VBAT branches, BATT+, LOAD_OUT, GND traces),
+  Reg 0.25mm (+3V3, regulator VIN, switch node; fits U2's 0.5mm pitch),
+  Default 0.2mm; vias 0.6–0.7/0.3mm. Solder mask expansion 0.05mm
+  (0.025mm on U2's 0.5mm-pitch pins, keeping 0.15mm webs). A custom rule
+  (`heimdall-switch.kicad_dru`) allows neck-down to 0.15mm where traces
+  enter fine-pitch pads (U1, U2), well inside JLCPCB's 0.127mm minimum.
+- 32 vias in total, ~520mm of track (~215mm top, ~305mm bottom).
 
 **Current capacity** (design target **5A continuous, 15A peaks <1s**).
 Expected load, per servo: analog standard servos stall at ~0.8-1.2A
@@ -565,22 +581,10 @@ would be ~18-20A, which in practice doesn't happen; realistic peaks are
 6-12A for 10-100ms when everything moves at once, with 2-5A continuous.
 Short peaks barely heat copper; the continuous figure sets the width.
 IPC-2221 (outer layer, 1oz/35µm, 20°C rise): 1.4mm for 3A, 2.5mm for 5A,
-4.8mm for 10A. The power path's narrowest copper: BATT+ area 5.5mm,
-LOAD area 4.9mm, VBAT bar ~7mm (~5mm in parallel channels where Q3's
-gate pad and via sit in it), so roughly 8-10A continuous on 1oz.
-The **load return** (OUT− → BAT−) has to go around the slot between the
-wire tabs, and the top layer can't carry it there (the LOAD zone sits
-between the two − pads), so it runs as a solid **B.Cu GND strap**: a
-no-tracks rule area from BAT− around the slot end to OUT−, filled by
-the GND pour. Measured copper: 3.5mm on B alone past OUT+ (≈7A on the
-table above), ≥2.4mm on B beside the slot end with ~4.3mm of F.Cu
-BAT− copper in parallel. Both − pads are plated through-holes, so the
-current changes layer in the pad barrels; the F.Cu share drops to the
-strap through a 2 × 5 grid of GND vias (0.6/0.3mm, 1.2mm pitch, ≈1A
-each) in that F copper. OUT− needs no vias: its pad sits directly on the
-strap, and the F.Cu GND around it only carries the MCU/LED return.
-Signal and stitching vias elsewhere carry no load current. R8 moved below Q2 (R9/R10 shifted
-down) to clear the strap.
+4.8mm for 10A. The power path's narrowest copper: BATT+ and LOAD_OUT
+pours ~5.5mm, VBAT bar ~7.9mm, so roughly 10A continuous on 1oz; the GND
+strap on top is ~6mm. Both − pads are plated through-holes, so the return
+current changes layer in the pad barrels.
 AO4407A: −12A continuous, −60A pulsed; at 10A its ~13mΩ is 1.3W, too
 warm for SO-8 continuously, fine for the expected 2-5A (≤0.3W).
 **2oz copper** (a JLCPCB option, extra cost) roughly doubles the copper
@@ -588,57 +592,51 @@ figures if long stalls are expected. **Decision: first iterations are
 ordered with standard 1oz**; 2oz is an option for later boards. Before
 switching, check JLCPCB's minimum trace/space for 2oz: heavier copper
 usually raises it, and this layout has 0.15mm neck-downs at U1/U2's
-pins and 0.2mm clearances, which may need widening. The wire pads take 0.75mm² (18AWG),
-good for ~10A in a harness.
-- **No copper on top under the BT832 body** (rule area): its unused LGA
-  pads sit there and would only be separated from traces by solder mask.
-- Net classes: Power 0.3mm (VBAT branches, BATT+, LOAD_OUT, GND traces),
-  Reg 0.25mm (+3V3, regulator VIN, switch node; fits U2's 0.5mm pitch),
-  Default 0.2mm; vias 0.7/0.3 (0.2mm annular ring, JLCPCB's recommended
-  value; Power 0.8/0.4). Solder mask expansion 0.05mm (0.025mm on U2's
-  0.5mm-pitch pins, keeping 0.15mm webs). A custom rule
-  (`heimdall-switch.kicad_dru`) allows neck-down to 0.15mm where traces
-  enter fine-pitch pads (U1, U2), well inside JLCPCB's 0.127mm minimum.
-- 44 vias in total, ~555mm of track.
+pins and 0.2mm clearances, which may need widening. The wire pads take
+0.75mm² (18AWG), good for ~10A in a harness.
 
-**How it was routed** (scripts in `hardware/kicad/`, run with KiCad's
-bundled python): `place_pcb.py` builds the board from the netlist and
-places everything; `route_pcb.py prep` adds the power copper, keep-outs
-and a few hand-placed VBAT/gate connections, exports a Specctra DSN;
-[Freerouting](https://github.com/freerouting/freerouting) 2.4 routes it;
-`route_pcb.py finish/gridstitch/islandstitch/cleanup` imports the result,
-pours GND and stitches it. These rebuild everything from scratch, so
-they're only for re-running from a new placement; once the board is
-edited in the GUI, the `.kicad_pcb` is the source of truth. The current
-board came from that layout shifted 14.5mm left when the relief
-footprints went (slot added, R11 moved to the top side), then
-re-routed with the same pre-routes and `finish/gridstitch/islandstitch/
-cleanup` steps; the coordinates in `place_pcb.py`/`route_pcb.py prep`
-are those of the earlier 63.5mm board.
+**How it was made**: rev 2 was placed by script from the rev 1 board
+(parts moved to their zones, power parts flipped to the bottom), the power
+pours, rule areas and the critical runs (J1 ↔ U1 SWD fan-out, ADC lane,
+VBAT/gate-drive runs) laid by hand-written scripts, the rest routed by
+[Freerouting](https://github.com/freerouting/freerouting) 2.4, then
+cleaned up (GND stitching, 90° corners turned into two 45° bends) and
+finished by hand in the KiCad GUI. **The `.kicad_pcb` is the source of
+truth**; `place_pcb.py`/`route_pcb.py` in `hardware/kicad/` are the rev 1
+generators (coordinates of the earlier 63.5mm board) and don't produce
+rev 2, so don't run them on it.
 
 **Ordering (JLCPCB)**: `python jlc_export.py` (KiCad's python, from
-`hardware/kicad/`) writes the whole order package to `gerber/`: the
-Gerber + Excellon zip (board plot settings: Protel extensions, mask
-subtracted from silk), and JLC-format BOM/CPL files, both for all parts
-and `-bottom` only. The bottom side (26 small SMD parts incl. U2) is
-ordered machine-assembled ("Economic" PCBA, bottom side); the top is
-hand-soldered. JLC's part models don't always share KiCad's zero angle:
-`ROT_OFFSET` in the script holds the corrections per footprint (D_SOD-123
-+180°: their zener model had the band on the anode). **Check the
-placement preview every time**, especially D1/D2 (cathode band on pad
-1, the VBAT end: reversed zeners keep Q3/Q4 off), U2 and Q1/Q2. JLCDFM is clean
-except **"THT to SMD"**, an assembly-service rule (2-2.5mm wave-solder
-keep-outs around through-hole pads, e.g. Q3/Q4 next to the wire pads):
-irrelevant for bare boards and hand assembly.
+`hardware/kicad/`) writes the whole order package to `gerber/`:
+- `heimdall-switch.zip`: Gerbers + Excellon drill (board plot settings:
+  Protel extensions, mask subtracted from silk). Order options: 2 layers,
+  1.6mm, **HASL with lead**, 1oz.
+- BOM + CPL in JLC's format, three sets: both sides
+  (`-BOM.csv`/`-CPL.csv`), **top only** (`-top`) and **bottom only**
+  (`-bottom`), for one-sided "Economic" PCBA of either side if a batch is
+  ever machine-assembled. The plan for now is bare boards and hand
+  assembly; see [BOM](#bom).
+- Parts without an LCSC number are left out (U1 BT832, J2/J3 wire pads):
+  JLC can't place them, they're hand-soldered either way.
+- **Rotation**: JLC reads bottom-side angles mirrored, so the script
+  writes `180° − KiCad angle` for bottom parts (KiCad angle on top), plus
+  a per-footprint correction (`ROT_OFFSET`) where JLC's 3D model doesn't
+  share KiCad's zero angle (SOT-23 +180°, SOT-583-8 +270°). The
+  corrections come from rev 1's placement preview, where D1/D2/U2/Q1/Q2
+  sat on the bottom at 180°. **Check the placement preview every time**,
+  and for rev 2 especially: **D1** (the first diode at 90° on the bottom;
+  cathode band = pad 1 = the VBAT end, a reversed zener keeps Q4 off),
+  D2, **Q3/Q4** (SO-8, on the bottom for the first time: pin 1 dot),
+  U2, Q1/Q2.
+- Position = centre of the part's pads (as JLC expects), Y negated.
 
 **Check before ordering**:
 - Print the BT832 footprint 1:1 and lay a module on it (drawn from a
   low-resolution datasheet drawing).
-- Look over the buck loop (U2 → L1 → C4 → GND back to U2/C3) and the
-  crystal traces in the GUI; tighten by hand if needed.
-- Through-hole GND pads (J2/J3 pin 2, LED1 pin 1) connect
-  solid to the pours (no thermal relief): use a hot iron. LED1 was
-  solid'ed because neighbouring traces clipped its relief spokes.
+- Run JLC's DFM check on the rev 2 Gerbers (rev 1 was clean except the
+  "THT to SMD" assembly rule, irrelevant for bare boards).
+- Through-hole GND pads (J2/J3 pin 2, LED1 pin 1) connect solid to the
+  pours (no thermal relief): use a hot iron.
 
 ## Buck regulator (TPS629206) reference design
 
@@ -716,7 +714,8 @@ during bring-up and a fallback to classic external-divider mode is needed
 
 - **PCBs**: bare boards from JLCPCB, surface finish **HASL with lead**
   (pre-tinned with leaded solder, matches the hand-assembly solder).
-- **Parts**: from LCSC (ships with the JLCPCB order), preferring JLCPCB
+- **Parts**: from LCSC (ships with the JLCPCB order), except the BT832
+  and J4 (Mouser, see [BOM](#bom)), preferring JLCPCB
   "basic" parts where that doesn't compromise the design — keeps JLCPCB
   assembly possible for a later batch.
 - **Hand assembly**: hot-air station + Sn63/Pb37 leaded paste for SMD,
@@ -748,50 +747,75 @@ during bring-up and a fallback to classic external-divider mode is needed
 
 ## BOM
 
-References below are the descriptive names used throughout these notes;
-see [Schematic](#schematic) for the R1/C3/… mapping, or export the
-annotated BOM from KiCad.
+Schematic references (the descriptive names used elsewhere on this page are
+in brackets; see [Schematic](#schematic) for the mapping). Every part with
+an LCSC number carries it in the schematic's `LCSC` field, so the KiCad BOM
+export and `jlc_export.py` (see [PCB layout](#pcb-layout)) produce the
+order lists. Side: **T** top, **B** bottom (rev 2). "Basic" = JLCPCB basic
+part (only matters if a batch is ever JLC-assembled). Resistors are
+UNI-ROYAL 0603WAF thick film 1% unless noted. Stock and prices checked
+**2026-10-03**.
 
-All parts from LCSC; "basic" = JLCPCB basic part (only matters if a later
-batch is JLCPCB-assembled). Resistors are UNI-ROYAL 0603WAF thick film,
-1%, 0603. Stock checked 2026-09-30.
+**Main board** (42 parts; 39 from LCSC, U1 from Mouser, J2/J3 are wire pads):
 
-| Ref | Value | Part | Package | LCSC | Basic |
+| Ref | Value | Part | Package | Side | Source | Basic |
+|---|---|---|---|---|---|---|
+| U1 | BT832 (nRF52832) | Fanstel BT832 | 14 × 16mm module | T | [Mouser](https://www.mouser.com/ProductDetail/Fanstel/BT832?qs=wUXugUrL1qzkqriNuICYIQ%3D%3D) | |
+| U2 | 3.3V buck | TI TPS629206DRLR | SOT-583-8 | B | [LCSC C5219292](https://www.lcsc.com/product-detail/C5219292.html) | |
+| L1 | 2.2µH | Murata DFE252012PD-2R2M=P2 | 1008 | B | [LCSC C237482](https://www.lcsc.com/product-detail/C237482.html) | |
+| Q1, Q5 | N-FET | AOS AO3400A | SOT-23 | B, T | [LCSC C20917](https://www.lcsc.com/product-detail/C20917.html) | ✓ |
+| Q2, Q6 | P-FET | Nexperia BSS84,215 | SOT-23 | B, T | [LCSC C493579](https://www.lcsc.com/product-detail/C493579.html) | |
+| Q3, Q4 | P-FET | AOS AO4407A | SO-8 | B | [LCSC C16072](https://www.lcsc.com/product-detail/C16072.html) | |
+| D1, D2 (D_Z2, D_Z) | 18V zener | JSCJ MMSZ5248B | SOD-123 | B | [LCSC C2127](https://www.lcsc.com/product-detail/C2127.html) | |
+| Y1 | 32.768kHz, CL 12.5pF | Epson FC-135 (Q13FC13500004) | 3215 | T | [LCSC C32346](https://www.lcsc.com/product-detail/C32346.html) | ✓ |
+| C1, C2 | 18pF 50V C0G | Samsung CL10C180JB8NNNC | 0603 | T | [LCSC C1647](https://www.lcsc.com/product-detail/C1647.html) | ✓ |
+| C3 (C_IN) | 10µF 50V X7R | Samsung CL31B106KBHNNNE | 1206 | B | [LCSC C89632](https://www.lcsc.com/product-detail/C89632.html) | |
+| C4 (C_OUT) | 22µF 25V X5R | Samsung CL21A226MAQNNNE | 0805 | B | [LCSC C45783](https://www.lcsc.com/product-detail/C45783.html) | ✓ |
+| C5 (C_VDD1) | 4.7µF 16V X5R | Samsung CL10A475KO8NNNC | 0603 | T | [LCSC C19666](https://www.lcsc.com/product-detail/C19666.html) | ✓ |
+| C6, C8 (C_VDD2, C_FB) | 100nF 50V X7R | Yageo CC0603KRX7R9BB104 | 0603 | T, B | [LCSC C14663](https://www.lcsc.com/product-detail/C14663.html) | ✓ |
+| C7 (C_SS) | 220nF 50V X7R | Samsung CL21B224KBFNNNE | 0805 | B | [LCSC C5378](https://www.lcsc.com/product-detail/C5378.html) | ✓ |
+| R1, R11 (R_REV, R_FB_TOP) | 100kΩ | 0603WAF1003T5E | 0603 | B | [LCSC C25803](https://www.lcsc.com/product-detail/C25803.html) | ✓ |
+| R2 (R_IN) | 22Ω | 0603WAF220JT5E | 0603 | B | [LCSC C23345](https://www.lcsc.com/product-detail/C23345.html) | ✓ |
+| R3 (R_MODE) | 27.4kΩ | 0603WAF2742T5E | 0603 | B | [LCSC C22964](https://www.lcsc.com/product-detail/C22964.html) | |
+| R4 (R_RST) | 10kΩ | Yageo RC0603FR-0710KL | 0603 | T | [LCSC C98220](https://www.lcsc.com/product-detail/C98220.html) | ✓ |
+| R5, R8 (R_G1, R_LIM) | 100Ω | 0603WAF1000T5E | 0603 | B | [LCSC C22775](https://www.lcsc.com/product-detail/C22775.html) | ✓ |
+| R6, R7, R13, R15 (R_OFF_PD, R_CLAMP_PU, R_Q6_PU, R_LED_PD) | 1MΩ | 0603WAF1004T5E | 0603 | B, B, T, T | [LCSC C22935](https://www.lcsc.com/product-detail/C22935.html) | ✓ |
+| R9, R10 (R_PD1, R_PD2) | 2.2MΩ | 0603WAF2204T5E | 0603 | B | [LCSC C22938](https://www.lcsc.com/product-detail/C22938.html) | |
+| R12 (R_FB_BOT) | 33kΩ | 0603WAF3302T5E | 0603 | B | [LCSC C4216](https://www.lcsc.com/product-detail/C4216.html) | ✓ |
+| R14 (R_LED) | 680Ω 1/4W | 1206W4F6800T5E | 1206 | T | [LCSC C17975](https://www.lcsc.com/product-detail/C17975.html) | |
+| R16 (R_BTN) | 1kΩ | 0603WAF1001T5E | 0603 | T | [LCSC C21190](https://www.lcsc.com/product-detail/C21190.html) | ✓ |
+| LED1 | green 525nm, 3.2cd, 20° | Everlight 204-10SUGC/S400-A4 | 3mm THT, water clear | T | [LCSC C414645](https://www.lcsc.com/product-detail/C414645.html) | |
+| SW1 | tactile | C&K PTS810 SJM 250 SMTR LFS | 4.2 × 3.2mm SMD | T | [LCSC C116501](https://www.lcsc.com/product-detail/C116501.html) | |
+| J1 | ARM 10-pin SWD | hanxia HX PZ1.27-2x5P TP | 2×5 1.27mm SMD | T | [LCSC C41376037](https://www.lcsc.com/product-detail/C41376037.html) | |
+| J4 | UI breakout | JST SM03B-GHS-TB(LF)(SN) | GH 1×3 1.25mm SMD right-angle | T | [Mouser](https://www.mouser.com/c/?q=SM03B-GHS-TB(LF)(SN)) (LCSC [C514175](https://www.lcsc.com/product-detail/C514175.html): 0 in stock) | |
+| J2, J3 | wire pads | see [Assembly](#assembly) | THT pads | — | — | |
+
+**UI daughter board** (see [Daughter board (UI)](#daughter-board-ui)):
+
+| Ref | Value | Part | Package | Side | Source |
 |---|---|---|---|---|---|
-| U1 | BT832 | Fanstel BT832 (nRF52832) | module | — (Fanstel/distributors) | |
-| U2 | 3.3V buck | TI TPS629206DRLR | SOT-583 | C5219292 | |
-| L1 | 2.2µH | Murata DFE252012PD-2R2M=P2 | 1008 | C237482 | |
-| Q1, Q5 | N-FET | AOS AO3400A | SOT-23 | C20917 | ✓ |
-| Q2, Q6 | P-FET | Nexperia BSS84 | SOT-23 | C493579 | |
-| Q3, Q4 | P-FET | AOS AO4407A | SO-8 | C16072 | |
-| D_Z, D_Z2 | 18V zener | onsemi MMSZ5248B | SOD-123 | C2127 | |
-| Y1 | 32.768kHz | Epson FC-135, CL 12.5pF | 3215 | C32346 | ✓ |
-| SW1 | tactile | C&K PTS810 SJM 250 SMTR LFS | 4.2×3.2 SMD | C116501 | |
-| (daughter SW1) | tactile, IP67 | C&K KSC641J LFS, 3.4N | 6.2×6.2 SMD | C226344 | |
-| LED1 | green 525nm, 3.2cd, 20° | Everlight 204-10SUGC/S400-A4 | 3mm THT, water clear | C414645 | |
-| R_BTN | 1kΩ | 0603WAF1001T5E | 0603 | C21190 | ✓ |
-| J4 | UI breakout | JST SM03B-GHS-TB(LF)(SN) | GH 1×3 1.25mm SMD right-angle | C514175 | |
-| C_IN | 10µF 50V X7R | Samsung CL31B106KBHNNNE | 1206 | C89632 | |
-| C_OUT | 22µF 25V X5R | Samsung CL21A226MAQNNNE | 0805 | C45783 | ✓ |
-| C_SS | 220nF 50V X7R | Samsung CL21B224KBFNNNE | 0805 | C5378 | ✓ |
-| C_VDD1 | 4.7µF 16V X5R | Samsung CL10A475KO8NNNC | 0603 | C19666 | ✓ |
-| C_VDD2, C_FB | 100nF 50V X7R | Yageo CC0603KRX7R9BB104 | 0603 | C14663 | ✓ |
-| C1, C2 | 18pF 50V C0G | Samsung CL10C180JB8NNNC | 0603 | C1647 | ✓ |
-| R_IN | 22Ω | 0603WAF220JT5E | 0603 | C23345 | ✓ |
-| R_G1, R_LIM | 100Ω | 0603WAF1000T5E | 0603 | C22775 | ✓ |
-| R_LED | 680Ω 1/4W | 1206W4F6800T5E | 1206 | C17975 | |
-| R_RST | 10kΩ | Yageo RC0603FR-0710KL | 0603 | C98220 | ✓ |
-| R_MODE | 27.4kΩ | 0603WAF2742T5E | 0603 | C22964 | |
-| R_FB_BOT | 33kΩ | 0603WAF3302T5E | 0603 | C4216 | ✓ |
-| R_FB_TOP, R_REV | 100kΩ | 0603WAF1003T5E | 0603 | C25803 | ✓ |
-| R_CLAMP_PU, R_OFF_PD, R_LED_PD, R_Q6_PU | 1MΩ | 0603WAF1004T5E | 0603 | C22935 | ✓ |
-| R_PD1, R_PD2 | 2.2MΩ | 0603WAF2204T5E | 0603 | C22938 | |
-| J1 | ARM 10-pin debug | hanxia HX PZ1.27-2x5P TP | 2×5 1.27mm SMD | C41376037 | |
-| J2, J3 | wire pads | see Assembly | — | — | |
+| LED1 | green 3mm | Everlight 204-10SUGC/S400-A4 | 3mm THT | front | [LCSC C414645](https://www.lcsc.com/product-detail/C414645.html) |
+| SW1 | tactile, IP67, 3.4N | C&K KSC641J LFS | 6.2 × 6.2mm SMD | front | [LCSC C226344](https://www.lcsc.com/product-detail/C226344.html) |
+| J1 | UI cable | JST BM03B-GHS-TBT(LF)(SN) | GH 1×3 1.25mm SMD vertical | back | [LCSC C161691](https://www.lcsc.com/product-detail/C161691.html) / [Mouser](https://www.mouser.com/ProductDetail/JST-Commercial/BM03B-GHS-TBTLFSN?qs=cdbOS8ANM9Du45wKC780vQ%3D%3D) |
+
+**UI cable** (J4 ↔ UI J1, pin 1 ↔ pin 1), per cable:
+
+| Qty | Part | Source |
+|---|---|---|
+| 2 | JST GHR-03V-S housing, GH 3-pin | [LCSC C160417](https://www.lcsc.com/product-detail/C160417.html) (only 20 in stock; also at Mouser/DigiKey) |
+| 6 | JST SSHL-002T-P0.2 crimp contact, 26-30 AWG | [LCSC C189897](https://www.lcsc.com/product-detail/C189897.html) |
+| 3 | 26-28 AWG wire, to length | — |
+
+GH crimps need a fine crimp tool (or buy ready-made GH 3-pin
+"pre-crimped" leads, often sold for drones/Pixhawk; check pin 1 ↔ pin 1).
 
 Notes:
-- **R_MODE must be exactly 27.4kΩ (E96)**: it selects the TPS629206's
+- **R3 (R_MODE) must be exactly 27.4kΩ (E96)**: it selects the TPS629206's
   mode by resistor window, so a 27kΩ E24 substitute is not safe.
+- **U1: plain BT832, not BT832-P / newer nRF52832 revisions with locked
+  APPROTECT**: those lock the debug port unless the firmware keeps it
+  open (needs a recent SDK); the plain module is easier for prototypes.
+  Fanstel's own store sells in 1000s; Mouser stocks single modules.
 - **LED1: 3mm green, high intensity, narrow beam** for sunlight
   visibility through a 3mm hole in the hull (see Status LED above for the
   VBAT drive and currents). Chosen over Hubei KENTO 3AG2HD (C2843819,
@@ -800,16 +824,43 @@ Notes:
   out too narrow to see off-axis. It only blinks on events, so its current
   doesn't show in the power budget.
 - **SW1 (main board)**: C&K PTS810 SJM 250 SMTR LFS, 4.2 × 3.2mm
-  J-lead tactile (LCSC C116501; KiCad `Button_Switch_SMD:SW_SPST_PTS810`
-  matches exactly). The on-board button sits inside the hull, so it
-  needn't be sealed, and the KSC641J's 6.2mm body was too big for the
-  main board. Alps SKRPACE010 (C139797) is the same size/package if
-  stock runs out (check its land pattern against the PTS810 footprint).
+  J-lead tactile (KiCad `Button_Switch_SMD:SW_SPST_PTS810` matches
+  exactly). The on-board button sits inside the hull, so it needn't be
+  sealed, and the KSC641J's 6.2mm body was too big for the main board.
+  Alps SKRPACE010 (C139797) is the same size/package if stock runs out
+  (check its land pattern against the PTS810 footprint).
 - **SW1 (daughter board)**: C&K KSC641J — IP67 sealed tactile switch,
   J-lead (easy to solder by hand), 3.4N actuation (firm enough to resist
   vibration presses), for the outside housing. KiCad's stock
   `Button_Switch_SMD:SW_Push_1P1T_NO_CK_KSC6xxJ` footprint matches it
   exactly.
+- **J4 / UI J1**: both JST GH 1.25mm, the main board's right-angle (cable
+  leaves along the board), the UI board's vertical (cable leaves straight
+  back through the housing).
+
+### Cost estimate (prototype run)
+
+For **10 main boards + 5 UI boards + 5 cables**, prices 2026-10-03,
+excl. VAT, ~9.5 SEK/USD. LCSC sells most passives in reels/strips of
+50–100 minimum, so the order costs more than 10× the per-board figure.
+
+| Item | Where | Order | ≈ SEK |
+|---|---|---|---|
+| BT832 × 10 | Mouser | ~$10 each; 10 pcs + shipping quoted at 996 SEK | ~1000 |
+| J4 SM03B-GHS-TB × 10 | Mouser (not in stock at LCSC) | ~$0.8 each | ~80 |
+| Main-board parts × 10 (rest of the BOM) | LCSC | $40.7 (min-order quantities included; $3.4/board at those prices) | ~390 |
+| UI-board parts × 5 | LCSC | $5.2 | ~50 |
+| Cable parts × 5 | LCSC | $2.1 | ~20 |
+| Main PCB × 10 (45.5 × 23mm, 2L, 1.6mm, leaded HASL) | JLCPCB | estimate, get a quote | ~50–100 |
+| UI PCB × 5 (35 × 13mm, 2L, **2.0mm**) | JLCPCB | estimate, get a quote (2.0mm adds cost) | ~50–100 |
+| Shipping LCSC + JLCPCB (combined) | | estimate | ~150–250 |
+| **Total** | | | **~1800–2000** |
+
+Per finished main board that's **~150–170 SEK** in parts, PCB and a share
+of the shipping at this quantity, about **100 SEK of it the BT832**. For comparison, a Jeti SPS-20
+is around $60. Mouser ships free above 800 SEK, so the BT832 order covers
+J4 too; other parts for the suite (e.g. an ESP32-C3 for heimdall-module)
+can ride along on the same order.
 
 ## Daughter board (UI)
 
@@ -822,12 +873,14 @@ LED and button need to sit away from the main board, e.g. in a housing
 on the outside of the hull, as on the Jeti SPS-20.
 
 - **Parts**: LED1 (Everlight 204-10SUGC, 3mm green), SW1 (C&K KSC641J),
-  J1 (JST B3B-XH-A, same header as the main board's J4), H1/H2 (tapped
-  M3 holes, not parts). Same part
-  numbers as the main board's on-board positions; nothing else, since the
+  J1 (JST BM03B-GHS-TBT, vertical SMD GH, the same series as the main
+  board's right-angle J4), H1/H2 (tapped M3 holes, not parts). LED and
+  button are the same part numbers as the main board's on-board ones;
+  nothing else, since the
   LED driver, current limit and button ESD resistor live on the main
   board.
-- **Cable**: 3-wire JST-XH, crimped to length, pin 1 ↔ pin 1 (1 LED_A,
+- **Cable**: 3-wire JST-GH (GHR-03V-S housings, SSHL-002T-P0.2
+  contacts, see [BOM](#bom)), crimped to length, pin 1 ↔ pin 1 (1 LED_A,
   2 BTN, 3 GND).
 - **Board**: 35 × 13mm, **2.0mm FR4** (order option at JLCPCB; the main
   board stays 1.6mm), 2 layers, two **tapped M3 holes** (H1/H2): 2.5mm
@@ -840,9 +893,11 @@ on the outside of the hull, as on the Jeti SPS-20.
   presses: fine for clamping a light board, don't over-tighten. Worn
   threads: drill to 3.2mm and use screw + nut. From H1:
   button centre +6.8mm, LED centre +15.6mm, all on the centreline. LED
-  and button on the front, facing out; the XH header is mounted on the
-  **back**, so the cable leaves straight backwards. Back silk carries the
-  board name; pin 1 of J1 is the square pad.
+  and button on the front, facing out; the GH header is mounted on the
+  **back** (SMD, so nothing comes through to the front), so the cable
+  leaves straight backwards. Back silk carries the board name. J1's pins
+  run GND, BTN, LED_A from the top edge down (as seen on the back); the
+  cable is pin 1 ↔ pin 1 either way.
 - **Mounting**: in a 3D-printed housing screwed to the **outside** of the
   hull (like the SPS-20's), the LED protruding through the housing and
   the button sealed with an O-ring, so the only hull penetration is the
@@ -851,8 +906,9 @@ on the outside of the hull, as on the Jeti SPS-20.
 - Verified: ERC 0/0; DRC 0 violations, 0 unconnected, full schematic
   parity (`kicad-cli pcb drc --schematic-parity`).
 - `gen_ui.sh` generated the first version (schematic + routed PCB, with
-  KiCad's Python API flipping J1 to the back). As with the main board, the
-  KiCad files are the source of truth once edited in the GUI.
+  KiCad's Python API flipping J1 to the back), with the XH header that
+  has since been swapped for the GH; don't re-run it. As with the main
+  board, the KiCad files are the source of truth.
 
 ## Open items
 
@@ -860,9 +916,10 @@ on the outside of the hull, as on the Jeti SPS-20.
   advertising interval (see [protocol.md](protocol.md)) are all first
   estimates, not measured.
 - **Component selection, annotation and footprints: done** (see
-  [BOM](#bom) and [Schematic](#schematic)). **Main board layout: first
-  full routing done** (see [PCB layout](#pcb-layout)); needs a by-eye
-  review in KiCad, then Gerbers for JLCPCB.
+  [BOM](#bom) and [Schematic](#schematic)). **Main board rev 2 layout:
+  done and reviewed** (see [PCB layout](#pcb-layout)). Before ordering:
+  BT832 footprint print-out check, JLC DFM check on the rev 2 Gerbers,
+  a JLCPCB quote (see [Cost estimate](#cost-estimate-prototype-run)).
 - **Y1/C1/C2**: kept in the design; fitted or not is decided at
   assembly. Firmware supports both clock sources (see LFCLK note above).
 - Power budget is estimated, not measured.

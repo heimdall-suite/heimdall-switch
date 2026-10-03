@@ -28,7 +28,7 @@ build, lint, or test commands because there is nothing to build.
   the GUI it is the source of truth too. Run `pcb drc --schematic-parity`
   after PCB changes.
 - `hardware/kicad-ui/` — separate KiCad project for the optional UI
-  daughter board (LED + button, JST-XH to the main board's J4), with a
+  daughter board (LED + button, JST-GH cable to the main board's J4), with a
   routed PCB. Same rules: the KiCad files are the source of truth
   (`gen_ui.sh` made the first version); run `sch erc` and
   `pcb drc --schematic-parity` after changes.
