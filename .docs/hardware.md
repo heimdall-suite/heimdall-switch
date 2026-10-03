@@ -74,12 +74,13 @@
     18.5mA (0.23W, within the 1206's 0.25W).
 - **Breakout for a daughter board (J4)**: LED and button can sit on the
   main board (LED1/SW1 fitted) or on a small daughter board, positioned
-  wherever the vehicle needs them. J4 is a 3-pin **JST-XH** header
-  (B3B-XH-A, 2.5mm pitch; 1 LED_A, 2 BTN, 3 GND — the LED cathode and the
+  wherever the vehicle needs them. J4 is a 3-pin **JST-GH** header
+  (SM03B-GHS-TB, 1.25mm pitch, right-angle SMD at the board edge; 1 LED_A,
+  2 BTN, 3 GND — the LED cathode and the
   button share the GND wire) wired in parallel with LED1/SW1. In the main
   schematic LED1/SW1 are the *optional on-board positions*; for off-board
-  use leave them unfitted and plug a crimped 3-wire XH cable (made to
-  length) from J4 to the daughter board's identical header. Q5, Q6 and
+  use leave them unfitted and plug a ready-made 3-wire GH cable
+  (pin 1 ↔ pin 1) from J4 to the daughter board's GH header. Q5, Q6 and
   R_LED stay on the main board, so the daughter board only needs the LED
   and the switch. See [Daughter board](#daughter-board-ui).
   **R_BTN (1kΩ)** in
@@ -457,7 +458,7 @@ carries its old name in a hidden `Function` field, and the mapping is:
 
 Unchanged: C1/C2 (crystal caps), Q1–Q6, U1, U2, L1, Y1, LED1, SW1, J1–J4.
 Footprints are KiCad stock (0603 passives; 0805/1206 where the BOM says;
-SOT-23, SOIC-8, SOD-123, SOT-583-8, 1008, 3215 crystal, JST-XH, 2×5
+SOT-23, SOIC-8, SOD-123, SOT-583-8, 1008, 3215 crystal, JST-GH, 2×5
 1.27mm SMD header, solder-wire pads) except two project-local items:
 - **`heimdall-switch:Fanstel_BT832`** (in `heimdall-switch.pretty`, via
   the project `fp-lib-table`), drawn from Fanstel's datasheet (Ver 2.12,
@@ -526,13 +527,14 @@ assembly: bottom side first, then top, then the through-hole parts).
 - **Top side** (what you see, touch or plug in): wire pads, Q3/Q4, U1,
   Y1 beside U1's crystal pins, the LED driver (Q5/Q6/R13–R15) next to the
   VBAT bar, SW1 + LED1 in the strip below the module, and at the right
-  end J1 (debug header, rotated so the cable leaves upwards) above J4.
+  end J1 (debug header, rotated so the cable leaves upwards) above J4
+  (right-angle GH, cable entry flush with the right edge).
 - **Bottom side**: only flat SMD parts, nothing that sticks out, so the
   board can lie flat on its back: Q4's gate parts (D1, R1); the regulator
   chain R2/C3 → U2 → L1 → C4 in one row; Q3's gate network (C7, D2,
   R5–R10, Q1, Q2); the ADC divider bottom (R12/C8 at U1's ADC pin); C5/C6 at U1's VDD pin (C5 moved there from beside LED1, whose
   leads it sat 0.22mm from) and R4 under the module body; the crystal
-  load caps C1/C2 behind Y1; R16 by J4. Through-hole leads (J2–J4, LED1)
+  load caps C1/C2 behind Y1; R16 by J4. Through-hole leads (J2/J3, LED1)
   are trimmed flush after soldering.
 - Silkscreen (sized for JLCPCB's DFM check): reference designators at
   1.0mm text / 0.15mm stroke (0.85mm where a part has no room), placed
@@ -634,9 +636,9 @@ irrelevant for bare boards and hand assembly.
   low-resolution datasheet drawing).
 - Look over the buck loop (U2 → L1 → C4 → GND back to U2/C3) and the
   crystal traces in the GUI; tighten by hand if needed.
-- Through-hole GND pads (J2/J3 pin 2, J4 pin 3, LED1 pin 1) connect
-  solid to the pours (no thermal relief): use a hot iron. J4/LED1 were
-  solid'ed because neighbouring traces clipped their relief spokes.
+- Through-hole GND pads (J2/J3 pin 2, LED1 pin 1) connect
+  solid to the pours (no thermal relief): use a hot iron. LED1 was
+  solid'ed because neighbouring traces clipped its relief spokes.
 
 ## Buck regulator (TPS629206) reference design
 
@@ -768,7 +770,7 @@ batch is JLCPCB-assembled). Resistors are UNI-ROYAL 0603WAF thick film,
 | (daughter SW1) | tactile, IP67 | C&K KSC641J LFS, 3.4N | 6.2×6.2 SMD | C226344 | |
 | LED1 | green 525nm, 3.2cd, 20° | Everlight 204-10SUGC/S400-A4 | 3mm THT, water clear | C414645 | |
 | R_BTN | 1kΩ | 0603WAF1001T5E | 0603 | C21190 | ✓ |
-| J4 | UI breakout | JST B3B-XH-A(LF)(SN) | XH 1×3 2.5mm THT | C144394 | |
+| J4 | UI breakout | JST SM03B-GHS-TB(LF)(SN) | GH 1×3 1.25mm SMD right-angle | C514175 | |
 | C_IN | 10µF 50V X7R | Samsung CL31B106KBHNNNE | 1206 | C89632 | |
 | C_OUT | 22µF 25V X5R | Samsung CL21A226MAQNNNE | 0805 | C45783 | ✓ |
 | C_SS | 220nF 50V X7R | Samsung CL21B224KBFNNNE | 0805 | C5378 | ✓ |

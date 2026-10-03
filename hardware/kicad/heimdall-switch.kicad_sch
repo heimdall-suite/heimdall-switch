@@ -11134,7 +11134,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "B3B-XH-A"
+		(property "Value" "SM03B-GHS-TB"
 			(at 306.07 182.88 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -11145,7 +11145,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Connector_JST:JST_XH_B3B-XH-A_1x03_P2.50mm_Vertical"
+		(property "Footprint" "Connector_JST:JST_GH_SM03B-GHS-TB_1x03-1MP_P1.25mm_Horizontal"
 			(at 303.53 181.61 0)
 			(hide yes)
 			(show_name no)
@@ -11177,7 +11177,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C144394"
+		(property "LCSC" "C514175"
 			(at 303.53 181.61 0)
 			(hide yes)
 			(show_name no)
