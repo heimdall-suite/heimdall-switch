@@ -509,6 +509,11 @@ below), 3D [top](../hardware/kicad/render-top.png) /
 Rev 1 (53 × 23mm, power path on top) was never ordered; it stays in git
 under the tag `main-pcb-rev1`.
 
+| Top | Bottom (mirrored, as seen from below) |
+|---|---|
+| ![Main board, 3D top](../hardware/kicad/render-top.png) | ![Main board, 3D bottom](../hardware/kicad/render-bottom.png) |
+| ![Main board layout, top](../hardware/kicad/layout-top.png) | ![Main board layout, bottom](../hardware/kicad/layout-bottom.png) |
+
 **Board**: 45.5 × 23mm, 2 layers, 1.6mm FR4, parts on both sides, laid
 out in **zones by function**, like a high-voltage and a low-voltage side:
 everything that carries or switches pack power (blocks 1–5 in the
@@ -607,7 +612,9 @@ generators (coordinates of the earlier 63.5mm board) and don't produce
 rev 2, so don't run them on it.
 
 **Ordering (JLCPCB)**: `python jlc_export.py` (KiCad's python, from
-`hardware/kicad/`) writes the whole order package to `gerber/`:
+`hardware/kicad/`) writes the whole order package to `gerber/`
+(`python jlc_export.py ../kicad-ui` does the same for the UI board, into
+`hardware/kicad-ui/gerber/`; see [Daughter board (UI)](#daughter-board-ui)):
 - `heimdall-switch.zip`: Gerbers + Excellon drill (board plot settings:
   Protel extensions, mask subtracted from silk). Order options: 2 layers,
   1.6mm, **HASL with lead**, 1oz.
@@ -872,6 +879,10 @@ Separate KiCad project in [hardware/kicad-ui/](../hardware/kicad-ui/)
 LED and button need to sit away from the main board, e.g. in a housing
 on the outside of the hull, as on the Jeti SPS-20.
 
+| Front | Back |
+|---|---|
+| ![UI board, front](../hardware/kicad-ui/render-top.png) | ![UI board, back](../hardware/kicad-ui/render-bottom.png) |
+
 - **Parts**: LED1 (Everlight 204-10SUGC, 3mm green), SW1 (C&K KSC641J),
   J1 (JST BM03B-GHS-TBT, vertical SMD GH, the same series as the main
   board's right-angle J4), H1/H2 (tapped M3 holes, not parts). LED and
@@ -895,9 +906,10 @@ on the outside of the hull, as on the Jeti SPS-20.
   button centre +6.8mm, LED centre +15.6mm, all on the centreline. LED
   and button on the front, facing out; the GH header is mounted on the
   **back** (SMD, so nothing comes through to the front), so the cable
-  leaves straight backwards. Back silk carries the board name. J1's pins
-  run GND, BTN, LED_A from the top edge down (as seen on the back); the
-  cable is pin 1 ↔ pin 1 either way.
+  leaves straight backwards. J1's pin row runs along the board (body
+  117.4–124.5mm from the left edge, ≥2mm clear of H2's hole) so it
+  doesn't crowd the screw. Back silk carries the board name; the cable
+  is pin 1 ↔ pin 1.
 - **Mounting**: in a 3D-printed housing screwed to the **outside** of the
   hull (like the SPS-20's), the LED protruding through the housing and
   the button sealed with an O-ring, so the only hull penetration is the
@@ -905,6 +917,14 @@ on the outside of the hull, as on the Jeti SPS-20.
   kill the button.
 - Verified: ERC 0/0; DRC 0 violations, 0 unconnected, full schematic
   parity (`kicad-cli pcb drc --schematic-parity`).
+- **Ordering**: `python jlc_export.py ../kicad-ui` (from
+  `hardware/kicad/`) writes `hardware/kicad-ui/gerber/`: Gerber + drill
+  zip and BOM/CPL (all, `-top`, `-bottom`), same format as the main
+  board. Select **2.0mm** thickness on the JLCPCB order form (the Gerbers
+  don't carry it). If it's ever assembled: SW1 is SMD on the front, J1
+  SMD on the back (two "Economic" sides), LED1 is through-hole (hand
+  solder, or JLC's Standard PCBA); J1/SW1 have no rotation corrections
+  yet, so check the placement preview.
 - `gen_ui.sh` generated the first version (schematic + routed PCB, with
   KiCad's Python API flipping J1 to the back), with the XH header that
   has since been swapped for the GH; don't re-run it. As with the main

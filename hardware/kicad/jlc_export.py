@@ -1,12 +1,13 @@
-# Builds the JLCPCB order package for the main board into gerber/:
-#   heimdall-switch.zip            Gerbers (board plot settings) + Excellon drill (PTH/NPTH)
-#   heimdall-switch-BOM[-top|-bottom].csv   Comment, Designator, Footprint, LCSC
-#   heimdall-switch-CPL[-top|-bottom].csv   Designator, Mid X, Mid Y, Layer, Rotation
+# Builds the JLCPCB order package for a board into gerber/ in its project folder:
+#   <name>.zip            Gerbers (board plot settings) + Excellon drill (PTH/NPTH)
+#   <name>-BOM[-top|-bottom].csv   Comment, Designator, Footprint, LCSC
+#   <name>-CPL[-top|-bottom].csv   Designator, Mid X, Mid Y, Layer, Rotation
 # No suffix = both sides; -top / -bottom are for one-sided ("Economic") assembly.
 # Parts without an LCSC number (U1 BT832, J2/J3 wire pads) are left out of BOM and CPL.
 #
-# Run with KiCad's bundled python from hardware/kicad/:
-#   python jlc_export.py
+# Run with KiCad's bundled python; the argument is the project folder (default: this one):
+#   python jlc_export.py                  main board  (hardware/kicad/)
+#   python jlc_export.py ../kicad-ui      UI daughter board
 #
 # Rotation, as in Bouni's kicad-jlcpcb-tools: top = KiCad angle + correction,
 # bottom = 180 - KiCad angle + correction (JLC reads bottom angles mirrored).
@@ -19,7 +20,9 @@ import csv, os, subprocess, sys, zipfile
 import pcbnew
 
 KICAD_CLI = r"C:\Users\svefre\AppData\Local\Programs\KiCad\10.0\bin\kicad-cli.exe"
-BOARD, SCH, OUT = "heimdall-switch.kicad_pcb", "heimdall-switch.kicad_sch", "gerber"
+os.chdir(sys.argv[1] if len(sys.argv) > 1 else os.path.dirname(os.path.abspath(__file__)))
+name = [f[:-len(".kicad_pro")] for f in os.listdir(".") if f.endswith(".kicad_pro")][0]
+BOARD, SCH, OUT = name + ".kicad_pcb", name + ".kicad_sch", "gerber"
 ROT_OFFSET = {
     "D_SOD-123": 0,        # rev 1 preview: band on the cathode with the mirrored angle alone
     "SOT-583-8": 270,      # U2: JLC's model is turned 90 deg against KiCad's
@@ -34,10 +37,10 @@ os.makedirs(OUT, exist_ok=True)
 cli("pcb", "export", "gerbers", "--board-plot-params", "-l", LAYERS, "-o", OUT + "/", BOARD)
 cli("pcb", "export", "drill", "--format", "excellon", "--drill-origin", "absolute",
     "--excellon-units", "mm", "--excellon-separate-th", "-o", OUT + "/", BOARD)
-name = os.path.splitext(BOARD)[0]
-parts = [name + s for s in ("-F_Cu.gtl", "-B_Cu.gbl", "-F_Mask.gts", "-B_Mask.gbs", "-F_Silkscreen.gto",
-                            "-B_Silkscreen.gbo", "-F_Paste.gtp", "-B_Paste.gbp", "-Edge_Cuts.gm1",
-                            "-PTH.drl", "-NPTH.drl", "-job.gbrjob")]
+# every Gerber/drill file the export wrote for this board (layer file names follow the
+# board's layer names, e.g. "top_cu" on the UI board, so match by extension)
+EXT = (".gtl", ".gbl", ".gts", ".gbs", ".gto", ".gbo", ".gtp", ".gbp", ".gm1", ".drl", ".gbrjob")
+parts = sorted(f for f in os.listdir(OUT) if f.startswith(name + "-") and f.endswith(EXT))
 with zipfile.ZipFile(os.path.join(OUT, name + ".zip"), "w", zipfile.ZIP_DEFLATED) as z:
     for p in parts:
         z.write(os.path.join(OUT, p), p)
