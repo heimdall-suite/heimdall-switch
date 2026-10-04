@@ -15,9 +15,11 @@ not yet validated on real hardware):
    against chosen advertising interval)
 2. If no valid command heard → sleep
 3. If valid command (matches paired address + key + unit ID + counter >
-   last accepted, for replay protection) → drive relay coil (SET or RESET
-   per commanded absolute state — never toggle logic, always an absolute
-   state command)
+   last accepted, for replay protection) → drive the output ON or OFF per
+   commanded absolute state (never toggle logic, always an absolute state
+   command). If the state changed, persist state + counter to flash
+   ([persistence.md](persistence.md)) — the last accepted counter must
+   survive reboot or old sniffed frames become valid again.
 4. Advertise a short ack burst (a few adverts, ~100-300ms)
 5. Sleep
 
@@ -44,6 +46,21 @@ widget):
 Multi-unit safety: each node only reacts to its own paired address + unit
 ID, so overlapping BLE range between multiple vehicles/units is a
 non-issue by design.
+
+## Open items
+
+- **8-bit key check byte is forgeable**: an attacker can spray frames with
+  random key bytes and a high counter and get ~1 in 256 accepted — no
+  sniffing needed. Proposed fix: replace it with a truncated AES-CMAC/CCM
+  MAC (4-8 bytes) over `{unit ID, counter, state}` using the pairing key
+  (nRF52832 has hardware AES). Frame grows to ~12-16 bytes, still fits a
+  legacy advert. Asymmetric signatures were considered and rejected: they
+  don't prevent replay on their own (a counter is still needed), don't fit
+  a legacy advert (64-byte Ed25519 signature), and have no hardware
+  acceleration on the nRF52832.
+- **8-bit counter wraps after 256 commands**: a plain `counter > last`
+  check stops accepting at wrap. Widen to 32 bits (preferred, pairs with
+  the MAC change) or use serial-number arithmetic.
 
 ## Transmitter-side Lua widget
 

@@ -1,0 +1,4 @@
+(fp_lib_table
+	(version 7)
+	(lib (name "heimdall-switch-ui")(type "KiCad")(uri "${KIPRJMOD}/heimdall-switch-ui.pretty")(options "")(descr "Project-local footprints"))
+)

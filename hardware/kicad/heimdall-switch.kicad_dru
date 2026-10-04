@@ -1,0 +1,4 @@
+(version 1)
+(rule "pin neck-down"
+  (condition "A.Type == 'track'")
+  (constraint track_width (min 0.15mm)))

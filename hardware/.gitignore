@@ -4,3 +4,6 @@
 *-drc.rpt
 fp-info-cache
 _autosave-*
+~*.lck
+.history/
+*-backups/
