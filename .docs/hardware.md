@@ -394,13 +394,20 @@ rest is supply plumbing.
 | 6 | MCU | U1, C5, C6, Y1, C1, C2, R4, J1 | BT832 (nRF52832 + antenna), supply decoupling, 32kHz crystal, reset pull-up, SWD header. |
 | 7 | Status LED + button | Q5, Q6, R13, R14, R15, LED1, SW1, R16, J4 | P0.03 high → Q5 pulls Q6's gate low → Q6 feeds VBAT through R14 to the LED (off by default). SW1 to GND with R16 protecting the pin. J4 breaks LED/BTN/GND out to the daughter board. |
 
-A first-draft KiCad schematic implementing everything on this page lives in
+The KiCad schematic implementing everything on this page lives in
 [hardware/kicad/](../hardware/kicad/) (`heimdall-switch.kicad_pro` +
 `.kicad_sch`), with a rendered [heimdall-switch.svg](../hardware/kicad/heimdall-switch.svg)
-for quick viewing without opening KiCad. Custom symbols for the BT832 and
-TPS629206 (neither has an official KiCad library part) live in
-`heimdall-switch.kicad_sym`; opening the project should resolve them
-automatically via the project-local `sym-lib-table`.
+for quick viewing without opening KiCad. The BT832 and TPS629206 symbols
+are project-local, in `heimdall-switch.kicad_sym` (resolved automatically
+via the project's `sym-lib-table`). Neither part is in KiCad's own
+libraries (they have the bare nRF52832 chip, not the module), but both
+have vendor symbols: Fanstel publishes a KiCad library with the BT832
+([hemalchevli/Fanstel-kicad-library](https://github.com/hemalchevli/Fanstel-kicad-library),
+linked from Fanstel's site; KiCad 5 format) and TI's TPS629206 symbol is
+available through Ultra Librarian. Ours were drawn before those were
+found and kept: the BT832 symbol's pin map is identical to Fanstel's
+(checked pin by pin, see the footprint note below) and its pins sit on
+KiCad's 2.54mm grid.
 
 Drawn with real wires within each block (regulator, MCU + crystal/SWD,
 status LED + button + J4 breakout, switching stage + load output), KiCad power symbols (`GND`,
