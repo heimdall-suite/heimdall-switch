@@ -959,7 +959,7 @@ J2/J3 are wire pads):
 |---|---|---|---|---|---|---|
 | LED1 | green 3mm | Kingbright L-7104ZGCK † | 3mm THT | front | TME L-7104ZGCK | [C414645](https://www.lcsc.com/product-detail/C414645.html) (Everlight 204-10SUGC/S400-A4) |
 | SW1 | tactile, IP67, 3.4N | C&K KSC641J LFS | 6.2 × 6.2mm SMD | front | TME KSC641JLFS | [C226344](https://www.lcsc.com/product-detail/C226344.html) |
-| J1 | UI cable | JST BM03B-GHS-TBT(LF)(SN) | GH 1×3 1.25mm SMD vertical | back | TME BM03B-GHS-TBT | [C161691](https://www.lcsc.com/product-detail/C161691.html) |
+| J1 | UI cable | JST SM03B-GHS-TB(LF)(SN) | GH 1×3 1.25mm SMD right-angle | back | TME SM03B-GHS-TB | [C514175](https://www.lcsc.com/product-detail/C514175.html) |
 
 **UI cable** (J4 ↔ UI J1, pin 1 ↔ pin 1), per cable, from TME:
 
@@ -1011,9 +1011,10 @@ Notes:
   vibration presses), for the outside housing. KiCad's stock
   `Button_Switch_SMD:SW_Push_1P1T_NO_CK_KSC6xxJ` footprint matches it
   exactly.
-- **J4 / UI J1**: both JST GH 1.25mm, the main board's right-angle (cable
-  leaves along the board), the UI board's vertical (cable leaves straight
-  back through the housing).
+- **J4 / UI J1**: the same JST GH 1.25mm right-angle header on both
+  boards (cable plugs in from the side, along the board). The UI board
+  had a vertical BM03B-GHS-TBT until 2026-10-04; side entry suits its
+  housing better, and one part number covers both ends.
 
 ### Cost estimate (prototype run)
 
@@ -1029,20 +1030,20 @@ over-buying.
 | U2, L1, Y1 × 10 | Mouser | 85 + 34 + 39 | 158 |
 | **Mouser order** | | above Mouser's 800 SEK free-shipping threshold (not re-checked; confirm in the cart) | **885** |
 | Main-board parts × 10 (rest of the BOM) | TME | | 360 |
-| UI-board parts × 5 | TME | | 71 |
+| UI-board parts × 5 | TME | | 60 |
 | Cable parts × 5 | TME | | 15 |
-| **TME order** | | shipping not known yet; check at checkout | **445** |
+| **TME order** | | shipping not known yet; check at checkout | **435** |
 | Main PCB × 10 (45.5 × 23mm, 2L, 1.6mm, leaded HASL) | JLCPCB | estimate, get a quote | ~50–100 |
 | UI PCB × 5 (35 × 13mm, 2L, **2.0mm**) | JLCPCB | estimate, get a quote (2.0mm adds cost) | ~50–100 |
 | Shipping JLCPCB | | estimate | ~100–200 |
-| **Total** | | plus TME shipping | **~1530–1730** |
+| **Total** | | plus TME shipping | **~1520–1720** |
 
 Per finished main board that's about **125 SEK in parts**, 73 of it the
 BT832. For comparison, a Jeti SPS-20 is around $60.
 
 Alternatives priced the same day (parts only, excl. shipping):
 **LCSC + Mouser** (BT832, J4 and U2 from Mouser, the rest from LCSC with
-no substitutes) came to ~1250 SEK, about 80 SEK less, but LCSC sells
+no substitutes) came to ~1250 SEK, about 70 SEK less, but LCSC sells
 passives in strips of 50-100 and ships from China. Neither TME nor Mouser
 alone covers the BOM: TME has no BT832 or TPS629206, Mouser no AOS
 MOSFETs and no stock of C3, C4, LED1 or the handful of equivalents
@@ -1068,8 +1069,8 @@ on the outside of the hull, as on the Jeti SPS-20.
 | ![UI board, front](../hardware/kicad-ui/render-top.png) | ![UI board, back](../hardware/kicad-ui/render-bottom.png) |
 
 - **Parts**: LED1 (Kingbright L-7104ZGCK, 3mm green), SW1 (C&K KSC641J),
-  J1 (JST BM03B-GHS-TBT, vertical SMD GH, the same series as the main
-  board's right-angle J4), H1/H2 (tapped M3 holes, not parts). LED and
+  J1 (JST SM03B-GHS-TB, right-angle SMD GH, the same part as the main
+  board's J4), H1/H2 (tapped M3 holes, not parts). LED and
   button are the same part numbers as the main board's on-board ones;
   nothing else, since the
   LED driver, current limit and button ESD resistor live on the main
@@ -1089,18 +1090,24 @@ on the outside of the hull, as on the Jeti SPS-20.
   threads: drill to 3.2mm and use screw + nut. From H1:
   button centre +6.8mm, LED centre +15.6mm, all on the centreline. LED
   and button on the front, facing out; the GH header is mounted on the
-  **back** (SMD, so nothing comes through to the front), so the cable
-  leaves straight backwards. J1's pin row runs along the board (body
-  117.4–124.5mm from the left edge, ≥2mm clear of H2's hole) so it
-  doesn't crowd the screw. Back silk carries the board name; the cable
-  is pin 1 ↔ pin 1.
+  **back** (SMD, so nothing comes through to the front) as a
+  **right-angle** header with its opening at the **bottom long edge**, so
+  the cable plugs in from the side and runs along the back of the board
+  (changed from a vertical BM03B-GHS-TBT on 2026-10-04, so both ends of
+  the cable use the same header). J1's body sits ~21–29.5mm from the
+  left edge, between the LED leads and H2's ~2mm keep-out, its front
+  ~0.8mm in from the edge as on the main board. Its GND and LED_A reach
+  the front layer through one via each; BTN runs on the back to the
+  button's via. Back silk carries the board name; the cable is pin 1 ↔
+  pin 1.
 - **Mounting**: in a 3D-printed housing screwed to the **outside** of the
   hull (like the SPS-20's), the LED protruding through the housing and
   the button sealed with an O-ring, so the only hull penetration is the
   cable hole. The KSC641J is IP67 itself, so a leaking O-ring doesn't
   kill the button.
-- Verified: ERC 0/0; DRC 0 violations, 0 unconnected, full schematic
-  parity (`kicad-cli pcb drc --schematic-parity`).
+- Verified (after the J1 change, 2026-10-04): ERC 0/0; DRC 0
+  violations, 0 unconnected, full schematic parity (`kicad-cli pcb drc
+  --schematic-parity`). Renders above regenerated.
 - **Ordering**: `python jlc_export.py ../kicad-ui` (from
   `hardware/kicad/`) writes `hardware/kicad-ui/gerber/`: Gerber + drill
   zip and BOM/CPL (all, `-top`, `-bottom`), same format as the main
