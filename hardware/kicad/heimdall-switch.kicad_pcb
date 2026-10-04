@@ -173,6 +173,50 @@
 				)
 			)
 		)
+		(property "Manufacturer" "Samsung"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "56c990ac-79eb-4282-81d8-756e79bee369")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "CL10A475KO8NNNC"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "e7ae82ed-8c64-4eaa-b526-19c2af240904")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "TME"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "5b0cbfad-6244-4b78-900c-476acd1c6fe7")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "CL10A475KO8NNNC"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "a76865c6-4899-42f2-bfd1-420522d79326")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(path "/bcd1f565-486a-4fcb-9f6d-03e41ba4e76d")
 		(sheetname "/")
 		(sheetfile "heimdall-switch.kicad_sch")
@@ -326,6 +370,50 @@
 				)
 			)
 		)
+		(property "Manufacturer" "Yageo"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "8e91caa4-d6fc-4ecc-9886-613d93a315db")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "CC0603KRX7R9BB104"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "a3660864-f0c7-4883-950a-271bb3e733e0")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "TME"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "bba7b449-f6d9-4209-8d07-b357d3aef88d")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "CC0603KRX7R9BB104"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "2f6d0913-a274-44de-a71b-2beb41f78c54")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(path "/d8c1355d-3774-42ef-bf10-9ed634573e98")
 		(sheetname "/")
 		(sheetfile "heimdall-switch.kicad_sch")
@@ -464,6 +552,50 @@
 				(font
 					(size 1.27 1.27)
 					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "Alpha & Omega"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "d8d4bca8-2724-4c81-830d-acbfa513d4d1")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "AO3400A"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "3c0a84d9-8636-480f-a45a-be70d5d0c7f9")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "TME"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "0813e364-ec93-4adb-b804-95743476771f")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "AO3400A"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "200164e1-68d5-44f2-84ba-03664d6bff30")
+			(effects
+				(font
+					(size 1.27 1.27)
 				)
 			)
 		)
@@ -840,6 +972,50 @@
 				)
 			)
 		)
+		(property "Manufacturer" "Yageo"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "59200e14-35eb-41a2-b77d-4f39232c94d3")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "RC0603FR-071KL"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "ad69bde4-39a1-487d-920e-87081c9fbb99")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "TME"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "91bc8a1a-e369-4f57-b7d1-8dd09002f237")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "RC0603FR-071K"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "8bd8c596-02b5-475b-b9c2-d99c1eb2b8fc")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(path "/8b3a0252-5b9d-4de2-b079-3a71259e2313")
 		(sheetname "/")
 		(sheetfile "heimdall-switch.kicad_sch")
@@ -1001,6 +1177,50 @@
 				)
 			)
 		)
+		(property "Manufacturer" "Kingbright"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "a44873a5-a6eb-4bcb-9af7-d940cb46f87b")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "L-7104ZGCK"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "ef17d6bc-4f7d-4598-a233-80c1f3a01da7")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "TME"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "e34cbc8d-4dbe-4889-9fd5-4b7ae48e9147")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "L-7104ZGCK"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "227641d9-6783-406f-bac3-59f5580a5cf0")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(path "/0753bccc-c7e9-46e0-a1ce-2f5093f80019")
 		(sheetname "/")
 		(sheetfile "heimdall-switch.kicad_sch")
@@ -1142,6 +1362,50 @@
 			(layer "F.Fab")
 			(hide yes)
 			(uuid "1f4562ce-46d0-445a-870e-1fd91f16156d")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Manufacturer" "Fanstel"
+			(at 0 3 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "bd887da3-fbb9-4169-879b-a652b30f1a10")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "BT832"
+			(at 0 3 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "2c76708b-a85b-4dde-be89-cf61b871122a")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "Mouser"
+			(at 0 3 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "f7e0108e-a725-45fb-b196-ee6440576326")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "308-BT832"
+			(at 0 3 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "2f3df9ea-6934-4017-985e-6f66d7a0fda9")
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1494,6 +1758,50 @@
 				)
 			)
 		)
+		(property "Manufacturer" "Samsung"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "868a25da-71d8-4979-8b80-cf3fb1f34474")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "CL10C180JB8NNNC"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "70aa83c7-77c5-4024-bdc6-916718805674")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "TME"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "caf128f4-5a6b-4592-a4d2-62a5d0b36ac8")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "CL10C180JB8NNNC"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "b77b1be4-39dc-4ea7-a58a-086f6937806f")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(path "/32396a9d-40f8-4795-84d0-3e88e666ad07")
 		(sheetname "/")
 		(sheetfile "heimdall-switch.kicad_sch")
@@ -1624,6 +1932,50 @@
 				(font
 					(size 1.27 1.27)
 					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "Epson"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "1b5b3cea-0806-4371-b73e-2c93290e300e")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "FC-135 32.7680KA-A5"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "aa4ff0cb-0d32-4cb2-ad06-a1c6d4f1ed27")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "Mouser"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "2f37b821-9d8f-4d9a-b476-9328c28b089e")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "732-532.7680KA-A5"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "31bcbda2-c67e-42e8-9371-1ca9228887c8")
+			(effects
+				(font
+					(size 1.27 1.27)
 				)
 			)
 		)
@@ -1842,6 +2194,50 @@
 				(font
 					(size 1.27 1.27)
 					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "JST"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "1b917271-ddd1-4387-8a4b-546dcd9b65e8")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "SM03B-GHS-TB(LF)(SN)"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "8fd31620-9c12-453c-ab86-42958fee7adf")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "TME"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "1f1952b3-b639-45bb-94a9-ef328dba86eb")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "SM03B-GHS-TB"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "a8bec338-378e-4b10-ace6-41f27af5e844")
+			(effects
+				(font
+					(size 1.27 1.27)
 				)
 			)
 		)
@@ -2263,6 +2659,50 @@
 				(font
 					(size 1.27 1.27)
 					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "Connfly"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "eab54c9e-ef96-4006-861b-1551a26caf05")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "DS1031-08-2*5P8BS41-3A"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "140f4caa-e7e4-4a0f-83d2-a5b6ae09bf3a")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "TME"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "63983bad-24d3-4bfb-ad4d-df4a94e9fc3f")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "ZL322-2X5P"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "b62b4e46-788f-4a39-bd80-ca4db69f69d7")
+			(effects
+				(font
+					(size 1.27 1.27)
 				)
 			)
 		)
@@ -2822,6 +3262,50 @@
 				)
 			)
 		)
+		(property "Manufacturer" "C&K"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "355674d2-2871-4047-bfa9-dfbc348becd3")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "PTS810 SJM 250 SMTR LFS"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "d9291537-c8e3-4702-9b14-e0210ad4e5c0")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "TME"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "9d94ba3a-b94e-4d26-bb67-97b0375c1242")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "PTS810SJM250SMTRLF"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "33781582-03ad-4fb8-9f28-f9779c5b240e")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(path "/b6cd46f8-a949-4ae6-a49f-a88466eded9c")
 		(sheetname "/")
 		(sheetfile "heimdall-switch.kicad_sch")
@@ -3115,6 +3599,50 @@
 				)
 			)
 		)
+		(property "Manufacturer" "Samsung"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "8af69722-edfb-42d2-9025-5d48375052b5")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "CL10C180JB8NNNC"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "3e027be2-7bc1-4b50-a4d7-179afc0ed732")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "TME"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "6c4ecf8a-07f6-402b-a555-61e57c09cc08")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "CL10C180JB8NNNC"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "7c320912-6fac-40ff-916b-f62ce04d08f1")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(path "/bc0526ef-7966-47e0-9184-ba2a46f4578d")
 		(sheetname "/")
 		(sheetfile "heimdall-switch.kicad_sch")
@@ -3265,6 +3793,50 @@
 				(font
 					(size 1.27 1.27)
 					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "Yageo"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "03383878-208d-4684-b9f8-74a8ee3c964b")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "RC0603FR-071ML"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "bc90cc87-1139-4bea-a270-a304bbe2ee0e")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "TME"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "0dc487d8-3dcf-4f63-b965-dc14de51c325")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "RC0603FR-071M"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "0ffc5190-0bf2-4039-a7f7-e4ea2363b940")
+			(effects
+				(font
+					(size 1.27 1.27)
 				)
 			)
 		)
@@ -3585,6 +4157,50 @@
 				)
 			)
 		)
+		(property "Manufacturer" "Yageo"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "202dfe03-3ed7-4be6-85a6-6fb6aeb07896")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "RC0603FR-0710KL"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "a576903a-c4fa-4d09-acdd-a39671e4069f")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "TME"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "e84f794d-24b9-4f93-ae03-43d28911b47a")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "RC0603FR-0710K"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "a6558096-d630-469f-9139-d1959896483d")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(path "/08429f1d-444a-43d2-8091-0b5e9c12cc0c")
 		(sheetname "/")
 		(sheetfile "heimdall-switch.kicad_sch")
@@ -3758,6 +4374,50 @@
 				)
 			)
 		)
+		(property "Manufacturer" "Yageo"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "f49f2476-c9da-4416-b8e4-cdd90aa8c11e")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "RC0603FR-071ML"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "237e2704-ea84-48ce-b548-125b3eb6d7e5")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "TME"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "ff72ab2d-1c7f-4f13-b3c4-7e7c501dda02")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "RC0603FR-071M"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "9cabe28f-c08c-416b-ab87-49eaa4e52222")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(path "/28243d24-120b-44e5-b4e5-a0d17de49308")
 		(sheetname "/")
 		(sheetfile "heimdall-switch.kicad_sch")
@@ -3916,6 +4576,50 @@
 				(font
 					(size 1.27 1.27)
 					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "Nexperia"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "9756471a-0843-4b79-a18e-b9da223fe58d")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "BSS84AK,215"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "061b30f9-48fe-4d73-9423-404ca72c64ec")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "TME"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "a5ef4d58-6f74-4fd6-a812-cab5d56ab71c")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "BSS84AK.215"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "549c3837-2030-4376-87f6-1f66d6e961ae")
+			(effects
+				(font
+					(size 1.27 1.27)
 				)
 			)
 		)
@@ -4436,6 +5140,50 @@
 				)
 			)
 		)
+		(property "Manufacturer" "Yageo"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "3127d717-ec41-4940-8bf5-5aba035b2da2")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "RC1206FR-07680RL"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "e500b5e3-e1df-4392-98d2-8180bbaeaf49")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "TME"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "1a7c4fe4-b96f-4d22-a3df-166b8712936c")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "RC1206FR-07680R"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "149c74be-c917-4c15-8da1-606fda494dcf")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(path "/50e015a3-1d25-4038-b2be-8afc7074002c")
 		(sheetname "/")
 		(sheetfile "heimdall-switch.kicad_sch")
@@ -4617,6 +5365,50 @@
 				(justify mirror)
 			)
 		)
+		(property "Manufacturer" "Yageo"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "7bd40921-82e2-44ce-a60d-4645056a324c")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "RC0603FR-0722RL"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "5d82aba7-07ea-4b90-95a7-a69ebf1aaf06")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "TME"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "ae6919d8-97c9-4ffc-af40-5cfae9ff8217")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "RC0603FR-0722RL"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "4c4939c4-fbe9-4111-beaa-6fc244d8e1b5")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(path "/b08e72a3-2399-4f7e-b778-35d921fe9792")
 		(sheetname "/")
 		(sheetfile "heimdall-switch.kicad_sch")
@@ -4783,6 +5575,50 @@
 					(thickness 0.15)
 				)
 				(justify mirror)
+			)
+		)
+		(property "Manufacturer" "Nexperia"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "55a485e2-4033-41da-acfb-a48ba6e29006")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "BSS84AK,215"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "1271dd4b-bff4-43c5-9c23-3c25588bccf4")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "TME"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "c3669e77-0205-4eb9-b228-7466b8d2f60c")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "BSS84AK.215"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "6859673c-4fce-424e-a738-1a1ea453c0bb")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(path "/6b7626f9-6137-45e5-a6d6-314592ea3cf8")
@@ -5166,6 +6002,50 @@
 				(justify mirror)
 			)
 		)
+		(property "Manufacturer" "Yageo"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "30369e9e-267e-4d19-8988-35afa19efd83")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "RC0603FR-07100RL"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "558c8871-41db-47cd-b1d1-53ae711526cf")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "TME"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "8a802e42-fe62-486f-b9a8-5316bd920f4e")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "RC0603FR-07100R"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "ea6dfd79-a5db-4a0d-a542-aa5f7cfc6d7f")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(path "/2e4dbb62-c93d-492c-ab40-17b1f6c407a6")
 		(sheetname "/")
 		(sheetfile "heimdall-switch.kicad_sch")
@@ -5347,6 +6227,50 @@
 				(justify mirror)
 			)
 		)
+		(property "Manufacturer" "Yageo"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "0c45c266-cae1-47e4-a981-78e1f63ea401")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "CC0603KRX7R9BB104"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "7f2b3f4b-e8e4-49f5-814a-e057a0ccb025")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "TME"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "f566e520-4aa0-4fb2-835b-bc353ac2bc1a")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "CC0603KRX7R9BB104"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "f3fa3ef3-313a-42f5-941a-c19629c43388")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(path "/369c3e57-c674-4363-8cd4-d6f5f8f1c056")
 		(sheetname "/")
 		(sheetfile "heimdall-switch.kicad_sch")
@@ -5506,6 +6430,50 @@
 					(thickness 0.15)
 				)
 				(justify mirror)
+			)
+		)
+		(property "Manufacturer" "Yageo"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "c223cfe4-b04a-49ab-a8de-80b769998922")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "RC0603FR-072M2L"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "60ed68e5-655e-4f74-97ad-a86f45e4ca3d")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "TME"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "c65cdc08-aace-47e1-ab1c-e3b6334c8b39")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "RC0603FR-072M2"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "ba3e13fa-588f-42fc-9b3e-1102798bfc45")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(path "/9bea7edd-6f88-4cae-a646-18447bafd0ef")
@@ -5689,6 +6657,50 @@
 				(justify mirror)
 			)
 		)
+		(property "Manufacturer" "Yageo"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "cda95ca0-816f-4e04-a327-256ea3262265")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "RC0603FR-07100KL"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "6cb850ed-b0c8-4057-ac55-a0c6f7218282")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "TME"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "6a63728b-4b73-4319-9801-0e498f75d3c0")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "RC0603FR-07100K"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "07af6226-b6b5-4c41-819f-112a3eeb3c69")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(path "/3e9f0b13-40d3-41b1-983f-43823ce77fe7")
 		(sheetname "/")
 		(sheetfile "heimdall-switch.kicad_sch")
@@ -5855,6 +6867,50 @@
 					(thickness 0.15)
 				)
 				(justify mirror)
+			)
+		)
+		(property "Manufacturer" "Alpha & Omega"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "28d6c7c0-13fd-4ffa-a15a-7eedc395e7d3")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "AO4407A"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "0367a558-4950-49f5-9270-d754e7e8381d")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "TME"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "ee2b7cba-e132-4ef9-910c-58ef1396755b")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "AO4407A"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "1693e830-3d1a-4f69-8c37-b4131f634296")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(path "/09b83bda-c82a-4a34-99d3-a4582223fc2d")
@@ -6208,6 +7264,50 @@
 				(justify mirror)
 			)
 		)
+		(property "Manufacturer" "Yageo"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "f2c45dc3-e17f-4405-a8ef-5f59b4069722")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "RC0603FR-071ML"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "b49fff94-6913-4c45-881d-508d99636404")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "TME"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "49e61566-fdc6-4245-afd3-f275129890c2")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "RC0603FR-071M"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "1e356ec1-2953-47bc-a6f8-67e9e76a2e7a")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(path "/1b95466d-9eb7-419c-aa05-4a9e898c2e8e")
 		(sheetname "/")
 		(sheetfile "heimdall-switch.kicad_sch")
@@ -6387,6 +7487,50 @@
 					(thickness 0.15)
 				)
 				(justify mirror)
+			)
+		)
+		(property "Manufacturer" "Samsung"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "edf33e2b-cc92-47ad-871b-6fcdeb726693")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "CL31A106KBHNNNE"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "9f36258e-8bf3-4199-b38a-1be04d8a2d95")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "TME"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "781ed61c-11a7-439b-9d9f-830083c3c640")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "CL31A106KBHNNNE"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "c084b88c-9101-4973-9192-8047f1ad802f")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(path "/d1fd0c63-6735-4faf-b782-e0f6758166a2")
@@ -6570,6 +7714,50 @@
 				(justify mirror)
 			)
 		)
+		(property "Manufacturer" "Yageo"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "6b5b0bfd-39a8-4017-979f-4ceacb6e1326")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "RC0603FR-0733KL"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "623257a1-4276-4d31-980a-b2120a69ddf4")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "TME"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "79cc83e2-7675-4212-9614-ec592fcd5786")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "RC0603FR-0733KL"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "1f0dc862-ceae-439f-8805-d006114d33c5")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(path "/b22526b4-67c5-44af-9bd5-83c57b1d16c0")
 		(sheetname "/")
 		(sheetfile "heimdall-switch.kicad_sch")
@@ -6736,6 +7924,50 @@
 					(thickness 0.15)
 				)
 				(justify mirror)
+			)
+		)
+		(property "Manufacturer" "Murata"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "504eb50d-2996-4516-ba4f-c046bf7d38b7")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "DFE252012PD-2R2M=P2"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "ef24230e-cdd9-467b-a0f5-09d2f4d121ef")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "Mouser"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "2b85fd3a-158b-4381-ab1f-ddd1eb68bf45")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "81-DFE252012PD2R2MP2"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "e3e1c28c-eeef-46b2-a25c-560b0cce94d3")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(path "/1a469356-b4a0-41ff-b73d-8af6bae6c091")
@@ -6919,6 +8151,50 @@
 				(justify mirror)
 			)
 		)
+		(property "Manufacturer" "Yageo"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "50840980-3817-4211-b753-8caf7cea79f3")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "RC0603FR-072M2L"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "13057b72-0127-4cfc-bb10-e78247cc9595")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "TME"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "26e52af8-1265-43c8-a678-fa44d301dd44")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "RC0603FR-072M2"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "0b1a9284-3348-4a4e-8546-025e5c32ac31")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(path "/b0a6ca31-0df7-470d-ad4b-a6d0f9089e5a")
 		(sheetname "/")
 		(sheetfile "heimdall-switch.kicad_sch")
@@ -7089,6 +8365,50 @@
 					(thickness 0.15)
 				)
 				(justify mirror)
+			)
+		)
+		(property "Manufacturer" "DC Components"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "9af35745-f192-476b-8f86-1117012818a4")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "MMSZ5248B"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "b591ad83-a17a-44c6-b2bb-9716224c77c6")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "TME"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "2789e651-83c8-4eed-8b96-29dde6310949")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "MMSZ5248B-DC"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "0adc7f4a-d509-47c1-b36b-9259934ea2a0")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(path "/0003eccf-5ad3-4352-be40-cc044ccf1d34")
@@ -7420,6 +8740,50 @@
 				(justify mirror)
 			)
 		)
+		(property "Manufacturer" "Samsung"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "46480592-6fba-4e2a-81f1-fe8cbad16d25")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "CL21B224KBFNNNE"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "e7c2cf2e-81e5-4b85-a655-42ed4514ac11")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "TME"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "496b35b4-9ad3-4559-b6bc-89678343b102")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "CL21B224KBFNNNE"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "66210486-ac29-445a-a181-3a7ee6fd2a8d")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(path "/422ad13e-813b-4a89-b252-b0cc95ab71ff")
 		(sheetname "/")
 		(sheetfile "heimdall-switch.kicad_sch")
@@ -7601,6 +8965,50 @@
 				(justify mirror)
 			)
 		)
+		(property "Manufacturer" "Murata"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "0413187d-4b89-4fd2-be4a-fbb297439c74")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "GRM21BR61E226ME44L"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "6dd712bb-00ab-4f9a-8490-95f6cf26a6e5")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "TME"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "d590d191-aaa1-44b6-8d22-3c45c41fd882")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "GRM21BR61E226ME44L"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "a178b23e-84c0-4c98-a546-86eaa5e48790")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(path "/97c4363c-aa97-4fe1-ad0f-2a62665d4661")
 		(sheetname "/")
 		(sheetfile "heimdall-switch.kicad_sch")
@@ -7771,6 +9179,50 @@
 					(thickness 0.15)
 				)
 				(justify mirror)
+			)
+		)
+		(property "Manufacturer" "DC Components"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "637521fa-1245-4306-8757-25031438ebbd")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "MMSZ5248B"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "e0b53a30-875a-4b0d-b616-6035c511e881")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "TME"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "20290700-b19d-4cea-b92e-b1a6b95c37b7")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "MMSZ5248B-DC"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "2f7c5a3f-cf89-4442-840d-4fa15c4a86be")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(path "/2876e9fa-51ae-412f-9224-9db85032bcfe")
@@ -8102,6 +9554,50 @@
 				(justify mirror)
 			)
 		)
+		(property "Manufacturer" "Yageo"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "56242c3f-f036-41fa-9f52-459a03b67487")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "RC0603FR-071ML"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "4ac1ef43-ec37-4cb8-877d-4d7e08d37470")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "TME"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "28807f5f-f2f5-4bd9-96d1-e85fa6a3747d")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "RC0603FR-071M"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "80c34057-21ae-4285-8564-26649297bf5c")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(path "/ff2ad0a1-82a4-458c-99bd-cb9c1cc0ecdf")
 		(sheetname "/")
 		(sheetfile "heimdall-switch.kicad_sch")
@@ -8268,6 +9764,50 @@
 					(thickness 0.15)
 				)
 				(justify mirror)
+			)
+		)
+		(property "Manufacturer" "Alpha & Omega"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "120dfdaf-fd8b-438c-9acf-41b7e32ff6fb")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "AO3400A"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "9da492eb-243a-48a4-8cd5-388616eb33ec")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "TME"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "ecd4031f-2531-4a16-bf80-485b34a76229")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "AO3400A"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "a855bc6b-26ab-410a-a522-e906736fffb0")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(path "/a9b9c025-7263-418a-b416-2757cfff4add")
@@ -8638,6 +10178,50 @@
 				(justify mirror)
 			)
 		)
+		(property "Manufacturer" "Alpha & Omega"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "a7be7c8a-9703-4a1b-9a34-d8100de6ccf8")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "AO4407A"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "848655b8-4afe-4746-8cc3-fdf1cf642c52")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "TME"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "fe33d34c-fe32-4195-a0ed-cfebf74c9e2e")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "AO4407A"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "820727bd-419e-4230-8efe-f21b8613efe3")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(path "/42a6ccd0-b182-45e3-a8fc-860d3c816a29")
 		(sheetname "/")
 		(sheetfile "heimdall-switch.kicad_sch")
@@ -8989,6 +10573,50 @@
 				(justify mirror)
 			)
 		)
+		(property "Manufacturer" "Yageo"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "b6f612d9-8f40-4881-a1ba-02445edc82dc")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "RC0603FR-07100RL"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "2a2fd703-ef98-4e49-b6e8-e815abb2188d")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "TME"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "0a05730d-bf2c-4a3a-a98b-cc8998d169cc")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "RC0603FR-07100R"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "e7a96de7-45eb-4332-8531-8323746f5fb6")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(path "/df0f5ce2-eb91-405c-a604-29ce28dfda0e")
 		(sheetname "/")
 		(sheetfile "heimdall-switch.kicad_sch")
@@ -9168,6 +10796,50 @@
 					(thickness 0.15)
 				)
 				(justify mirror)
+			)
+		)
+		(property "Manufacturer" "Yageo"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "ce54e070-95bb-4bbf-9569-0ff162fe30b9")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "RC0603FR-07100KL"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "b0bc69d0-8634-41fc-9328-20dbce9ffd77")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "TME"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "8f9108e9-2a70-400c-9e4f-2f4e7beffcc9")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "RC0603FR-07100K"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "5bf4074d-2e62-4832-8046-de439a60403c")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(path "/bd925aa8-a741-4e41-b8fd-2539c8586e1b")
@@ -9351,6 +11023,50 @@
 				(justify mirror)
 			)
 		)
+		(property "Manufacturer" "Yageo"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "bc77e13a-e3b5-4cdc-898c-f014cd138b42")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "RC0603FR-0727K4L"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "06981c23-ad01-423c-8f35-54679c6fb521")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "TME"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "e022017a-0749-4654-a9d1-20b85377a6b3")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "RC0603FR-0727K4L"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "16bf1514-ab38-4796-8c18-64524d3fe779")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(path "/3c0ae9b1-f190-406d-8435-ca7c8b579bb9")
 		(sheetname "/")
 		(sheetfile "heimdall-switch.kicad_sch")
@@ -9509,6 +11225,50 @@
 					(thickness 0.15)
 				)
 				(justify mirror)
+			)
+		)
+		(property "Manufacturer" "Texas Instruments"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "fba56d7e-e3be-4bd3-b25e-f0d0ff4d2f3d")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "TPS629206DRLR"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "a5e6c7a3-5837-464d-8b08-20860c2395f1")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "Mouser"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "54e0fad3-7b6f-4c61-b2e8-e6b312ae1628")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "595-TPS629206DRLR"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "f5b8b1ae-088d-405b-a935-a91b6f5bd12d")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
 			)
 		)
 		(path "/2607dfe9-fb07-4bc2-b0a7-31690a391f9f")
@@ -10696,6 +12456,15 @@
 		(uuid "fc6c056b-d679-44d3-9e05-4d68aa9ead80")
 	)
 	(via
+		(at 125.1 120.85)
+		(size 0.7)
+		(drill 0.3)
+		(layers "F.Cu" "B.Cu")
+		(locked yes)
+		(net "GND")
+		(uuid "24ca7420-5eb3-421c-bad3-8816ec519584")
+	)
+	(via
 		(at 136.525499 121.1505)
 		(size 0.7)
 		(drill 0.3)
@@ -10720,6 +12489,24 @@
 		(locked yes)
 		(net "GND")
 		(uuid "29439799-3402-4c71-bf90-04552e5fbe20")
+	)
+	(via
+		(at 105.6 107.35)
+		(size 0.7)
+		(drill 0.3)
+		(layers "F.Cu" "B.Cu")
+		(locked yes)
+		(net "GND")
+		(uuid "33f38cc3-dbdd-4325-a10c-b2ddad3d1e23")
+	)
+	(via
+		(at 136.1 114.6)
+		(size 0.7)
+		(drill 0.3)
+		(layers "F.Cu" "B.Cu")
+		(locked yes)
+		(net "GND")
+		(uuid "3c539c3b-2c43-4f24-a717-7c4ce86c20fb")
 	)
 	(via
 		(at 110.477839 120.300809)
@@ -10747,12 +12534,57 @@
 		(uuid "551b7df8-a42b-46ef-ad45-f1068d04ae61")
 	)
 	(via
+		(at 118.1 121.35)
+		(size 0.7)
+		(drill 0.3)
+		(layers "F.Cu" "B.Cu")
+		(locked yes)
+		(net "GND")
+		(uuid "55a4351b-3e88-46f5-9900-fdbc58be8dcb")
+	)
+	(via
+		(at 133.6 101.1)
+		(size 0.7)
+		(drill 0.3)
+		(layers "F.Cu" "B.Cu")
+		(locked yes)
+		(net "GND")
+		(uuid "572a4563-e40c-4b6f-96e4-960a1f3a8f49")
+	)
+	(via
 		(at 108.7688 111.9441)
 		(size 0.6)
 		(drill 0.3)
 		(layers "F.Cu" "B.Cu")
 		(net "GND")
 		(uuid "71df421a-f531-4e5c-9187-90ecb845eb8b")
+	)
+	(via
+		(at 136.85 110.6)
+		(size 0.7)
+		(drill 0.3)
+		(layers "F.Cu" "B.Cu")
+		(locked yes)
+		(net "GND")
+		(uuid "89fd754e-4f30-4be1-bc08-2cc030deb45a")
+	)
+	(via
+		(at 106.35 121.85)
+		(size 0.7)
+		(drill 0.3)
+		(layers "F.Cu" "B.Cu")
+		(locked yes)
+		(net "GND")
+		(uuid "96cbc1fe-589d-4dcc-a76c-dae3895fdbb0")
+	)
+	(via
+		(at 130.85 120.85)
+		(size 0.7)
+		(drill 0.3)
+		(layers "F.Cu" "B.Cu")
+		(locked yes)
+		(net "GND")
+		(uuid "bc79a46b-d6b1-461c-b675-7b34b2d00b41")
 	)
 	(via
 		(at 138.63 110.4)

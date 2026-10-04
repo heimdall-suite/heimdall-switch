@@ -621,7 +621,18 @@ user interface (blocks 6–7) on the **top**.
   (0.025mm on U2's 0.5mm-pitch pins, keeping 0.15mm webs). A custom rule
   (`heimdall-switch.kicad_dru`) allows neck-down to 0.15mm where traces
   enter fine-pitch pads (U1, U2), well inside JLCPCB's 0.127mm minimum.
-- 32 vias in total, ~520mm of track (~215mm top, ~305mm bottom).
+- 40 vias in total, ~520mm of track (~215mm top, ~305mm bottom).
+- **GND stitching**: 19 GND vias plus the 3 through-hole GND pads tie the
+  two GND pours together. 8 of the vias (0.7/0.3mm) were added on
+  2026-10-04 with `route_pcb.py gapstitch`, only where both pours are
+  solid around the via and outside courtyards and keep-outs: every pour
+  fragment big enough for a via now has at least 2 ties (one 5.8mm²
+  bottom fragment has room for only 1), and of the ~151mm² where both
+  layers have GND, 2% is more than 5mm from a tie (was 6%; worst point
+  7.4mm, was 9.1mm). The regulator's and the BT832's GND pins have a tie
+  within ~1mm. DRC unchanged afterwards (0 unconnected, no new
+  violations). The layout pictures and 3D renders above predate these
+  vias.
 
 **Current capacity** (design target **5A continuous, 15A peaks <1s**).
 Expected load, per servo: analog standard servos stall at ~0.8-1.2A

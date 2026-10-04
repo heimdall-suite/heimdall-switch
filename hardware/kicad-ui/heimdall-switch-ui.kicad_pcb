@@ -292,6 +292,50 @@
 				)
 			)
 		)
+		(property "Manufacturer" "C&K"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "beb87eb7-5950-41eb-bea7-1fe6b826d361")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "KSC641J LFS"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "beba09f8-e939-4b36-bc21-41c280b34944")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "TME"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "336369f0-a46b-44c3-9daf-3add9af19ef1")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "KSC641JLFS"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "b33669f1-07eb-4517-84b0-da1f6244b1bc")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
 		(path "/a96819c2-43eb-4a5b-8cd7-d6b962e6fa35")
 		(sheetname "/")
 		(sheetfile "heimdall-switch-ui.kicad_sch")
@@ -537,6 +581,50 @@
 				(font
 					(size 1 1)
 					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "Kingbright"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "2262db6a-c5a8-4c55-ad4b-3cfe2cdc4833")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "L-7104ZGCK"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "c214d060-e24c-465a-a130-158bdcb1b4c0")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "TME"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "32608bf3-14d0-4d6f-9d3c-4cc4fa43baa6")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "L-7104ZGCK"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "484782b2-35b9-43f4-9eaa-dc70a3b6ab61")
+			(effects
+				(font
+					(size 1.27 1.27)
 				)
 			)
 		)
@@ -873,6 +961,50 @@
 				(font
 					(size 1.27 1.27)
 					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer" "JST"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "ea4a3043-c912-4df1-83e4-547ec5094064")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "MPN" "BM03B-GHS-TBT(LF)(SN)"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "7b0b96e9-0673-4d1e-8eb9-23598919c990")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier" "TME"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "a892cc47-984a-44bf-8867-39a7550e692d")
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Supplier PN" "BM03B-GHS-TBT"
+			(at 0 0 0)
+			(layer "B.Fab")
+			(hide yes)
+			(uuid "21bbf5fd-7f4a-4ad3-953c-513367bb682f")
+			(effects
+				(font
+					(size 1.27 1.27)
 				)
 			)
 		)
