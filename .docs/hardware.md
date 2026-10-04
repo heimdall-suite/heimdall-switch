@@ -468,11 +468,21 @@ SOT-23, SOIC-8, SOD-123, SOT-583-8, 1008, 3215 crystal, JST-GH, 2×5
   the project `fp-lib-table`), drawn from Fanstel's datasheet (Ver 2.12,
   p.8): 14.0 × 16.0mm module, 16 castellated pads at 1.10mm pitch, pins
   1–8 down the left side and 9–16 up the right, pin 8/9 1.10mm above the
-  bottom edge. Pads are 0.70 × 1.75mm, reaching 0.85mm beyond the module
-  edge for the soldering iron. The 24 LGA pads are left off (unused; the
+  bottom edge. Pads are 0.70 × 1.75mm, reaching 0.75mm beyond the module
+  edge (and 1.0mm under it) for the soldering iron. The 24 LGA pads are left off (unused; the
   module's LGA pads then sit on solder mask). A copper keep-out (tracks,
   vias, pads, pours, both layers) covers the 6.43mm antenna section.
-  **Check the printed footprint against a real module before ordering.**
+  **Verified against Fanstel's official KiCad library**
+  ([hemalchevli/Fanstel-kicad-library](https://github.com/hemalchevli/Fanstel-kicad-library),
+  MIT, linked from Fanstel's site; footprint `BT832-BT832L`): all 16 pad
+  centres match within 0.001mm (pitch, pin 8/9 height, pin 1 position),
+  same 0.70mm pad width and the same 0.75mm overhang beyond the module
+  edge (theirs is 1.50mm long, ours 1.75mm reaching 0.25mm further under
+  the module). Their symbol's pin map matches ours pin for pin.
+  3D model: Fanstel's STEP of the BT832 (Pro/E export), in
+  `hardware/kicad/heimdall-switch.3dshapes/Fanstel_BT832.step`, attached
+  to the footprint (rotated −90° about X, raised 0.3mm so the module's
+  0.6mm PCB sits on ours); total height ~2.0mm.
 - **`heimdall-switch:AO4407A`** symbol (in `heimdall-switch.kicad_sym`):
   the generic P-FET drawing with SO-8 pin numbers — G = 4, S = 1/2/3,
   D = 5–8, the duplicates stacked on the same pin — so Q3/Q4 map onto the
@@ -512,6 +522,10 @@ below), 3D [top](../hardware/kicad/render-top.png) /
 0 unconnected, full schematic parity; reviewed by eye in the KiCad GUI.
 Rev 1 (53 × 23mm, power path on top) was never ordered; it stays in git
 under the tag `main-pcb-rev1`.
+
+| Top, angled | Bottom (power side), angled |
+|---|---|
+| ![Main board, 3D top, angled](../hardware/kicad/render-angled-top.png) | ![Main board, 3D bottom, angled](../hardware/kicad/render-angled-bottom.png) |
 
 | Top | Bottom (mirrored, as seen from below) |
 |---|---|
@@ -644,8 +658,9 @@ rev 2, so don't run them on it.
 **Check before ordering**:
 - Simulation and copper checks: done, see
   [Verification](#verification-simulation-and-copper).
-- Print the BT832 footprint 1:1 and lay a module on it (drawn from a
-  low-resolution datasheet drawing).
+- BT832 footprint and pin map: verified against Fanstel's official KiCad
+  library (see [Schematic](#schematic)). A 1:1 print with a real module on
+  it is still a cheap final check if a module is at hand.
 - Run JLC's DFM check on the rev 2 Gerbers (rev 1 was clean except the
   "THT to SMD" assembly rule, irrelevant for bare boards).
 - Through-hole GND pads (J2/J3 pin 2, LED1 pin 1) connect solid to the
@@ -939,6 +954,10 @@ Separate KiCad project in [hardware/kicad-ui/](../hardware/kicad-ui/)
 [bottom](../hardware/kicad-ui/render-bottom.png) views). Use it when the
 LED and button need to sit away from the main board, e.g. in a housing
 on the outside of the hull, as on the Jeti SPS-20.
+
+| Front, angled | Back, angled |
+|---|---|
+| ![UI board, front, angled](../hardware/kicad-ui/render-angled-top.png) | ![UI board, back, angled](../hardware/kicad-ui/render-angled-bottom.png) |
 
 | Front | Back |
 |---|---|

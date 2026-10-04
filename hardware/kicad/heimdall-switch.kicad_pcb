@@ -1408,6 +1408,17 @@
 			)
 		)
 		(embedded_fonts no)
+		(model "${KIPRJMOD}/heimdall-switch.3dshapes/Fanstel_BT832.step"
+			(offset
+				(xyz 0 0 0.3)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz -90 0 0)
+			)
+		)
 	)
 	(footprint "Capacitor_SMD:C_0603_1608Metric"
 		(layer "F.Cu")
