@@ -1,5 +1,6 @@
 # Builds the TME and Mouser order files for a prototype run into hardware/order/:
 #   tme-basket.csv     "symbol;quantity" per line, for TME's basket import (upload from file)
+#   tme-customer-symbols.csv  "symbol;HSW-designators" for TME's customer symbol panel (file import)
 #   mouser-bom.csv     Mouser No, Mfr No, Manufacturer, Quantity, Refs, for Mouser's BOM tool
 # Parts come from the schematics' Supplier / Supplier PN / MPN / Manufacturer fields, times
 # the number of boards; the UI cable isn't in any schematic, so its parts are listed below.
@@ -54,6 +55,17 @@ if __name__ == "__main__":
     mouser = [(k[1], m["MPN"], m["Manufacturer"], m["Qty"], "; ".join(m["Refs"])) for k, m in merged.items() if k[0] == "Mouser"]
     with open(os.path.join(OUT, "tme-basket.csv"), "w", newline="", encoding="utf8") as fh:
         csv.writer(fh, delimiter=";").writerows(tme)
+    # TME "customer's symbol" per product: our designators, no spaces/commas (TME splits on
+    # them), prefixed with the project since TME keeps one symbol per product across orders
+    def designators(refs):
+        out = []
+        for r in refs:
+            board, _, ds = r.partition(": ")
+            ds = ds.replace(",", "/") if ds else board.upper()
+            out.append("UI-" + ds.replace("/", "/UI-") if board == "ui" else ds)
+        return "HSW-" + "/".join(out)
+    with open(os.path.join(OUT, "tme-customer-symbols.csv"), "w", newline="", encoding="utf8") as fh:
+        csv.writer(fh, delimiter=";").writerows([(k[1], designators(m["Refs"])) for k, m in merged.items() if k[0] == "TME"])
     with open(os.path.join(OUT, "mouser-bom.csv"), "w", newline="", encoding="utf8") as fh:
         w = csv.writer(fh)
         w.writerow(["Mouser No", "Mfr No", "Manufacturer", "Quantity", "Refs"])

@@ -891,6 +891,10 @@ matters if a batch is ever JLC-assembled). Stock and prices checked
 **Order files**: `python order_export.py [main UI cables]` (from
 `hardware/kicad/`, default 10 5 5) writes `hardware/order/tme-basket.csv`
 ("symbol;quantity" lines for TME's basket import from file) and
+`hardware/order/tme-customer-symbols.csv` ("symbol;customer symbol" for
+TME's customer-symbol panel, our designators as e.g. `HSW-R6/R7/R13/R15`,
+`HSW-UI-` for the UI board; TME keeps one customer symbol per product
+across orders, hence the project prefix) and
 `hardware/order/mouser-bom.csv` (for Mouser's BOM tool) from the
 schematics' supplier fields, times the board counts, plus the UI cable's
 crimp parts. The committed files are the 10 / 5 / 5 run; all lines were
