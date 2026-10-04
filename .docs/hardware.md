@@ -221,23 +221,27 @@ the benign direction.
   1.1MΩ), split so a single open resistor can't leave the gate floating.
 - **Slow turn-on**: C_SS = 220nF gate-source with the 1.1MΩ pull-down →
   τ ≈ 240ms. On battery connect or MCU reset the gate starts at V_GS = 0;
-  Q3 only starts conducting once V_GS crosses its threshold (~−1.5V), which
-  takes ~30ms at 12.6V and ~60ms at 6.6V. The MCU must assert OFF before
-  that — i.e. **within ~20ms of power-up** (bare nRF52 boot to GPIO is a
-  few ms, so there's margin, but keep the restore path early and simple).
-  Fully enhanced (V_GS = −4.5V) after ~110ms at 12.6V / ~280ms at 6.6V.
+  Q3 only starts conducting once V_GS crosses its threshold. Simulated
+  (see [Verification](#verification-simulation-and-copper)) across the
+  AO4407A's threshold spread (−1.7 to −3.0V): **40–70ms after power-up at
+  12.6V, 60–115ms at 8.4V** (AOS's own model: 92 / 153ms). The MCU must
+  assert OFF before that — the firmware requirement stays **within ~20ms
+  of power-up** (bare nRF52 boot to GPIO is a few ms), leaving ≥2× margin.
+  Q3 then passes through its linear region in ~12–40ms, fully on after
+  ~75ms at 12.6V / ~115ms at 8.4V.
   The same RC soft-starts the inrush into the downstream
   BEC/receiver/servo capacitance.
   C_SS is a **50V X7R 0805** (Samsung CL21B224KBFNNNE, LCSC C5378), not a
   25V 0603: it sits at up to 12.6V, and a 25V 0603 X7R loses ~30% of its
-  capacitance there, which would cut the ~30ms turn-on delay at 12.6V to
-  ~20ms — the whole firmware margin. The 50V 0805 part loses ~10%.
+  capacitance there, cutting the delay by about as much. The 50V 0805
+  part loses ~10%. Don't reduce C_SS: 100nF would bring the worst case
+  down to ~19ms, inside the firmware window (simulated).
 - **Active OFF**: Q2 (P-FET) clamps Q3's gate to VBAT through R_LIM when
   on. Q2's gate is pulled up to VBAT by R_CLAMP_PU (1MΩ) and pulled low by
   Q1 (N-FET), driven from P0.13 via R_G1 (100Ω), with R_OFF_PD (1MΩ)
   holding Q1 off whenever the GPIO floats (reset, unpowered MCU). GPIO
-  high → Q1 on → Q2 on → output OFF. Turn-off is fast (~20µs); only
-  turn-on is slowed.
+  high → Q1 on → Q2 on → output OFF. Turn-off is fast (~30–40µs,
+  simulated); only turn-on is slowed.
   - **Q1: AOS AO3400A** (SOT-23, LCSC C20917, JLCPCB basic part) —
     logic-level (V_GS(th) 0.65-1.45V), fully on from a 3.3V GPIO. The CJ
     2N7002 (C8545, V_GS(th) up to 2.5V) was the placeholder: works, but
@@ -638,12 +642,64 @@ rev 2, so don't run them on it.
 - Position = centre of the part's pads (as JLC expects), Y negated.
 
 **Check before ordering**:
+- Simulation and copper checks: done, see
+  [Verification](#verification-simulation-and-copper).
 - Print the BT832 footprint 1:1 and lay a module on it (drawn from a
   low-resolution datasheet drawing).
 - Run JLC's DFM check on the rev 2 Gerbers (rev 1 was clean except the
   "THT to SMD" assembly rule, irrelevant for bare boards).
 - Through-hole GND pads (J2/J3 pin 2, LED1 pin 1) connect solid to the
   pours (no thermal relief): use a hot iron.
+
+## Verification (simulation and copper)
+
+Pre-order checks of the power side, scripts in
+[hardware/sim/](../hardware/sim/), run with KiCad's bundled python (it
+ships ngspice): `python run_sims.py` (all circuit cases, ~10s) and
+`python copper.py` (copper of the load path from the `.kicad_pcb`).
+Results from 2026-10-04 on rev 2. **Nothing needed changing.**
+
+**Circuit (ngspice)**: blocks 1–5 as in the schematic netlist (battery +
+lead inductance, Q4/D1/R1, Q3 with C7/D2/R9‖R10, the Q1/Q2 OFF chain,
+R2/C3 into the regulator, ADC divider, load). Every case runs on two
+model sets that bracket the real part: MOSFET models fitted to the
+datasheets (AO4407A 10.0/26.1mΩ at V_GS −10/−5V vs datasheet 10/27), and
+AOS's own AO4407A model (downloaded by the script; 9.5/12.2mΩ at
+−10/−6V vs 10/12.7). The fit has the lower threshold (earlier, slower
+turn-on: pessimistic for Q3 stress), the AOS model the higher one.
+
+| Check | Fitted models | AOS model | Verdict |
+|---|---|---|---|
+| Plug-in, full 3S, 0.3–2µH leads | VBAT peak 12.6V, U2 VIN 11.6V, Q3 stays off (V_GS ≈ 0) | same | No spike (R_IN, no low-ESR cap on VBAT) |
+| Q3 starts conducting after power-up (C7 220nF) | 3S 40–70ms, 2S 61–114ms over V_th −1.7…−3.0V | 3S 92ms, 2S 153ms | ≥2× the 20ms firmware window; 100nF would fail it (19ms) |
+| Q3 turn-on into 5A + 1000µF | 3S: 21W peak, ~21ms half-on; 2S: 11W, ~35ms | 3S: 24W, ~12ms; 2S: 12W, ~21ms | Within the AO4407A single-pulse rating (~35W at 30ms) with ~2× margin |
+| Q3 turn-on into 10A + 1000µF (3S) | 34W, ~40ms | 37W, ~17ms | Fitted case exceeds the rating (~25W at 60ms); servos idle at power-up, so only matters if something draws heavy current within ~100ms of switching on |
+| OFF at full current, VBAT kick from battery leads | 5A/1µH 13.8V, 10A/2µH 16.6V; off in ~38µs | 5A/1µH 16.6V, 10A/2µH 22.9V; off in ~28µs | Inside Q3/Q4/Q5 30V, Q2/Q6 50V; D1 clamps Q4's gate; U2 VIN stays 12.5V. Smallest margin on the board (22.9 vs 30V) |
+| MCU dead (fail-on), 12.6 / 8.4 / 6.0V | Q3 V_GS −12.5/−8.3/−5.9V, R_DS 8/13/21mΩ | 9/10/12mΩ | Output fully ON |
+| Pack current while OFF (excl. regulator) | 24µA at 12.6V, 16µA at 8.4V | same | Matches the power budget |
+| Reversed 3S pack | VBAT/LOAD/U2 VIN 0V, 0µA | same | Nothing conducts |
+
+Not covered: the TPS629206 itself (TI's model is encrypted, PSpice for TI
+only), the BT832/RF, ESD.
+
+**Copper of the load path** (`copper.py`): each section's copper (zone
+fills, tracks, pads; 1oz, 0.49mΩ/□) rasterised at 0.1mm from the board
+and solved for DC current flow between its entry and exit pads; the GND
+return on both layers, coupled through vias and plated pad holes.
+
+| Section | R | 5A | 10A |
+|---|---|---|---|
+| BATT+ (J3+ → Q4 drain), B.Cu | 0.30mΩ | 1.5mV, 7mW | 3mV, 30mW |
+| VBAT bar (Q4 → Q3 sources), B.Cu | 1.13mΩ | 5.6mV, 28mW | 11mV, 113mW |
+| LOAD_OUT (Q3 drain → J2+), B.Cu | 0.28mΩ | 1.4mV, 7mW | 3mV, 28mW |
+| GND return (J2− → J3−), F+B | 1.86mΩ | 9.3mV, 46mW | 19mV, 186mW |
+| **Total copper** | **3.6mΩ** | **18mV, 0.09W** | **36mV, 0.36W** |
+
+99% of the path carries ≤1.5A per mm of width at 5A (≤2.9A/mm at 10A),
+against IPC-2221's ~2A/mm for a 20°C rise on 1oz; the local peaks
+(~4A/mm at 5A) sit at pad corners where current enters a pad. The FETs
+dissipate more than the copper: Q3 and Q4 ~0.2W each at 5A, ~0.8W each at
+10A (R_DS(on) ~8–13mΩ at full gate drive).
 
 ## Buck regulator (TPS629206) reference design
 
@@ -707,6 +763,11 @@ node (C_IN + VIN/EN):
   (AO3400A, via 1MΩ) are 30V parts, Q2/Q6 (BSS84) 50V, Q3/Q4 gates are
   zener-clamped, and Q6's gate sits at V_GS ≈ 0 at plug-in (LED off).
   The load path through Q3 doesn't go through R_IN.
+- Simulated (see [Verification](#verification-simulation-and-copper)):
+  with R_IN in place there is **no overshoot at all** on plug-in — VBAT
+  rises to exactly the pack voltage and U2 VIN to ~11.6V, for 0.3–2µH of
+  lead inductance — because VBAT itself carries no low-ESR capacitance
+  (C_IN sits behind R_IN). The ~2× ring above is what R_IN prevents.
 - **Verify on the first boards**: scope VBAT and U2 VIN while plugging in
   a full 3S pack a few times.
 
