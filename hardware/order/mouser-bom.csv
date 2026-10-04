@@ -1,5 +1,5 @@
 Mouser No,Mfr No,Manufacturer,Quantity,Refs
-81-DFE252012PD2R2MP2,DFE252012PD-2R2M=P2,Murata,10,heimdall-switch: L1
-308-BT832,BT832,Fanstel,10,heimdall-switch: U1
-595-TPS629206DRLR,TPS629206DRLR,Texas Instruments,10,heimdall-switch: U2
-732-532.7680KA-A5,FC-135 32.7680KA-A5,Epson,10,heimdall-switch: Y1
+81-DFE252012PD2R2MP2,DFE252012PD-2R2M=P2,Murata,10,main: L1
+308-BT832,BT832,Fanstel,10,main: U1
+595-TPS629206DRLR,TPS629206DRLR,Texas Instruments,10,main: U2
+732-532.7680KA-A5,FC-135 32.7680KA-A5,Epson,10,main: Y1

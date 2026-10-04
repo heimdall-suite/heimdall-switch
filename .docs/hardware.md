@@ -885,6 +885,24 @@ schematics' supplier fields, times the board counts, plus the UI cable's
 crimp parts. The committed files are the 10 / 5 / 5 run; all lines were
 checked orderable and in stock on 2026-10-04.
 
+**Supplier lookups** ([hardware/sourcing/](../hardware/sourcing/),
+stdlib-only python):
+- `check_order.py`: checks the order files against the live TME and
+  Mouser APIs (orderable, minimum quantity, stock), prints each line's
+  cost and the totals, and points out cheaper price breaks. Run it right
+  before ordering.
+- `compare.py [main UI cables]`: prices every BOM line at LCSC (the `LCSC`
+  field), TME and Mouser (the `MPN` / `Supplier PN` fields), as in the
+  supplier comparison below.
+- `find_part.py "<part number or phrase>" [-q qty]`: searches TME and
+  Mouser, for finding a substitute when a part runs out.
+- `suppliers.py`: the API clients. TME uses API v2 (OAuth2; tokens made
+  after 2026-05-14 only work with v2), Mouser the Search API (a *Search*
+  key, not the Order key), LCSC the product data its web pages load (no
+  key). Keys come from the environment (`TME_TOKEN`, `TME_APP_SECRET`,
+  `MOUSER_API_KEY`) or from `~/.config/heimdall/api-keys.env`, **never
+  from the repo**.
+
 **Main board** (42 parts; U1, U2, L1, Y1 from Mouser, the rest from TME,
 J2/J3 are wire pads):
 
@@ -1013,9 +1031,8 @@ no substitutes) came to ~1250 SEK, about 80 SEK less, but LCSC sells
 passives in strips of 50-100 and ships from China. Neither TME nor Mouser
 alone covers the BOM: TME has no BT832 or TPS629206, Mouser no AOS
 MOSFETs and no stock of C3, C4, LED1 or the handful of equivalents
-checked for them. The lookup scripts
-(TME API v2, Mouser Search API, LCSC product data) are not in the repo
-yet; the API keys live outside it.
+checked for them. Re-run the comparison with
+`hardware/sourcing/compare.py` (see [BOM](#bom)).
 
 ## Daughter board (UI)
 
