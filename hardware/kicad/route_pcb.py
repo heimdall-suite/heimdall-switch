@@ -6,7 +6,9 @@
 #   gridstitch IN OUT 4.0        GND stitching vias
 #   islandstitch IN OUT          via for every GND pour fragment
 #   cleanup IN OUT               drop fragment/dangling vias, solid GND on J2/J3
+#   gapstitch IN OUT 4.0 [0.7]   more GND vias (0.7/0.3): >= 2 per pour fragment, all overlap within 4mm
 # Only for re-running the flow from a fresh placement: it rebuilds all copper.
+# gapstitch and syncfields (copy schematic fields onto footprints) also run on a finished board.
 import sys, re, pcbnew
 
 MM = pcbnew.FromMM
@@ -263,6 +265,88 @@ elif sys.argv[1] == "cleanup":
     pcbnew.ZONE_FILLER(b).Fill(b.Zones())
     pcbnew.SaveBoard(sys.argv[3], b)
     print("removed fragment vias:", removed, "dangling vias:", dang)
+
+elif sys.argv[1] == "gapstitch":
+    # gapstitch IN OUT LIMIT [DIAM] -> extra GND vias (DIAM/0.3mm, default 0.7 for JLCDFM's
+    # 0.2mm annular ring) on a finished board, only where both GND pours are solid around the
+    # via (so it can't touch other copper), outside courtyards and via keep-outs, >= 1.5mm from
+    # other GND vias. First every pour fragment gets >= 2 ties to the other layer, then vias go
+    # where the overlap is farthest from a tie, until all is within LIMIT.
+    import math
+    b = pcbnew.LoadBoard(sys.argv[2]); LIMIT = float(sys.argv[4])
+    DIAM = float(sys.argv[5]) if len(sys.argv) > 5 else 0.7
+    pcbnew.ZONE_FILLER(b).Fill(b.Zones())
+    F, B = pcbnew.F_Cu, pcbnew.B_Cu
+    mm = pcbnew.ToMM
+    gnd = b.GetNetsByName()["GND"].GetNetCode()
+    gz = {z.GetLayer(): z for z in b.Zones() if z.GetNetCode() == gnd and not z.GetIsRuleArea()}
+    def filled(L, x, y): return gz[L].HitTestFilledArea(L, V(x, y))
+    ties = [(mm(t.GetPosition().x), mm(t.GetPosition().y)) for t in b.GetTracks() if t.Type() == pcbnew.PCB_VIA_T and t.GetNetCode() == gnd]
+    ties += [(mm(p.GetPosition().x), mm(p.GetPosition().y)) for f in b.GetFootprints() for p in f.Pads()
+             if p.GetNetCode() == gnd and p.GetAttribute() == pcbnew.PAD_ATTRIB_PTH]
+    edge = b.GetBoardEdgesBoundingBox()
+    X0, Y0, X1, Y1 = [mm(v) for v in (edge.GetLeft(), edge.GetTop(), edge.GetRight(), edge.GetBottom())]
+    step = 0.25
+    overlap = [(X0 + step * (i + .5), Y0 + step * (j + .5)) for i in range(int((X1 - X0) / step)) for j in range(int((Y1 - Y0) / step))]
+    overlap = [(x, y) for x, y in overlap if filled(F, x, y) and filled(B, x, y)]
+    R = DIAM / 2 + 0.1   # via radius + margin inside the fill
+    ring = [(R * math.cos(a * math.pi / 6), R * math.sin(a * math.pi / 6)) for a in range(12)]
+    kos = [z for z in b.Zones() if z.GetIsRuleArea() and z.GetDoNotAllowVias()]
+    crt = [s for f in b.GetFootprints() for s in (f.GetCourtyard(pcbnew.F_CrtYd), f.GetCourtyard(pcbnew.B_CrtYd)) if s.OutlineCount()]
+    cand = [(x, y) for x, y in overlap
+            if all(filled(F, x + dx, y + dy) and filled(B, x + dx, y + dy) for dx, dy in ring)
+            and not any(k.Outline().Contains(V(x, y)) for k in kos) and not any(c.Contains(V(x, y)) for c in crt)]
+    added = []
+    def add(p):
+        added.append(p); ties.append(p)
+        cand[:] = [c for c in cand if math.hypot(c[0] - p[0], c[1] - p[1]) >= 1.5]
+    cand = [c for c in cand if min(math.hypot(c[0] - t[0], c[1] - t[1]) for t in ties) >= 1.5]
+    for L in (F, B):
+        polys = gz[L].GetFilledPolysList(L)
+        for i in range(polys.OutlineCount()):
+            ol = polys.Outline(i)
+            while True:
+                inside = [t for t in ties if ol.PointInside(V(*t))]
+                spots = [c for c in cand if ol.PointInside(V(*c))]
+                if len(inside) >= 2 or not spots: break
+                add(max(spots, key=lambda c: min([math.hypot(c[0] - t[0], c[1] - t[1]) for t in inside] or [0])))
+    n_frag = len(added)
+    todo = list(overlap)
+    while todo and cand:
+        dist, wx, wy = max((min(math.hypot(x - t[0], y - t[1]) for t in ties), x, y) for x, y in todo)
+        if dist <= LIMIT: break
+        c = min(cand, key=lambda c: math.hypot(c[0] - wx, c[1] - wy))
+        if math.hypot(c[0] - wx, c[1] - wy) > LIMIT:
+            todo.remove((wx, wy)); continue   # no via spot close enough to this point
+        add(c)
+    for x, y in added:
+        via(b, "GND", round(x, 2), round(y, 2), DIAM, 0.3)
+    pcbnew.ZONE_FILLER(b).Fill(b.Zones())
+    pcbnew.SaveBoard(sys.argv[3], b)
+    print("gap stitch vias: %d for fragments, %d for coverage" % (n_frag, len(added) - n_frag))
+
+elif sys.argv[1] == "syncfields":
+    # syncfields IN OUT SCH FIELD... -> copy these symbol fields onto the matching footprints
+    # (hidden, on the LCSC field's layer), like "Update PCB from Schematic" does for fields
+    # read the symbol instances straight from the .kicad_sch (kicad-cli's BOM export groups by
+    # reference *prefix* even with --group-by Reference, merging different parts into one row)
+    b = pcbnew.LoadBoard(sys.argv[2]); names = sys.argv[5:]
+    text = open(sys.argv[4], encoding="utf8").read().replace("\r\n", "\n")
+    unq = lambda s: s.replace('\\"', '"').replace("\\\\", "\\")
+    n = 0
+    for blk in re.findall(r'\n\t\(symbol\n\t\t\(lib_id .*?\n\t\)', text, re.S):
+        props = {k: unq(v) for k, v in re.findall(r'\n\t\t\(property "([^"]*)" "((?:[^"\\]|\\.)*)"', blk)}
+        fp = b.FindFootprintByReference(props.get("Reference", ""))
+        if not fp: continue
+        for name in names:
+            val = props.get(name, "")
+            if not val or (fp.HasField(name) and fp.GetFieldText(name) == val): continue
+            fp.SetField(name, val)
+            fld, ref = fp.GetField(name), fp.GetField("LCSC") if fp.HasField("LCSC") else fp.Reference()
+            fld.SetVisible(False); fld.SetLayer(ref.GetLayer()); fld.SetPosition(ref.GetPosition())
+            n += 1
+    pcbnew.SaveBoard(sys.argv[3], b)
+    print("fields set:", n)
 
 elif sys.argv[1] == "jumper":
     # jumper IN OUT NET LAYER W x0,y0 x1,y1 ... : polyline track, refused if it hits other-net copper

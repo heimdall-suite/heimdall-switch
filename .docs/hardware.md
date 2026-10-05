@@ -48,9 +48,10 @@
 - **Status LED**: 1 GPIO, visual state indicator. Must be clearly visible
   **outdoors in sunlight**, typically through a 3mm hole drilled in the
   hull/fuselage (as with the Jeti SPS-20's daughter-board LED). So: 3mm
-  through-hole, water-clear lens, narrow beam, high intensity — **Everlight
-  204-10SUGC/S400-A4**, emerald green 525nm, 3.2cd at 20mA, 20° (see
-  [BOM](#bom)).
+  through-hole, water-clear lens, narrow beam, high intensity — **Kingbright
+  L-7104ZGCK**, InGaN green 525nm, 8cd min / 14cd typ at 20mA, 30° (see
+  [BOM](#bom)). Originally the Everlight 204-10SUGC/S400-A4 (3.2cd, 20°),
+  which went out of stock at TME and Mouser; it's still the LCSC alternative.
   - **Driven from VBAT, not 3.3V**: high-intensity green/blue/white LEDs
     (InGaN) need ~3.0-3.4V forward, which leaves nothing across a
     resistor on the 3.3V rail. Circuit, **high-side switched** so the
@@ -65,7 +66,8 @@
   - **Current follows pack voltage** (V_F ≈ 3.1V at these currents):
     ~4.3mA at 6.0V (2S LiFePO4 near empty), ~5.1mA at 6.6V (2S LiFePO4
     nominal), ~7.8mA at 8.4V (2S LiPo full), ~14mA at 12.6V (3S full) —
-    roughly 0.7-2.2cd, still far above a normal indicator. R_LED
+    roughly 1.7-10cd with the L-7104ZGCK (intensity is linear in current
+    on its datasheet curve; 25mA max), far above a normal indicator. R_LED
     dissipates ≤0.13W. If an even brightness matters, firmware can PWM
     the LED against the pack voltage it reads through ADC_FB while the
     output is ON.
@@ -130,7 +132,8 @@ Notes:
   support both LFCLK sources (LFXO and calibrated LFRC), ideally
   detecting which is present; with the crystal fitted, the real
   difference can be measured at bring-up. Part: **Epson FC-135** 32.768kHz, CL 12.5pF, ±20ppm
-  (3.2×1.5mm, LCSC C32346, JLCPCB basic; the 9pF variant isn't stocked),
+  (3.2×1.5mm, Mouser FC-135 32.7680KA-A5 / LCSC C32346 (JLCPCB basic);
+  the 9pF variant isn't stocked),
   with C1 = C2 = **18pF C0G**: nRF52 formula C = 2·CL − C_pin (4pF) −
   C_pcb (~1-2pF) ≈ 19-20pF → nearest E12 below.
 - **DC/DC**: the two inductors for the nRF52832's internal DC/DC regulator
@@ -153,7 +156,12 @@ Notes:
   pattern (0.74 × 2.50mm pads, 6.50mm overall) matches KiCad's
   `PinHeader_2x05_P1.27mm_Vertical_SMD` (0.74 × 2.40mm, 6.30mm overall,
   same 1.5mm gap between rows) closely enough to keep the stock
-  footprint. Fitted on **every** board: each one needs SWD at least once
+  footprint. Ordered part: **Connfly DS1031-08-2\*5P8BS41-3A** (TME
+  ZL322-2X5P), since TME doesn't carry the hanxia. Its recommended land
+  pattern (0.60 × 2.45mm pads, 1.60mm between rows, 6.50mm overall, tails
+  spanning 5.7mm) is also within ~0.1mm of the stock footprint, and the
+  drawing has no locating pegs (only an optional pick-up cap). Fitted on
+  **every** board: each one needs SWD at least once
   to flash the bootloader, and later for recovery. It's unshrouded, so
   the cable can go on either way round: pin 1 is marked on the
   silkscreen, match it to the ribbon's red stripe. Programmer: the nRF52
@@ -250,7 +258,13 @@ the benign direction.
     −2.0V, I_DSS ≤ 100nA at −40V/25°C. A *high* threshold is deliberate:
     the more gate voltage Q2 needs, the more Q1 leakage it takes to turn it
     on by accident (so low-threshold parts like AO3401A are unsuitable
-    here).
+    here). **Ordered: Nexperia BSS84AK** (TME; the BSS84 is out of stock
+    at TME and Mouser, and Mouser lists it as not recommended for new
+    designs): same SOT-23 G/S/D pinout, V_GS(th) −1.1 to −2.1V (higher, so
+    better here), ±20V V_GS, ESD-protected gate (I_GSS ≤ 10µA at ±20V,
+    which only flows while Q1 holds the gate low). Its I_DSS spec is
+    looser — ≤ 1µA at −50V/25°C, ≤ 2µA at 150°C — still below the ≈3-9µA
+    step (2) below needs, but one more reason to do the first-board check.
   - **R_LIM (100Ω, Q2 drain → Q3 gate)**: when Q2 switches on it shorts
     C_SS (charged to VBAT); without R_LIM the discharge spike is ~1A+ for
     ~µs, above BSS84's ~0.5A pulse rating (tiny energy, ~17µJ — a spec
@@ -267,7 +281,8 @@ the benign direction.
   within a few mV of VBAT. Don't raise R_CLAMP_PU / R_PD further to save
   current without re-checking this.
 - **Gate protection**: D_Z, 18V zener gate-source on Q3 (cathode to VBAT)
-  — **onsemi MMSZ5248B** (SOD-123, LCSC C2127). At 12.6V max the ±25V gate
+  — **MMSZ5248B** (SOD-123; ordered from DC Components via TME, LCSC
+  C2127 is JSCJ's). At 12.6V max the ±25V gate
   is within spec without it; it's cheap insurance against transients.
   18V rather than 15V because the zener sits reverse-biased at full pack
   voltage whenever the output is ON, and its leakage flows into Q3's gate
@@ -499,7 +514,12 @@ Verified after the change: ERC 0/0; the netlist is identical net-for-net
 (old references mapped, Q3/Q4 S/D pins expanded); every symbol pin has a
 matching footprint pad. Every part with an LCSC number carries it in a
 hidden `LCSC` field, so `kicad-cli sch export bom --fields
-"Reference,Value,Footprint,LCSC"` gives an order list.
+"Reference,Value,Footprint,LCSC"` gives an order list. The parts
+actually ordered (TME + Mouser, see [BOM](#bom)) are in hidden
+`Manufacturer`, `MPN`, `Supplier` and `Supplier PN` fields; export those
+the same way for the TME/Mouser order lists. Where the ordered part is a
+substitute, the `LCSC` field still names the original part as the LCSC
+alternative.
 
 Known simplifications in this draft, worth revisiting before layout:
 - BT832 VDD decoupling (C5 4.7µF + C6 100nF, as on Fanstel's eval
@@ -601,7 +621,18 @@ user interface (blocks 6–7) on the **top**.
   (0.025mm on U2's 0.5mm-pitch pins, keeping 0.15mm webs). A custom rule
   (`heimdall-switch.kicad_dru`) allows neck-down to 0.15mm where traces
   enter fine-pitch pads (U1, U2), well inside JLCPCB's 0.127mm minimum.
-- 32 vias in total, ~520mm of track (~215mm top, ~305mm bottom).
+- 40 vias in total, ~520mm of track (~215mm top, ~305mm bottom).
+- **GND stitching**: 19 GND vias plus the 3 through-hole GND pads tie the
+  two GND pours together. 8 of the vias (0.7/0.3mm) were added on
+  2026-10-04 with `route_pcb.py gapstitch`, only where both pours are
+  solid around the via and outside courtyards and keep-outs: every pour
+  fragment big enough for a via now has at least 2 ties (one 5.8mm²
+  bottom fragment has room for only 1), and of the ~151mm² where both
+  layers have GND, 2% is more than 5mm from a tie (was 6%; worst point
+  7.4mm, was 9.1mm). The regulator's and the BT832's GND pins have a tie
+  within ~1mm. DRC unchanged afterwards (0 unconnected, no new
+  violations). The layout pictures and 3D renders above predate these
+  vias.
 
 **Current capacity** (design target **5A continuous, 15A peaks <1s**).
 Expected load, per servo: analog standard servos stall at ~0.8-1.2A
@@ -757,12 +788,17 @@ values select which mode):
   delay) — no soft-start capacitor needed.
 - C_out = 22µF ceramic, X7R/X5R, low ESR — **selected: Samsung
   CL21A226MAQNNNE** (22µF 25V X5R 0805, LCSC C45783); the 25V rating
-  keeps DC-bias derating at 3.3V small.
+  keeps DC-bias derating at 3.3V small. Ordered: **Murata
+  GRM21BR61E226ME44L** (TME), the same 22µF 25V X5R 0805 spec; the
+  Samsung part is end-of-life at Mouser and out of stock at TME.
 - C_in: TI's reference is 4.7µF 25V 1206. **Selected: Samsung
   CL31B106KBHNNNE, 10µF 50V X7R 1206** (LCSC C89632): same
   footprint, and at 12.6V it keeps roughly 5-6µF effective, where a
   4.7µF 25V part drops to ~2µF. The 50V rating also gives headroom for
-  hot-plug ringing (below).
+  hot-plug ringing (below). Ordered: **Samsung CL31A106KBHNNNE** (TME),
+  the same 10µF 50V 1206 in X5R (−55…+85°C instead of X7R's +125°C);
+  no 10µF 50V 1206 X7R was in stock at TME or Mouser. Its DC-bias
+  derating at 12.6V hasn't been checked against the X7R's 5-6µF figure.
 
 **Hot-plug damping (R_IN, 22Ω 0603, LCSC C23345)**: plugging a pack into a
 board whose input is only ceramic capacitance rings. The battery leads'
@@ -804,10 +840,12 @@ during bring-up and a fallback to classic external-divider mode is needed
 
 - **PCBs**: bare boards from JLCPCB, surface finish **HASL with lead**
   (pre-tinned with leaded solder, matches the hand-assembly solder).
-- **Parts**: from LCSC (ships with the JLCPCB order), except the BT832
-  and J4 (Mouser, see [BOM](#bom)), preferring JLCPCB
-  "basic" parts where that doesn't compromise the design — keeps JLCPCB
-  assembly possible for a later batch.
+- **Parts**: from **TME** (next-day delivery) and **Mouser** (the BT832
+  has to come from Mouser anyway, and the order clears its free-shipping
+  threshold), see [BOM](#bom). Every part also keeps an LCSC number,
+  preferring JLCPCB "basic" parts where that doesn't compromise the
+  design — keeps an LCSC order or JLCPCB assembly possible for a later
+  batch.
 - **Hand assembly**: hot-air station + Sn63/Pb37 leaded paste for SMD,
   soldering iron (60/40) for the BT832's castellated edges and connectors.
   **No 0402** — passives 0603, 0805 where voltage/capacitance needs it.
@@ -838,63 +876,98 @@ during bring-up and a fallback to classic external-divider mode is needed
 ## BOM
 
 Schematic references (the descriptive names used elsewhere on this page are
-in brackets; see [Schematic](#schematic) for the mapping). Every part with
-an LCSC number carries it in the schematic's `LCSC` field, so the KiCad BOM
-export and `jlc_export.py` (see [PCB layout](#pcb-layout)) produce the
-order lists. Side: **T** top, **B** bottom (rev 2). "Basic" = JLCPCB basic
-part (only matters if a batch is ever JLC-assembled). Resistors are
-UNI-ROYAL 0603WAF thick film 1% unless noted. Stock and prices checked
-**2026-10-03**.
+in brackets; see [Schematic](#schematic) for the mapping). The prototype
+run is ordered from **TME and Mouser**; every part also keeps an LCSC
+number as the alternative source. The schematic carries both: the ordered
+part in hidden `Manufacturer` / `MPN` / `Supplier` / `Supplier PN` fields,
+the LCSC part in the `LCSC` field (used by `jlc_export.py`, see
+[PCB layout](#pcb-layout)). **†** = the ordered part differs from the LCSC
+alternative (the original choice, out of stock or not carried at TME and
+Mouser); see the notes below the tables. Side: **T** top, **B** bottom
+(rev 2). "Basic" = the LCSC alternative is a JLCPCB basic part (only
+matters if a batch is ever JLC-assembled). Stock and prices checked
+**2026-10-04** through the TME and Mouser APIs.
 
-**Main board** (42 parts; 39 from LCSC, U1 from Mouser, J2/J3 are wire pads):
+**Order files**: `python order_export.py [main UI cables]` (from
+`hardware/kicad/`, default 10 5 5) writes `hardware/order/tme-basket.csv`
+("symbol;quantity" lines for TME's basket import from file) and
+`hardware/order/tme-customer-symbols.csv` ("symbol;customer symbol" for
+TME's customer-symbol panel, our designators as e.g. `HSW-R6/R7/R13/R15`,
+`HSW-UI-` for the UI board; TME keeps one customer symbol per product
+across orders, hence the project prefix) and
+`hardware/order/mouser-bom.csv` (for Mouser's BOM tool) from the
+schematics' supplier fields, times the board counts, plus the UI cable's
+crimp parts. The committed files are the 10 / 5 / 5 run; all lines were
+checked orderable and in stock on 2026-10-04.
 
-| Ref | Value | Part | Package | Side | Source | Basic |
+**Supplier lookups** ([hardware/sourcing/](../hardware/sourcing/),
+stdlib-only python):
+- `check_order.py`: checks the order files against the live TME and
+  Mouser APIs (orderable, minimum quantity, stock), prints each line's
+  cost and the totals, and points out cheaper price breaks. Run it right
+  before ordering.
+- `compare.py [main UI cables]`: prices every BOM line at LCSC (the `LCSC`
+  field), TME and Mouser (the `MPN` / `Supplier PN` fields), as in the
+  supplier comparison below.
+- `find_part.py "<part number or phrase>" [-q qty]`: searches TME and
+  Mouser, for finding a substitute when a part runs out.
+- `suppliers.py`: the API clients. TME uses API v2 (OAuth2; tokens made
+  after 2026-05-14 only work with v2), Mouser the Search API (a *Search*
+  key, not the Order key), LCSC the product data its web pages load (no
+  key). Keys come from the environment (`TME_TOKEN`, `TME_APP_SECRET`,
+  `MOUSER_API_KEY`) or from `~/.config/heimdall/api-keys.env`, **never
+  from the repo**.
+
+**Main board** (42 parts; U1, U2, L1, Y1 from Mouser, the rest from TME,
+J2/J3 are wire pads):
+
+| Ref | Value | Ordered part | Package | Side | Order from | LCSC alternative | Basic |
+|---|---|---|---|---|---|---|---|
+| U1 | BT832 (nRF52832) | Fanstel BT832 | 14 × 16mm module | T | Mouser 308-BT832 | — (not at LCSC) | |
+| U2 | 3.3V buck | TI TPS629206DRLR | SOT-583-8 | B | Mouser 595-TPS629206DRLR | [C5219292](https://www.lcsc.com/product-detail/C5219292.html) | |
+| L1 | 2.2µH | Murata DFE252012PD-2R2M=P2 | 1008 | B | Mouser 81-DFE252012PD2R2MP2 | [C237482](https://www.lcsc.com/product-detail/C237482.html) | |
+| Y1 | 32.768kHz, CL 12.5pF | Epson FC-135 32.7680KA-A5 | 3215 | T | Mouser 732-532.7680KA-A5 | [C32346](https://www.lcsc.com/product-detail/C32346.html) (Q13FC13500004) | ✓ |
+| Q1, Q5 | N-FET | AOS AO3400A | SOT-23 | B, T | TME AO3400A | [C20917](https://www.lcsc.com/product-detail/C20917.html) | ✓ |
+| Q2, Q6 | P-FET | Nexperia BSS84AK,215 † | SOT-23 | B, T | TME BSS84AK.215 | [C493579](https://www.lcsc.com/product-detail/C493579.html) (BSS84,215) | |
+| Q3, Q4 | P-FET | AOS AO4407A | SO-8 | B | TME AO4407A | [C16072](https://www.lcsc.com/product-detail/C16072.html) | |
+| D1, D2 (D_Z2, D_Z) | 18V zener | DC Components MMSZ5248B † | SOD-123 | B | TME MMSZ5248B-DC | [C2127](https://www.lcsc.com/product-detail/C2127.html) (JSCJ MMSZ5248B) | |
+| C1, C2 | 18pF 50V C0G | Samsung CL10C180JB8NNNC | 0603 | T | TME CL10C180JB8NNNC | [C1647](https://www.lcsc.com/product-detail/C1647.html) | ✓ |
+| C3 (C_IN) | 10µF 50V X5R | Samsung CL31A106KBHNNNE † | 1206 | B | TME CL31A106KBHNNNE | [C89632](https://www.lcsc.com/product-detail/C89632.html) (CL31B106KBHNNNE, X7R) | |
+| C4 (C_OUT) | 22µF 25V X5R | Murata GRM21BR61E226ME44L † | 0805 | B | TME GRM21BR61E226ME44L | [C45783](https://www.lcsc.com/product-detail/C45783.html) (Samsung CL21A226MAQNNNE) | ✓ |
+| C5 (C_VDD1) | 4.7µF 16V X5R | Samsung CL10A475KO8NNNC | 0603 | T | TME CL10A475KO8NNNC | [C19666](https://www.lcsc.com/product-detail/C19666.html) | ✓ |
+| C6, C8 (C_VDD2, C_FB) | 100nF 50V X7R | Yageo CC0603KRX7R9BB104 | 0603 | T, B | TME CC0603KRX7R9BB104 | [C14663](https://www.lcsc.com/product-detail/C14663.html) | ✓ |
+| C7 (C_SS) | 220nF 50V X7R | Samsung CL21B224KBFNNNE | 0805 | B | TME CL21B224KBFNNNE | [C5378](https://www.lcsc.com/product-detail/C5378.html) | ✓ |
+| R1, R11 (R_REV, R_FB_TOP) | 100kΩ | Yageo RC0603FR-07100KL † | 0603 | B | TME RC0603FR-07100K | [C25803](https://www.lcsc.com/product-detail/C25803.html) | ✓ |
+| R2 (R_IN) | 22Ω | Yageo RC0603FR-0722RL † | 0603 | B | TME RC0603FR-0722RL | [C23345](https://www.lcsc.com/product-detail/C23345.html) | ✓ |
+| R3 (R_MODE) | 27.4kΩ | Yageo RC0603FR-0727K4L † | 0603 | B | TME RC0603FR-0727K4L | [C22964](https://www.lcsc.com/product-detail/C22964.html) | |
+| R4 (R_RST) | 10kΩ | Yageo RC0603FR-0710KL | 0603 | T | TME RC0603FR-0710K | [C98220](https://www.lcsc.com/product-detail/C98220.html) | ✓ |
+| R5, R8 (R_G1, R_LIM) | 100Ω | Yageo RC0603FR-07100RL † | 0603 | B | TME RC0603FR-07100R | [C22775](https://www.lcsc.com/product-detail/C22775.html) | ✓ |
+| R6, R7, R13, R15 (R_OFF_PD, R_CLAMP_PU, R_Q6_PU, R_LED_PD) | 1MΩ | Yageo RC0603FR-071ML † | 0603 | B, B, T, T | TME RC0603FR-071M | [C22935](https://www.lcsc.com/product-detail/C22935.html) | ✓ |
+| R9, R10 (R_PD1, R_PD2) | 2.2MΩ | Yageo RC0603FR-072M2L † | 0603 | B | TME RC0603FR-072M2 | [C22938](https://www.lcsc.com/product-detail/C22938.html) | |
+| R12 (R_FB_BOT) | 33kΩ | Yageo RC0603FR-0733KL † | 0603 | B | TME RC0603FR-0733KL | [C4216](https://www.lcsc.com/product-detail/C4216.html) | ✓ |
+| R14 (R_LED) | 680Ω 1/4W | Yageo RC1206FR-07680RL † | 1206 | T | TME RC1206FR-07680R | [C17975](https://www.lcsc.com/product-detail/C17975.html) | |
+| R16 (R_BTN) | 1kΩ | Yageo RC0603FR-071KL † | 0603 | T | TME RC0603FR-071K | [C21190](https://www.lcsc.com/product-detail/C21190.html) | ✓ |
+| LED1 | green 525nm, 8-14cd, 30° | Kingbright L-7104ZGCK † | 3mm THT, water clear | T | TME L-7104ZGCK | [C414645](https://www.lcsc.com/product-detail/C414645.html) (Everlight 204-10SUGC/S400-A4) | |
+| SW1 | tactile | C&K PTS810 SJM 250 SMTR LFS | 4.2 × 3.2mm SMD | T | TME PTS810SJM250SMTRLF | [C116501](https://www.lcsc.com/product-detail/C116501.html) | |
+| J1 | ARM 10-pin SWD | Connfly DS1031-08-2\*5P8BS41-3A † | 2×5 1.27mm SMD | T | TME ZL322-2X5P | [C41376037](https://www.lcsc.com/product-detail/C41376037.html) (hanxia HX PZ1.27-2x5P TP) | |
+| J4 | UI breakout | JST SM03B-GHS-TB(LF)(SN) | GH 1×3 1.25mm SMD right-angle | T | TME SM03B-GHS-TB | [C514175](https://www.lcsc.com/product-detail/C514175.html) | |
+| J2, J3 | wire pads | see [Assembly](#assembly) | THT pads | — | — | — | |
+
+**UI daughter board** (see [Daughter board (UI)](#daughter-board-ui)), all from TME:
+
+| Ref | Value | Ordered part | Package | Side | Order from | LCSC alternative |
 |---|---|---|---|---|---|---|
-| U1 | BT832 (nRF52832) | Fanstel BT832 | 14 × 16mm module | T | [Mouser](https://www.mouser.com/ProductDetail/Fanstel/BT832?qs=wUXugUrL1qzkqriNuICYIQ%3D%3D) | |
-| U2 | 3.3V buck | TI TPS629206DRLR | SOT-583-8 | B | [LCSC C5219292](https://www.lcsc.com/product-detail/C5219292.html) | |
-| L1 | 2.2µH | Murata DFE252012PD-2R2M=P2 | 1008 | B | [LCSC C237482](https://www.lcsc.com/product-detail/C237482.html) | |
-| Q1, Q5 | N-FET | AOS AO3400A | SOT-23 | B, T | [LCSC C20917](https://www.lcsc.com/product-detail/C20917.html) | ✓ |
-| Q2, Q6 | P-FET | Nexperia BSS84,215 | SOT-23 | B, T | [LCSC C493579](https://www.lcsc.com/product-detail/C493579.html) | |
-| Q3, Q4 | P-FET | AOS AO4407A | SO-8 | B | [LCSC C16072](https://www.lcsc.com/product-detail/C16072.html) | |
-| D1, D2 (D_Z2, D_Z) | 18V zener | JSCJ MMSZ5248B | SOD-123 | B | [LCSC C2127](https://www.lcsc.com/product-detail/C2127.html) | |
-| Y1 | 32.768kHz, CL 12.5pF | Epson FC-135 (Q13FC13500004) | 3215 | T | [LCSC C32346](https://www.lcsc.com/product-detail/C32346.html) | ✓ |
-| C1, C2 | 18pF 50V C0G | Samsung CL10C180JB8NNNC | 0603 | T | [LCSC C1647](https://www.lcsc.com/product-detail/C1647.html) | ✓ |
-| C3 (C_IN) | 10µF 50V X7R | Samsung CL31B106KBHNNNE | 1206 | B | [LCSC C89632](https://www.lcsc.com/product-detail/C89632.html) | |
-| C4 (C_OUT) | 22µF 25V X5R | Samsung CL21A226MAQNNNE | 0805 | B | [LCSC C45783](https://www.lcsc.com/product-detail/C45783.html) | ✓ |
-| C5 (C_VDD1) | 4.7µF 16V X5R | Samsung CL10A475KO8NNNC | 0603 | T | [LCSC C19666](https://www.lcsc.com/product-detail/C19666.html) | ✓ |
-| C6, C8 (C_VDD2, C_FB) | 100nF 50V X7R | Yageo CC0603KRX7R9BB104 | 0603 | T, B | [LCSC C14663](https://www.lcsc.com/product-detail/C14663.html) | ✓ |
-| C7 (C_SS) | 220nF 50V X7R | Samsung CL21B224KBFNNNE | 0805 | B | [LCSC C5378](https://www.lcsc.com/product-detail/C5378.html) | ✓ |
-| R1, R11 (R_REV, R_FB_TOP) | 100kΩ | 0603WAF1003T5E | 0603 | B | [LCSC C25803](https://www.lcsc.com/product-detail/C25803.html) | ✓ |
-| R2 (R_IN) | 22Ω | 0603WAF220JT5E | 0603 | B | [LCSC C23345](https://www.lcsc.com/product-detail/C23345.html) | ✓ |
-| R3 (R_MODE) | 27.4kΩ | 0603WAF2742T5E | 0603 | B | [LCSC C22964](https://www.lcsc.com/product-detail/C22964.html) | |
-| R4 (R_RST) | 10kΩ | Yageo RC0603FR-0710KL | 0603 | T | [LCSC C98220](https://www.lcsc.com/product-detail/C98220.html) | ✓ |
-| R5, R8 (R_G1, R_LIM) | 100Ω | 0603WAF1000T5E | 0603 | B | [LCSC C22775](https://www.lcsc.com/product-detail/C22775.html) | ✓ |
-| R6, R7, R13, R15 (R_OFF_PD, R_CLAMP_PU, R_Q6_PU, R_LED_PD) | 1MΩ | 0603WAF1004T5E | 0603 | B, B, T, T | [LCSC C22935](https://www.lcsc.com/product-detail/C22935.html) | ✓ |
-| R9, R10 (R_PD1, R_PD2) | 2.2MΩ | 0603WAF2204T5E | 0603 | B | [LCSC C22938](https://www.lcsc.com/product-detail/C22938.html) | |
-| R12 (R_FB_BOT) | 33kΩ | 0603WAF3302T5E | 0603 | B | [LCSC C4216](https://www.lcsc.com/product-detail/C4216.html) | ✓ |
-| R14 (R_LED) | 680Ω 1/4W | 1206W4F6800T5E | 1206 | T | [LCSC C17975](https://www.lcsc.com/product-detail/C17975.html) | |
-| R16 (R_BTN) | 1kΩ | 0603WAF1001T5E | 0603 | T | [LCSC C21190](https://www.lcsc.com/product-detail/C21190.html) | ✓ |
-| LED1 | green 525nm, 3.2cd, 20° | Everlight 204-10SUGC/S400-A4 | 3mm THT, water clear | T | [LCSC C414645](https://www.lcsc.com/product-detail/C414645.html) | |
-| SW1 | tactile | C&K PTS810 SJM 250 SMTR LFS | 4.2 × 3.2mm SMD | T | [LCSC C116501](https://www.lcsc.com/product-detail/C116501.html) | |
-| J1 | ARM 10-pin SWD | hanxia HX PZ1.27-2x5P TP | 2×5 1.27mm SMD | T | [LCSC C41376037](https://www.lcsc.com/product-detail/C41376037.html) | |
-| J4 | UI breakout | JST SM03B-GHS-TB(LF)(SN) | GH 1×3 1.25mm SMD right-angle | T | [Mouser](https://www.mouser.com/c/?q=SM03B-GHS-TB(LF)(SN)) (LCSC [C514175](https://www.lcsc.com/product-detail/C514175.html): 0 in stock) | |
-| J2, J3 | wire pads | see [Assembly](#assembly) | THT pads | — | — | |
+| LED1 | green 3mm | Kingbright L-7104ZGCK † | 3mm THT | front | TME L-7104ZGCK | [C414645](https://www.lcsc.com/product-detail/C414645.html) (Everlight 204-10SUGC/S400-A4) |
+| SW1 | tactile, IP67, 3.4N | C&K KSC641J LFS | 6.2 × 6.2mm SMD | front | TME KSC641JLFS | [C226344](https://www.lcsc.com/product-detail/C226344.html) |
+| J1 | UI cable | JST SM03B-GHS-TB(LF)(SN) | GH 1×3 1.25mm SMD right-angle | back | TME SM03B-GHS-TB | [C514175](https://www.lcsc.com/product-detail/C514175.html) |
 
-**UI daughter board** (see [Daughter board (UI)](#daughter-board-ui)):
+**UI cable** (J4 ↔ UI J1, pin 1 ↔ pin 1), per cable, from TME:
 
-| Ref | Value | Part | Package | Side | Source |
-|---|---|---|---|---|---|
-| LED1 | green 3mm | Everlight 204-10SUGC/S400-A4 | 3mm THT | front | [LCSC C414645](https://www.lcsc.com/product-detail/C414645.html) |
-| SW1 | tactile, IP67, 3.4N | C&K KSC641J LFS | 6.2 × 6.2mm SMD | front | [LCSC C226344](https://www.lcsc.com/product-detail/C226344.html) |
-| J1 | UI cable | JST BM03B-GHS-TBT(LF)(SN) | GH 1×3 1.25mm SMD vertical | back | [LCSC C161691](https://www.lcsc.com/product-detail/C161691.html) / [Mouser](https://www.mouser.com/ProductDetail/JST-Commercial/BM03B-GHS-TBTLFSN?qs=cdbOS8ANM9Du45wKC780vQ%3D%3D) |
-
-**UI cable** (J4 ↔ UI J1, pin 1 ↔ pin 1), per cable:
-
-| Qty | Part | Source |
-|---|---|---|
-| 2 | JST GHR-03V-S housing, GH 3-pin | [LCSC C160417](https://www.lcsc.com/product-detail/C160417.html) (only 20 in stock; also at Mouser/DigiKey) |
-| 6 | JST SSHL-002T-P0.2 crimp contact, 26-30 AWG | [LCSC C189897](https://www.lcsc.com/product-detail/C189897.html) |
-| 3 | 26-28 AWG wire, to length | — |
+| Qty | Part | Order from | LCSC alternative |
+|---|---|---|---|
+| 2 | JST GHR-03V-S housing, GH 3-pin | TME GHR-03V-S | [C160417](https://www.lcsc.com/product-detail/C160417.html) (only 20 in stock on 2026-10-04) |
+| 6 | JST SSHL-002T-P0.2 crimp contact, 26-30 AWG | TME SSHL-002T-P0.2 | [C189897](https://www.lcsc.com/product-detail/C189897.html) |
+| 3 | 26-28 AWG wire, to length | — | — |
 
 GH crimps need a fine crimp tool (or buy ready-made GH 3-pin
 "pre-crimped" leads, often sold for drones/Pixhawk; check pin 1 ↔ pin 1).
@@ -906,13 +979,27 @@ Notes:
   APPROTECT**: those lock the debug port unless the firmware keeps it
   open (needs a recent SDK); the plain module is easier for prototypes.
   Fanstel's own store sells in 1000s; Mouser stocks single modules.
+- **Substitutes (†)** for the TME order, checked against the design:
+  - Resistors: Yageo RC series, same values, 1% (R2 was 5%). TME sells
+    the UNI-ROYAL parts only in 5000-piece reels.
+  - Q2/Q6 BSS84AK: see [Switching stage](#switching-stage), the threshold
+    is higher than the BSS84's (good for fail-on), the I_DSS spec looser.
+  - C3 X5R instead of X7R, C4 Murata instead of Samsung: see
+    [Buck regulator](#buck-regulator-tps629206-reference-design).
+  - D1/D2: same MMSZ5248B from another maker (DC Components).
+  - J1 Connfly: land pattern checked against the stock footprint, see
+    [Pin assignment](#pin-assignment-bt832-castellated-edge).
+  - LED1 Kingbright: see below.
 - **LED1: 3mm green, high intensity, narrow beam** for sunlight
   visibility through a 3mm hole in the hull (see Status LED above for the
-  VBAT drive and currents). Chosen over Hubei KENTO 3AG2HD (C2843819,
-  2-3cd, 23°) for the higher intensity and Everlight datasheet quality;
-  the -A5 variant (C2927624) is the same die with a 30° beam if 20° turns
-  out too narrow to see off-axis. It only blinks on events, so its current
-  doesn't show in the power budget.
+  VBAT drive and currents). Ordered: **Kingbright L-7104ZGCK** (InGaN,
+  water clear, 525nm, 8cd min / 14cd typ at 20mA, 30°, V_F 3.3V typ at
+  20mA, 25mA max). The original choice, Everlight 204-10SUGC/S400-A4
+  (3.2cd, 20°), was out of stock at TME and Mouser on 2026-10-04; it
+  stays the LCSC alternative. It was chosen over Hubei KENTO 3AG2HD
+  (C2843819, 2-3cd, 23°) for the higher intensity and Everlight datasheet
+  quality. The LED only blinks on events, so its current doesn't show in
+  the power budget.
 - **SW1 (main board)**: C&K PTS810 SJM 250 SMTR LFS, 4.2 × 3.2mm
   J-lead tactile (KiCad `Button_Switch_SMD:SW_SPST_PTS810` matches
   exactly). The on-board button sits inside the hull, so it needn't be
@@ -924,33 +1011,44 @@ Notes:
   vibration presses), for the outside housing. KiCad's stock
   `Button_Switch_SMD:SW_Push_1P1T_NO_CK_KSC6xxJ` footprint matches it
   exactly.
-- **J4 / UI J1**: both JST GH 1.25mm, the main board's right-angle (cable
-  leaves along the board), the UI board's vertical (cable leaves straight
-  back through the housing).
+- **J4 / UI J1**: the same JST GH 1.25mm right-angle header on both
+  boards (cable plugs in from the side, along the board). The UI board
+  had a vertical BM03B-GHS-TBT until 2026-10-04; side entry suits its
+  housing better, and one part number covers both ends.
 
 ### Cost estimate (prototype run)
 
-For **10 main boards + 5 UI boards + 5 cables**, prices 2026-10-03,
-excl. VAT, ~9.5 SEK/USD. LCSC sells most passives in reels/strips of
-50–100 minimum, so the order costs more than 10× the per-board figure.
+For **10 main boards + 5 UI boards + 5 cables**, prices 2026-10-04 from
+the TME and Mouser APIs, in SEK excl. VAT (TME returns prices incl. 25%
+VAT, converted here; Mouser's API prices are taken as excl. VAT, not
+verified). Quantities are bought per piece at TME, so there's little
+over-buying.
 
 | Item | Where | Order | ≈ SEK |
 |---|---|---|---|
-| BT832 × 10 | Mouser | ~$10 each; 10 pcs + shipping quoted at 996 SEK | ~1000 |
-| J4 SM03B-GHS-TB × 10 | Mouser (not in stock at LCSC) | ~$0.8 each | ~80 |
-| Main-board parts × 10 (rest of the BOM) | LCSC | $40.7 (min-order quantities included; $3.4/board at those prices) | ~390 |
-| UI-board parts × 5 | LCSC | $5.2 | ~50 |
-| Cable parts × 5 | LCSC | $2.1 | ~20 |
+| BT832 × 10 | Mouser | 72.64 SEK each | 726 |
+| U2, L1, Y1 × 10 | Mouser | 85 + 34 + 39 | 158 |
+| **Mouser order** | | above Mouser's 800 SEK free-shipping threshold (not re-checked; confirm in the cart) | **885** |
+| Main-board parts × 10 (rest of the BOM) | TME | | 360 |
+| UI-board parts × 5 | TME | | 60 |
+| Cable parts × 5 | TME | | 15 |
+| **TME order** | | shipping not known yet; check at checkout | **435** |
 | Main PCB × 10 (45.5 × 23mm, 2L, 1.6mm, leaded HASL) | JLCPCB | estimate, get a quote | ~50–100 |
 | UI PCB × 5 (35 × 13mm, 2L, **2.0mm**) | JLCPCB | estimate, get a quote (2.0mm adds cost) | ~50–100 |
-| Shipping LCSC + JLCPCB (combined) | | estimate | ~150–250 |
-| **Total** | | | **~1800–2000** |
+| Shipping JLCPCB | | estimate | ~100–200 |
+| **Total** | | plus TME shipping | **~1520–1720** |
 
-Per finished main board that's **~150–170 SEK** in parts, PCB and a share
-of the shipping at this quantity, about **100 SEK of it the BT832**. For comparison, a Jeti SPS-20
-is around $60. Mouser ships free above 800 SEK, so the BT832 order covers
-J4 too; other parts for the suite (e.g. an ESP32-C3 for heimdall-module)
-can ride along on the same order.
+Per finished main board that's about **125 SEK in parts**, 73 of it the
+BT832. For comparison, a Jeti SPS-20 is around $60.
+
+Alternatives priced the same day (parts only, excl. shipping):
+**LCSC + Mouser** (BT832, J4 and U2 from Mouser, the rest from LCSC with
+no substitutes) came to ~1250 SEK, about 70 SEK less, but LCSC sells
+passives in strips of 50-100 and ships from China. Neither TME nor Mouser
+alone covers the BOM: TME has no BT832 or TPS629206, Mouser no AOS
+MOSFETs and no stock of C3, C4, LED1 or the handful of equivalents
+checked for them. Re-run the comparison with
+`hardware/sourcing/compare.py` (see [BOM](#bom)).
 
 ## Daughter board (UI)
 
@@ -970,9 +1068,9 @@ on the outside of the hull, as on the Jeti SPS-20.
 |---|---|
 | ![UI board, front](../hardware/kicad-ui/render-top.png) | ![UI board, back](../hardware/kicad-ui/render-bottom.png) |
 
-- **Parts**: LED1 (Everlight 204-10SUGC, 3mm green), SW1 (C&K KSC641J),
-  J1 (JST BM03B-GHS-TBT, vertical SMD GH, the same series as the main
-  board's right-angle J4), H1/H2 (tapped M3 holes, not parts). LED and
+- **Parts**: LED1 (Kingbright L-7104ZGCK, 3mm green), SW1 (C&K KSC641J),
+  J1 (JST SM03B-GHS-TB, right-angle SMD GH, the same part as the main
+  board's J4), H1/H2 (tapped M3 holes, not parts). LED and
   button are the same part numbers as the main board's on-board ones;
   nothing else, since the
   LED driver, current limit and button ESD resistor live on the main
@@ -992,18 +1090,24 @@ on the outside of the hull, as on the Jeti SPS-20.
   threads: drill to 3.2mm and use screw + nut. From H1:
   button centre +6.8mm, LED centre +15.6mm, all on the centreline. LED
   and button on the front, facing out; the GH header is mounted on the
-  **back** (SMD, so nothing comes through to the front), so the cable
-  leaves straight backwards. J1's pin row runs along the board (body
-  117.4–124.5mm from the left edge, ≥2mm clear of H2's hole) so it
-  doesn't crowd the screw. Back silk carries the board name; the cable
-  is pin 1 ↔ pin 1.
+  **back** (SMD, so nothing comes through to the front) as a
+  **right-angle** header with its opening at the **bottom long edge**, so
+  the cable plugs in from the side and runs along the back of the board
+  (changed from a vertical BM03B-GHS-TBT on 2026-10-04, so both ends of
+  the cable use the same header). J1's body sits ~21–29.5mm from the
+  left edge, between the LED leads and H2's ~2mm keep-out, its front
+  ~0.8mm in from the edge as on the main board. Its GND and LED_A reach
+  the front layer through one via each; BTN runs on the back to the
+  button's via. Back silk carries the board name; the cable is pin 1 ↔
+  pin 1.
 - **Mounting**: in a 3D-printed housing screwed to the **outside** of the
   hull (like the SPS-20's), the LED protruding through the housing and
   the button sealed with an O-ring, so the only hull penetration is the
   cable hole. The KSC641J is IP67 itself, so a leaking O-ring doesn't
   kill the button.
-- Verified: ERC 0/0; DRC 0 violations, 0 unconnected, full schematic
-  parity (`kicad-cli pcb drc --schematic-parity`).
+- Verified (after the J1 change, 2026-10-04): ERC 0/0; DRC 0
+  violations, 0 unconnected, full schematic parity (`kicad-cli pcb drc
+  --schematic-parity`). Renders above regenerated.
 - **Ordering**: `python jlc_export.py ../kicad-ui` (from
   `hardware/kicad/`) writes `hardware/kicad-ui/gerber/`: Gerber + drill
   zip and BOM/CPL (all, `-top`, `-bottom`), same format as the main
